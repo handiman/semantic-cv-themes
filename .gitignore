@@ -1,0 +1,4 @@
+dist/
+*.orig
+*test-results.*
+node_modules/
