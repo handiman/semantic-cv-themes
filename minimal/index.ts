@@ -113,9 +113,9 @@ export class MinimalTheme extends Theme {
                 ${description ? `<div>${description}</div>` : ""}
                 ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}</a></li>`).join("\n")}</ul>` : ""}
             </header>
-            ${renderProjects(person)};
-            ${renderWork(person)};
-            ${renderEducation(person)};
+            ${renderProjects(person)}
+            ${renderWork(person)}
+            ${renderEducation(person)}
           `,
           html
         );
@@ -124,7 +124,6 @@ export class MinimalTheme extends Theme {
           main.append(
             `
               <section>
-                <h2>Education</h2>
                 <h2>Life Events</h2>
                 <ul>
                 ${lifeEvent
