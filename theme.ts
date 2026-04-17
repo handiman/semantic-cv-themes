@@ -20,10 +20,11 @@ export abstract class Theme {
    *           `<semantic-cv-theme-{id}>`.
    * @param loadAsset Function that loads a theme asset (CSS/JS) by name.
    *                  Implemented differently in CLI and Worker runtimes.
-   */  
+   */
   constructor(
     public id: string,
-    private loadAsset: (assetName: string) => Promise<string>
+    private loadAsset: (assetName: string) => Promise<string>,
+    public title: string = titleify(id)
   ) {}
 
   /**
@@ -32,16 +33,16 @@ export abstract class Theme {
    *
    * @param person Normalized JSON‑LD Person object.
    * @returns Promise resolving to an HTML string.
-   */  
+   */
   abstract renderHTML(person: Person): Promise<string>;
-  
+
   /**
    * Render the theme's CSS.
    * By default, loads `{id}.css` via the provided asset loader.
    *
    * @param person Normalized JSON‑LD Person object.
    * @returns Promise resolving to a CSS string.
-   */  
+   */
   renderCSS(_person: Person) {
     return this.loadAsset(`${this.id}.css`);
   }
@@ -53,9 +54,18 @@ export abstract class Theme {
    * @param person Normalized JSON‑LD Person object.
    * @returns Promise resolving to a JavaScript string.
    */
-    renderJS(_person: Person) {
+  renderJS(_person: Person) {
     return this.loadAsset(`${this.id}.js`);
   }
 }
 
 export default Theme;
+
+const titleify = (s: string) => initCaps(s).replaceAll("-", " ").replaceAll("_", " ").trim();
+
+const initCaps = (s: string) => {
+  if (s.length) {
+    return `${s[0].toUpperCase()}${s.substring(1)}`;
+  }
+  return s;
+};
