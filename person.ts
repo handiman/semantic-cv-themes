@@ -33,6 +33,17 @@ export const education = (person: Person) => {
 };
 
 /**
+ * Convert a date to the format YYYY-MM.
+ * @param date
+ */
+export const period = (value: string | Date) => {
+  const date = "string" === typeof value ? new Date(value) : value;
+  const year = date.getFullYear();
+  const month = date.getMonth();
+  return `${year}-${month < 10 ? `0${month}` : month}`;
+};
+
+/**
  * Minimal normalized subset of schema.org/Person used by Semantic‑CV.
  * All fields are optional and may be null or undefined depending on user input.
  */

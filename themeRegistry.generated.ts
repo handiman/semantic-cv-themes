@@ -3,6 +3,7 @@ import { titleify } from "./theme.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
+import { LenaTheme } from "./lena/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
 import { TimesTheme } from "./times/index.js";
@@ -26,6 +27,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: HoldenWreckTheme.title ?? titleify(HoldenWreckTheme.id),
     description: HoldenWreckTheme.description,
     tags: HoldenWreckTheme.tags
+  },
+  [LenaTheme.id]: {
+    type: LenaTheme,
+    title: LenaTheme.title ?? titleify(LenaTheme.id),
+    description: LenaTheme.description,
+    tags: LenaTheme.tags
   },
   [MatildaTheme.id]: {
     type: MatildaTheme,
