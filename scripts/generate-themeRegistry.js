@@ -19,11 +19,12 @@ const toThemeName = (slug) => {
   );
 };
 
+const ignoredDirectories = ["node_modules", "dist", "scripts"];
 const entries = await readdir(themesPath, { withFileTypes: true });
 const themes = [];
 for (const entry of entries) {
   if (entry.isDirectory()) {
-    if (entry.name.startsWith(".") || ["dist", "scripts"].includes(entry.name)) {
+    if (entry.name.startsWith(".") || ignoredDirectories.includes(entry.name)) {
       continue;
     }
     const themeSlug = entry.name;
