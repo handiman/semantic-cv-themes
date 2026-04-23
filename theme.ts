@@ -62,7 +62,7 @@ export abstract class Theme {
 
 export default Theme;
 
-const titleify = (s: string) => initCaps(s).replaceAll("-", " ").replaceAll("_", " ").trim();
+export const titleify = (s: string) => initCaps(s).replaceAll("-", " ").replaceAll("_", " ").trim();
 
 const initCaps = (s: string) => {
   if (s.length) {

@@ -2,6 +2,20 @@ import { BoilingDieselTheme } from "../boiling-diesel/index.js";
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { Person } from "../person.js";
+import { ThemeTags } from "../themeTags.js";
+
+const id = "holden-wreck";
+const title = "Holden wreck";
+const description =
+  "A clean, approachable two‑column résumé with a light, balanced layout and clear structure.";
+const tags = [
+  ThemeTags.twoCol,
+  ThemeTags.resume,
+  ThemeTags.lightMode,
+  ThemeTags.minimal,
+  ThemeTags.editorial,
+  ThemeTags.calm
+];
 
 export class HoldenWreckTheme extends Theme {
   private base: BoilingDieselTheme;
@@ -11,7 +25,19 @@ export class HoldenWreckTheme extends Theme {
   }
 
   static get id() {
-    return "holden-wreck";
+    return id;
+  }
+
+  static get title() {
+    return title;
+  }
+
+  static get description() {
+    return description;
+  }
+
+  static get tags() {
+    return tags;
   }
 
   renderHTML(person: Person): Promise<string> {

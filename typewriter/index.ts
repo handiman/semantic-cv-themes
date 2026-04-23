@@ -1,6 +1,19 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
+import { ThemeTags } from "../themeTags.js";
+
+const id = "typewriter";
+const description =
+  "A retro, monochrome résumé styled like a typewritten page. Charmingly imperfect and intentionally quirky.";
+const tags = [
+  ThemeTags.singleCol,
+  ThemeTags.lightMode,
+  ThemeTags.monoChrome,
+  ThemeTags.resume,
+  ThemeTags.humorous,
+  ThemeTags.retro
+];
 
 const html = { html: true };
 
@@ -13,11 +26,25 @@ export class TypewriterTheme extends Theme {
   }
 
   static get id() {
-    return "typewriter";
+    return id;
   }
+
+  static get title() {
+    return;
+  }
+
+  static get description() {
+    return description;
+  }
+
+  static get tags() {
+    return tags;
+  }
+
   renderJS(_person: Person): Promise<string> {
     return Promise.resolve("");
   }
+
   renderHTML(person: Person): Promise<string> {
     const { transformer } = this;
 
