@@ -2,7 +2,19 @@ import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
+import { ThemeTags } from "../themeTags.js";
 
+const id = "matilda";
+const description =
+  "A soft, pastel‑toned two‑column theme with gentle typography and a friendly, editorial touch.";
+const tags = [
+  ThemeTags.twoCol,
+  ThemeTags.headshot,
+  ThemeTags.lightMode,
+  ThemeTags.pastel,
+  ThemeTags.resume,
+  ThemeTags.technical
+];
 const html = { html: true };
 
 export class MatildaTheme extends Theme {
@@ -14,7 +26,19 @@ export class MatildaTheme extends Theme {
   }
 
   static get id() {
-    return "matilda";
+    return id;
+  }
+
+  static get title() {
+    return;
+  }
+
+  static get description() {
+    return description;
+  }
+
+  static get tags() {
+    return tags;
   }
 
   renderHTML(person: Person): Promise<string> {
@@ -159,7 +183,7 @@ const renderMain = (transformer: HTMLTransformer, person: Person) => {
       main.append(
         `
         ${header(person) ?? ""}
-        ${description(person) ?? ""}
+        ${renderDescription(person) ?? ""}
         ${renderProjects(person) ?? ""}
         ${renderWork(person) ?? ""}
         ${renderEducation(person) ?? ""}
@@ -171,7 +195,7 @@ const renderMain = (transformer: HTMLTransformer, person: Person) => {
   });
 };
 
-const description = (person: Person) => {
+const renderDescription = (person: Person) => {
   const { description } = person;
   return description
     ? `

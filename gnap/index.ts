@@ -2,6 +2,19 @@ import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
+import { ThemeTags } from "../themeTags.js";
+
+const id = "gnap";
+const title = "GNAP!";
+const description = "Smurf‑inspired black & white theme with splashes of green";
+const tags = [
+  ThemeTags.heroFullscreen,
+  ThemeTags.darkMode,
+  ThemeTags.monoChrome,
+  ThemeTags.accented,
+  ThemeTags.playful,
+  ThemeTags.bold
+];
 
 const html = { html: true };
 
@@ -10,11 +23,20 @@ export class GnapTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(GnapTheme.id, loadAsset);
+    super(id, loadAsset, title);
   }
 
   static get id() {
-    return "gnap";
+    return id;
+  }
+  static get title() {
+    return title;
+  }
+  static get description() {
+    return description;
+  }
+  static get tags() {
+    return tags;
   }
 
   renderHTML(person: Person): Promise<string> {

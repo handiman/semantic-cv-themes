@@ -2,6 +2,17 @@ import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
+import { ThemeTags } from "../themeTags.js";
+
+const id = "winter";
+const description = "A crisp, cool, spacious layout with bright whites and clean structure.";
+const tags = [
+  ThemeTags.twoCol,
+  ThemeTags.headshot,
+  ThemeTags.lightMode,
+  ThemeTags.cool,
+  ThemeTags.resume
+];
 
 const html = { html: true };
 
@@ -14,7 +25,19 @@ export class WinterTheme extends Theme {
   }
 
   static get id() {
-    return "winter";
+    return id;
+  }
+
+  static get title() {
+    return;
+  }
+
+  static get description() {
+    return description;
+  }
+
+  static get tags() {
+    return tags;
   }
 
   renderJS(_: Person): Promise<string> {

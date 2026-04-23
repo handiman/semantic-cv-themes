@@ -20,6 +20,7 @@ export abstract class Theme {
    *           `<semantic-cv-theme-{id}>`.
    * @param loadAsset Function that loads a theme asset (CSS/JS) by name.
    *                  Implemented differently in CLI and Worker runtimes.
+   * @param title Optional human friendly theme title
    */
   constructor(
     public id: string,
@@ -61,7 +62,7 @@ export abstract class Theme {
 
 export default Theme;
 
-const titleify = (s: string) => initCaps(s).replaceAll("-", " ").replaceAll("_", " ").trim();
+export const titleify = (s: string) => initCaps(s).replaceAll("-", " ").replaceAll("_", " ").trim();
 
 const initCaps = (s: string) => {
   if (s.length) {

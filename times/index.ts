@@ -2,6 +2,18 @@ import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
+import { ThemeTags } from "../themeTags.js";
+
+const id = "times";
+const description =
+  "A playful newspaper‑inspired résumé with an editorial layout and a subtle sense of humor.";
+const tags = [
+  ThemeTags.twoCol,
+  ThemeTags.lightMode,
+  ThemeTags.editorial,
+  ThemeTags.typographyForward,
+  ThemeTags.playful
+];
 
 const html = { html: true };
 
@@ -14,7 +26,19 @@ export class TimesTheme extends Theme {
   }
 
   static get id() {
-    return "times";
+    return id;
+  }
+
+  static get title() {
+    return;
+  }
+
+  static get description() {
+    return description;
+  }
+
+  static get tags() {
+    return tags;
   }
 
   renderJS(_person: Person) {

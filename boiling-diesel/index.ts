@@ -1,7 +1,20 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
+import { ThemeTags } from "../themeTags.js";
 
+const id = "boiling-diesel";
+const title = "Boiling Diesel";
+const description =
+  "A bold, high‑contrast dark theme built for technical résumés that want a strong, confident presence.";
+const tags = [
+  ThemeTags.twoCol,
+  ThemeTags.resume,
+  ThemeTags.darkMode,
+  ThemeTags.highContrast,
+  ThemeTags.technical,
+  ThemeTags.bold
+];
 const html = { html: true };
 
 export class BoilingDieselTheme extends Theme {
@@ -13,7 +26,19 @@ export class BoilingDieselTheme extends Theme {
   }
 
   static get id() {
-    return "boiling-diesel";
+    return id;
+  }
+
+  static get title() {
+    return title;
+  }
+
+  static get description() {
+    return description;
+  }
+
+  static get tags() {
+    return tags;
   }
 
   renderJS(_person: any) {
