@@ -27,16 +27,9 @@ import { ThemeTag, ThemeTags } from "./themeTags.js";
 export const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
   [GnapTheme.id]: {
     type: GnapTheme,
-    title: "GNAP!",
-    description: "Smurf‑inspired black & white theme with splashes of green",
-    tags: [
-      ThemeTags.heroFullscreen,
-      ThemeTags.darkMode,
-      ThemeTags.monoChrome,
-      ThemeTags.accented,
-      ThemeTags.playful,
-      ThemeTags.bold
-    ]
+    title: GnapTheme.title,
+    description: GnapTheme.description,
+    tags: GnapTheme.tags
   },
   [HoldenWreckTheme.id]: {
     type: HoldenWreckTheme,
