@@ -1,6 +1,6 @@
 # Semantic CV - Free themes
 
-<img src="https://semantic.cv/img/semantikitten-artist.png" alt="Artistic Semantikitten" height="100" align="right" style="margin-left: 20px;" />
+<img src="https://assets.semantic.cv/semantikitten-artist.png" alt="Artistic Semantikitten" height="100" align="right" style="margin-left: 20px;" />
 
 This repository contains the public collection of **free themes** used by:
 
