@@ -1,0 +1,365 @@
+:root {
+  --parchment: #edede9;
+  --bone: #d6ccc2;
+  --linen: #f5ebe0;
+  --almond-cream: #e3d5ca;
+  --almond-silk: #d5bdaf;
+
+  --canvas: #f8f6f3;
+  --background: var(--parchment);
+  --background-alt: var(--bone);
+  --background-card: var(--linen);
+  --background-accent: var(--almond-cream);
+
+  --text-primary: #2f2c2a;
+  --text-secondary: #4a4745;
+  --link-color: #8a6f63;
+  --link-decoration-color: var(--almond-silk);
+  --heading-color: #6a5f58;
+
+  --accent-primary: var(--almond-silk);
+  --accent-secondary: var(--almond-cream);
+  --space-0: 15px;
+  --space-1: 30px;
+  --space-2: 60px;
+  --space-3: calc(var(--space-1) + var(--space-2));
+
+  --max-width: 1200px;
+  --aside-max-width: 400px;
+  --photo-max-width: 250px;
+}
+
+html,
+body {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  color: var(--text-color-primary);
+  background: var(--canvas);
+  font-family: "Noto Sans", sans-serif;
+  font-optical-sizing: auto;
+  font-weight: 300;
+  font-style: normal;
+  font-variation-settings: "wdth" 100;
+  letter-spacing: 0.1cap;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body > div {
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-areas:
+    "header"
+    "aside"
+    "main";
+}
+
+p {
+  margin-bottom: var(--space-0);
+}
+
+.page {
+  width: 100%;
+  max-width: var(--max-width);
+  background: var(--background);
+}
+
+.scv-footer a {
+  color: var(--text-primary);
+}
+
+ul,
+li,
+li:before,
+li:after {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+a,
+a:link,
+a:visited,
+a:active,
+a:hover {
+  color: var(--link-color);
+  text-decoration: none;
+  text-decoration-color: var(--link-decoration-color);
+}
+a:hover {
+  text-decoration: underline;
+}
+
+aside a {
+  color: var(--text-primary) !important;
+}
+aside a i {
+  margin-right: var(--space-0);
+  color: var(--link-color);
+}
+
+time {
+  font-size: 0.9rem;
+}
+
+/* HEADINGS */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Noto Sans Display", sans-serif;
+  font-weight: 500;
+  font-variant: small-caps;
+}
+
+h1 {
+  font-size: 3rem;
+  margin-bottom: var(--space-0);
+  text-align: center;
+}
+h2 {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-0);
+}
+h3 {
+  font-size: 2rem;
+  margin-bottom: calc(var(--space-0) / 2);
+}
+h4 {
+  font-size: 1.5rem;
+}
+h5,
+h6 {
+  font-size: 1rem;
+}
+
+h1,
+h2,
+h3,
+.caption {
+  font-variant: small-caps;
+  color: var(--heading-color);
+  letter-spacing: 0.05em;
+  font-weight: 500;
+}
+
+section h2,
+aside h2 {
+  padding-block: calc(var(--space-0) / 2);
+  padding-inline: var(--space-2);
+  margin: 0;
+  background: var(--background-accent);
+  border-left: 4px solid var(--accent-primary);
+  border-block: 2px solid var(--accent-primary);
+}
+
+.caption {
+  margin-bottom: calc(var(--space-0) / 2);
+}
+
+/* ------------------------------------------ */
+
+/* ARTICLE */
+
+article {
+  padding-inline: var(--space-2);
+  padding-block: var(--space-2) 0;
+}
+article:last-child {
+  padding-bottom: var(--space-2);
+}
+
+article ul li {
+  display: inline-block;
+  border-right: 1px solid var(--heading-color);
+  margin: 0 calc(var(--space-0) / 2) 0 0;
+  padding: 0 calc(var(--space-0) / 2) 0 0;
+}
+
+article ul li:last-child {
+  border: none;
+  margin: 0;
+  padding: 0;
+}
+
+/* ------------------------------------------ */
+
+/* HEADER */
+header {
+  background: var(--linen);
+  border-top: 2px solid var(--accent-secondary);
+  width: 100%;
+  grid-area: header;
+  display: grid;
+  grid-template-areas:
+    "photo"
+    "summary";
+}
+
+.summary {
+  width: 100%;
+  grid-area: summary;
+  justify-self: center;
+  padding-inline: var(--space-2);
+}
+
+.photo {
+  grid-area: photo;
+  max-width: var(--photo-max-width);
+  margin: 10px 0 0 0;
+  justify-self: center;
+  aspect-ratio: 4 / 5;
+  overflow: hidden;
+}
+
+.photo img {
+  display: block;
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border: 4px solid var(--heading-color);
+}
+
+/* ------------------------------------------ */
+
+/* ASIDE */
+
+aside {
+  width: 100%;
+  grid-area: aside;
+  background-color: var(--parchment);
+  padding: 0;
+}
+
+aside ul {
+  margin-inline: var(--space-2);
+  margin-block: var(--space-1) var(--space-2);
+}
+aside {
+  border-top: 2px solid var(--accent-primary);
+}
+/* ------------------------------------------ */
+
+/* MAIN */
+main {
+  grid-area: main;
+}
+
+main {
+  width: 100%;
+}
+
+/* ------------------------------------------ */
+
+@media (min-width: 800px) {
+  body > div {
+    grid-template-columns: calc(var(--max-width) - var(--aside-max-width)) var(--aside-max-width);
+    grid-template-areas:
+      "header header"
+      "main aside";
+  }
+  .page {
+    margin: var(--space-0) auto;
+    box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
+  }
+  main {
+    max-width: calc(var(--max-width) - var(--aside-max-width));
+  }
+  h1 {
+    text-align: left;
+  }
+  header {
+    padding: 0;
+    max-width: var(--max-width);
+    grid-template-columns: calc(var(--max-width) - var(--aside-max-width)) var(--aside-max-width);
+    grid-template-areas: "summary photo";
+  }
+  .summary {
+    justify-self: left;
+    align-content: center;
+  }
+  .photo {
+    position: relative;
+    top: var(--space-2);
+  }
+  aside {
+    background-color: var(--bone);
+    min-height: 90vh;
+    padding-top: var(--space-3);
+    max-width: var(--aside-max-width);
+    padding-inline: 0;
+  }
+  aside h2 {
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 1.25;
+    background-color: transparent;
+    color: var(--text-secondary);
+    margin: var(--space-1) 0 var(--space-0);
+    padding-inline: var(--space-1);
+    padding-bottom: calc(var(--space-0) / 2);
+    border: 0;
+    border-bottom: 1px solid var(--almond-silk);
+  }
+  aside ul {
+    margin-top: calc(var(--space-0) / 2);
+    margin-inline: var(--space-1);
+  }
+}
+
+@media print {
+  header,
+  aside,
+  main,
+  article,
+  h1,
+  h2,
+  h3,
+  p,
+  ul,
+  .summary {
+    border: none !important;
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  header,
+  section,
+  article {
+    padding-block: var(--space-0) !important;
+  }
+  .job-title {
+    text-align: center;
+  }
+  p {
+    padding-block: var(--space-0) 0 !important;
+  }
+  li {
+    display: inline-block;
+    padding: 0;
+    margin: 0;
+  }
+  li::after {
+    content: ",";
+    margin-right: 0.5cap;
+  }
+  li:last-child::after {
+    content: "";
+    margin: 0;
+  }
+  a i {
+    margin: 0;
+    padding: 0;
+    margin-right: 0.5cap !important;
+  }
+}
