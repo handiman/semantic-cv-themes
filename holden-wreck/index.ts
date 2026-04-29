@@ -20,7 +20,7 @@ const tags = [
 export class HoldenWreckTheme extends Theme {
   private base: BoilingDieselTheme;
   constructor(transformer: HTMLTransformer, loadAsset: (_: string) => Promise<string>) {
-    super(HoldenWreckTheme.id, loadAsset);
+    super(id, loadAsset, title, description);
     this.base = new BoilingDieselTheme(transformer, loadAsset);
   }
 

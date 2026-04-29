@@ -25,7 +25,8 @@ export abstract class Theme {
   constructor(
     public id: string,
     private loadAsset: (assetName: string) => Promise<string>,
-    public title: string = titleify(id)
+    public title: string = titleify(id),
+    public description: string = ""
   ) {}
 
   /**

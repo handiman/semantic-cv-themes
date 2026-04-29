@@ -23,7 +23,7 @@ export class GnapTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(id, loadAsset, title);
+    super(id, loadAsset, title, description);
   }
 
   static get id() {

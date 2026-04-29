@@ -1,4 +1,4 @@
-import { Theme } from "../theme.js";
+import { Theme, titleify } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
@@ -21,7 +21,7 @@ export class WinterTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(WinterTheme.id, loadAsset);
+    super(WinterTheme.id, loadAsset, titleify(id), description);
   }
 
   static get id() {
