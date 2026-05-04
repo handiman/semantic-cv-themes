@@ -19,7 +19,7 @@ const toThemeName = (slug) => {
   );
 };
 
-const ignoredDirectories = ["node_modules", "dist", "scripts"];
+const ignoredDirectories = ["node_modules", "dist", "scripts", "test"];
 const entries = await readdir(themesPath, { withFileTypes: true });
 const themes = [];
 for (const entry of entries) {
