@@ -241,3 +241,17 @@ main > header {
     padding-left: var(--space-1);
   }
 }
+
+.scv-footer {
+  margin-bottom: var(--space-1);
+}
+@media print {
+  aside,
+  main {
+    border-bottom: none;
+  }
+
+  .scv-footer {
+    margin-block: var(--space-1);
+  }
+}

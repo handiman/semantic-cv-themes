@@ -98,7 +98,7 @@ export class GnapTheme extends Theme {
                     </div>
                 </section>                    
             </article>
-            <footer class="grey darken-4 white-text">
+            <footer class="grey darken-4 white-text no-print">
                 <div class="container">
                 </div>
             </footer>

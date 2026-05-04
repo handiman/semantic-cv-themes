@@ -179,3 +179,10 @@ time:last-child::after {
     grid-area: right;
   }
 }
+
+@media print {
+  main,
+  aside {
+    margin-block: 0;
+  }
+}

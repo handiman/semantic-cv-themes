@@ -33,6 +33,7 @@ body {
   margin: 0;
   padding: 0;
   color: var(--text-color);
+  background-color: white;
 }
 
 *,
@@ -200,4 +201,7 @@ header img {
     display: grid;
     grid-template-columns: repeat(auto-fill, 50%);
   }
+}
+.scv-footer {
+  margin-top: 1rem;
 }
