@@ -230,3 +230,7 @@ ul.inline li:first-child {
     display: none;
   }
 }
+
+.scv-footer, .scv-footer * {
+  color: var(--black) !important;
+}

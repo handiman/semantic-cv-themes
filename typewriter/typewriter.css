@@ -52,3 +52,13 @@ h3 {
 
   line-height: 1.6;
 }
+.scv-footer {
+  margin-top: 2rem;
+}
+
+@media print {
+  .paper {
+    border: none;
+    box-shadow: none;
+  }
+}
