@@ -46,8 +46,8 @@ export class HoldenWreckTheme extends Theme {
 
   async renderCSS(person: Person): Promise<string> {
     const css = await this.base.renderCSS(person);
-    return css.replace(
-      /:root\s*\{[\s\S]*?\}/,
+    return (
+      css +
       `:root {
         --header-color: #6b5a3a;
         --text-color: #2f3a2e;

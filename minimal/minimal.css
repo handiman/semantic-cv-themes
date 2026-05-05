@@ -18,20 +18,12 @@
   --color-section-bg: #f7f7f7;
 
   --space: 10px;
-}
 
-html {
-  font-family:
-    system-ui,
-    -apple-system,
-    "Segoe UI",
-    Roboto,
-    sans-serif;
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  background-color: var(--color-bg);
-  color: var(--color-text);
+  /* Overrides reset. Refactor variable names some day (tm) for consistency. */
+  --spacing-base: var(--space);
+  --text-color: var(--color-text);
+  --background-color: var(--color-bg);
+  --link-color: inherit;
 }
 
 body {
@@ -39,21 +31,6 @@ body {
   flex-direction: column;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: inherit;
-  margin: inherit;
-  padding: inherit;
-}
-
-ul,
-li,
-li:before {
-  list-style: none;
-  margin: 0;
-  padding: 0;
-}
 section {
   margin-block: calc(var(--space) * 3);
 }
@@ -75,20 +52,6 @@ h2 {
 h3 {
   padding-top: var(space);
 }
-a,
-a:link,
-a:active,
-a:visited,
-a:hover {
-  text-decoration: none;
-  color: var(--color-primary);
-}
-a:visisted {
-  color: var(--color-primary-dark);
-}
-a:hover {
-  text-decoration: underline;
-}
 
 img {
   width: 240px;
@@ -102,6 +65,7 @@ img {
 .wrapper {
   max-width: 960px;
   margin: 0 auto;
+  padding: calc(var(--space) * 2);
 }
 aside main {
   margin: calc(var(--space) * 2);
@@ -129,7 +93,7 @@ a:link,
 a:active,
 a:visited,
 a:hover {
-  color: var(--color-text);
+  color: var(--link-color);
 }
 
 time::after {

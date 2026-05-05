@@ -2,26 +2,8 @@
   --text-color: #111;
   --text-color-muted: #444;
   --border-color: #ddd;
-}
-html {
-  font-family: "Times New Roman", Times, serif;
-  box-sizing: border-box;
-}
-body {
-  background-color: white;
-}
-
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-}
-
-ul,
-li {
-  list-style: none;
-  padding: 0 !important;
-  margin: 0 !important;
+  --background-color: white;
+  --font-family-base: "Times New Roman", Times, serif;
 }
 
 main > div {
@@ -87,13 +69,17 @@ header li,
   display: inline;
   margin-left: 0.5rem;
 }
+.caption li:first-child {
+  margin-left: 0;
+}
 header a {
   text-decoration: none;
-  color: var(--text-color);
+  color: var(--text-color) !important;
 }
 
 p {
   font-size: 1.1rem;
+  margin-top: 1rem;
 }
 
 .hr {
@@ -122,8 +108,10 @@ h1 small,
 h2.pirata-one-regular {
   display: block;
   font-size: 2.5rem;
+  margin-top: 1.5rem;
 }
 h2,
 h3 {
   font-size: 1.5rem;
+  margin-top: 1.5rem;
 }
