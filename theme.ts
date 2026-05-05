@@ -86,13 +86,19 @@ const withResetCSS = (themeCss: string) => `
   --border-radius-base: 4px;
 }  
 html, body, *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { font-size: var(--font-size-base); font-family: var(--font-family-base); color: var(--text-color); background-color: var(--background-color); }
+html, body { width: 100%; min-height: 100vh; font-size: var(--font-size-base); font-family: var(--font-family-base); color: var(--text-color); background-color: var(--background-color); }
 a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decoration: none; }
 a:hover { text-decoration: underline; }
 ul, ol, li, li:before, li:after {   list-style: none; margin: 0; padding: 0; }
-.page { display: grid; grid-template-columns: auto; grid-template-areas: "header" "aside" "main"; } .page header { grid-area: "header"; }
-aside { grid-area: "aside"; }
-main { grid-area: "main"; }
+.page { display: grid; grid-template-columns: auto; grid-template-areas: 
+  "header" 
+  "aside" 
+  "main"
+  "footer"; 
+} 
+.page header { grid-area: header; }
+aside { grid-area: aside; }
+main { grid-area: main; }
 .scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
 .print { display: none; }
 .no-print { display: reset; }

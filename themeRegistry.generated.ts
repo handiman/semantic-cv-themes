@@ -1,5 +1,6 @@
 import { ThemeRegistryEntry } from "./themeRegistryEntry.js";
 import { titleify } from "./theme.js";
+import { AliceTheme } from "./alice/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
@@ -10,6 +11,12 @@ import { TimesTheme } from "./times/index.js";
 import { TypewriterTheme } from "./typewriter/index.js";
 import { WinterTheme } from "./winter/index.js";
 const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
+  [AliceTheme.id]: {
+    type: AliceTheme,
+    title: AliceTheme.title ?? titleify(AliceTheme.id),
+    description: AliceTheme.description,
+    tags: AliceTheme.tags
+  },
   [BoilingDieselTheme.id]: {
     type: BoilingDieselTheme,
     title: BoilingDieselTheme.title ?? titleify(BoilingDieselTheme.id),
