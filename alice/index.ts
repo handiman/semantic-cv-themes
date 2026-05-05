@@ -15,19 +15,6 @@ const tags = [
   ThemeTags.resume
 ];
 const html = { html: true };
-const options = {
-  headings: {
-    description: "Summary",
-    knowsLanguage: "Languages",
-    knowsAbout: "Core Competencies",
-    skills: "Skills",
-    certifications: "Certifications",
-    worksFor: "Work Experience",
-    alumniOf: "Education",
-    projects: "Projects",
-    lifeEvent: "Events"
-  }
-};
 
 export class AliceTheme extends Theme {
   constructor(
@@ -56,7 +43,7 @@ export class AliceTheme extends Theme {
   async renderHTML(person: Person): Promise<string> {
     const { name, jobTitle, description, image, knowsAbout, knowsLanguage, skills } = person;
     const { transformer } = this;
-    const { headings } = options;
+    const { headings } = this.options;
     const certs = certifications(person);
     const proj = projects(person);
     const worksFor = work(person);

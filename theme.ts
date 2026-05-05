@@ -1,4 +1,5 @@
 import { Person } from "./person.js";
+import { defaultOptions, ThemeOptions } from "./themeOptions.js";
 
 /**
  * Base class for all Semantic‑CV themes.
@@ -21,12 +22,14 @@ export abstract class Theme {
    * @param loadAsset Function that loads a theme asset (CSS/JS) by name.
    *                  Implemented differently in CLI and Worker runtimes.
    * @param title Optional human friendly theme title
+   * @param options Theme options such as headings. Custom values require a subscription. (or forking the repo and building your own implementation for the creative ones out there)
    */
   constructor(
     public id: string,
     private loadAsset: (assetName: string) => Promise<string>,
     public title: string = titleify(id),
-    public description: string = ""
+    public description: string = "",
+    protected options: ThemeOptions = defaultOptions
   ) {}
 
   /**
@@ -86,19 +89,13 @@ const withResetCSS = (themeCss: string) => `
   --border-radius-base: 4px;
 }  
 html, body, *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html, body { width: 100%; min-height: 100vh; font-size: var(--font-size-base); font-family: var(--font-family-base); color: var(--text-color); background-color: var(--background-color); }
+html, body { font-size: var(--font-size-base); font-family: var(--font-family-base); color: var(--text-color); background-color: var(--background-color); }
 a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decoration: none; }
 a:hover { text-decoration: underline; }
 ul, ol, li, li:before, li:after {   list-style: none; margin: 0; padding: 0; }
-.page { display: grid; grid-template-columns: auto; grid-template-areas: 
-  "header" 
-  "aside" 
-  "main"
-  "footer"; 
-} 
-.page header { grid-area: header; }
-aside { grid-area: aside; }
-main { grid-area: main; }
+.page { display: grid; grid-template-columns: auto; grid-template-areas: "header" "aside" "main"; } .page header { grid-area: "header"; }
+aside { grid-area: "aside"; }
+main { grid-area: "main"; }
 .scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
 .print { display: none; }
 .no-print { display: reset; }

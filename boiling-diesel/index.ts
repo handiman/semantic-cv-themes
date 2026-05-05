@@ -2,6 +2,7 @@ import { Theme, titleify } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeOptions } from "#themes/themeOptions.js";
 
 const id = "boiling-diesel";
 const title = "Boiling Diesel";
@@ -46,7 +47,8 @@ export class BoilingDieselTheme extends Theme {
   }
 
   async renderHTML(person: Person): Promise<string> {
-    const { transformer } = this;
+    const { transformer, options } = this;
+
     transformer
       .on("head", {
         element(head: any) {
@@ -98,11 +100,11 @@ export class BoilingDieselTheme extends Theme {
         }
       });
 
-    renderSummary(transformer, person);
-    renderProjects(transformer, person);
-    renderWork(transformer, person);
-    renderEducation(transformer, person);
-    renderLifeEvents(transformer, person);
+    renderSummary(transformer, person, options);
+    renderProjects(transformer, person, options);
+    renderWork(transformer, person, options);
+    renderEducation(transformer, person, options);
+    renderLifeEvents(transformer, person, options);
 
     return await transformer.transform(`
       <div class="wrapper">
@@ -123,34 +125,37 @@ export class BoilingDieselTheme extends Theme {
   }
 }
 
-const renderProjects = (transformer: HTMLTransformer, person: any) => {
+const renderProjects = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
+  const { headings } = options;
   transformer.on("main", {
     element(main: any) {
       const proj = projects(person);
       if (proj && proj.length) {
-        main.append(renderRoles("Featured Projects", proj), html);
+        main.append(renderRoles(headings.projects, proj), html);
       }
     }
   });
 };
 
-const renderWork = (transformer: HTMLTransformer, person: any) => {
+const renderWork = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
+  const { headings } = options;
   transformer.on("main", {
     element(main: any) {
       const worksFor = work(person);
       if (worksFor && worksFor.length) {
-        main.append(renderRoles("Professional Experience", worksFor), html);
+        main.append(renderRoles(headings.worksFor, worksFor), html);
       }
     }
   });
 };
 
-const renderEducation = (transformer: HTMLTransformer, person: any) => {
+const renderEducation = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
+  const { headings } = options;
   transformer.on("main", {
     element(main: any) {
       const alumniOf = education(person);
       if (alumniOf && alumniOf.length) {
-        main.append(renderRoles("Education", alumniOf), html);
+        main.append(renderRoles(headings.alumniOf, alumniOf), html);
       }
     }
   });
@@ -190,7 +195,8 @@ const renderRole = (role: any) => {
   `;
 };
 
-const renderLifeEvents = (transformer: HTMLTransformer, person: any) => {
+const renderLifeEvents = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
+  const { headings } = options;
   transformer.on("main", {
     element(main: any) {
       const { lifeEvent } = person;
@@ -198,7 +204,7 @@ const renderLifeEvents = (transformer: HTMLTransformer, person: any) => {
         main.append(
           `
           <section>
-            <h2>Life Events</h2>
+            <h2>${headings.lifeEvent}</h2>
             ${lifeEvent
               .map(
                 (e: any) => `
@@ -217,17 +223,17 @@ const renderLifeEvents = (transformer: HTMLTransformer, person: any) => {
   });
 };
 
-const renderSummary = (transformer: HTMLTransformer, person: any) => {
+const renderSummary = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
   transformer.on("main", {
     element(main: any) {
       main.append(
         `
         <section>
           <div class="grid">
-            ${renderKnowsAbout(person)}
-            ${renderSkills(person)}
-            ${renderLanguages(person)}
-            ${renderCerts(person)}
+            ${renderKnowsAbout(person, options)}
+            ${renderSkills(person, options)}
+            ${renderLanguages(person, options)}
+            ${renderCerts(person, options)}
           </div>
         </section>
         `,
@@ -237,12 +243,13 @@ const renderSummary = (transformer: HTMLTransformer, person: any) => {
   });
 };
 
-const renderKnowsAbout = (person: any) => {
+const renderKnowsAbout = (person: any, options: ThemeOptions) => {
   const { knowsAbout } = person;
-  if (knowsAbout && knowsAbout.language) {
+  const { headings } = options;
+  if (knowsAbout && knowsAbout.length) {
     return `
       <div>
-        <h3>Core Competencies</h3>
+        <h3>${headings.knowsAbout}</h3>
         <ul>${knowsAbout.map((thing: string) => `<li>${thing}</li>`).join("")}</ul>
       </div>
     `;
@@ -250,12 +257,13 @@ const renderKnowsAbout = (person: any) => {
   return "";
 };
 
-const renderSkills = (person: any) => {
+const renderSkills = (person: any, options: ThemeOptions) => {
   const { skills } = person;
-  if (skills && skills.length > 0) {
+  const { headings } = options;
+  if (skills && skills.length) {
     return `
       <div>
-        <h3>Tech Skills</h3>
+        <h3>${headings.skills}</h3>
         <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("")}</ul>
       </div>
     `;
@@ -263,12 +271,13 @@ const renderSkills = (person: any) => {
   return "";
 };
 
-const renderLanguages = (person: any) => {
+const renderLanguages = (person: any, options: ThemeOptions) => {
   const { knowsLanguage } = person;
-  if (knowsLanguage && knowsLanguage.length > 0) {
+  const { headings } = options;
+  if (knowsLanguage && knowsLanguage.length) {
     return `
       <div>
-        <h3>Languages</h3>
+        <h3>${headings.knowsLanguage}</h3>
         <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}</ul>
       </div>
     `;
@@ -276,12 +285,13 @@ const renderLanguages = (person: any) => {
   return "";
 };
 
-const renderCerts = (person: any) => {
+const renderCerts = (person: any, options: ThemeOptions) => {
   const certs = certifications(person);
-  if (certs && certs.length > 0) {
+  const { headings } = options;
+  if (certs && certs.length) {
     return `
       <div>
-        <h3>Certifications</h3>
+        <h3>${headings.certifications}</h3>
         <ul>${certs.map((certs: any) => `<li>${certs.name}</li>`).join("")}</ul>
       </div>
     `;

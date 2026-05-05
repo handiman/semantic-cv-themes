@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeOptions } from "#themes/themeOptions.js";
 
 const id = "winter";
 const description = "A crisp, cool, spacious layout with bright whites and clean structure.";
@@ -45,7 +46,7 @@ export class WinterTheme extends Theme {
   }
 
   renderHTML(person: Person): Promise<string> {
-    const { transformer } = this;
+    const { transformer, options } = this;
 
     transformer.on("head", {
       element(head: any) {
@@ -64,12 +65,12 @@ export class WinterTheme extends Theme {
 
     transformer.on("main", {
       element(main: any) {
-        main.append(renderBasics(person), html);
-        main.append(renderProjects(person), html);
-        main.append(renderWork(person), html);
-        main.append(renderEducation(person), html);
-        main.append(renderLifeEvents(person), html);
-        main.append(renderFooter(person), html);
+        main.append(renderBasics(person, options), html);
+        main.append(renderProjects(person, options), html);
+        main.append(renderWork(person, options), html);
+        main.append(renderEducation(person, options), html);
+        main.append(renderLifeEvents(person, options), html);
+        main.append(renderFooter(person, options), html);
       }
     });
 
@@ -119,19 +120,20 @@ const renderHeader = (person: Person) => {
   `;
 };
 
-const renderBasics = (person: Person) => {
+const renderBasics = (person: Person, options: ThemeOptions) => {
   const { description, knowsAbout, skills, knowsLanguage } = person;
+  const { headings } = options;
   const certs = certifications(person);
   return `
     <section>
-      <h2>Professional Summary</h2>
+      <h2>${headings.description}</h2>
       ${description ? `<p>${description}</p>` : ""}
       <div class="grid">
       ${
         knowsAbout && knowsAbout.length
           ? `
         <section>
-          <h2>Core Compentencies</h2>
+          <h2>${headings.knowsAbout}</h2>
           <ul>${knowsAbout.map((area: string) => `<li>${area}</li>`).join("\n")}</ul>        
         </section>
       `
@@ -141,7 +143,7 @@ const renderBasics = (person: Person) => {
         skills && skills.length
           ? `
         <section>
-          <h2>Technical Skills</h2>
+          <h2>${headings.skills}</h2>
           <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("\n")}</ul>        
         </section>
         `
@@ -151,7 +153,7 @@ const renderBasics = (person: Person) => {
         knowsLanguage && knowsLanguage.length
           ? `
         <section>
-          <h2>Languages</h2>
+          <h2>${headings.knowsLanguage}</h2>
           <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("\n")}</ul>
         </section>
          `
@@ -161,7 +163,7 @@ const renderBasics = (person: Person) => {
         certs && certs.length
           ? `
         <section>
-          <h2>Certifications</h2>
+          <h2>${headings.certifications}</h2>
           <ul>${certs.map((cert: any) => `<li>${cert.name}</li>`).join("\n")}</ul>
         </section>
         `
@@ -172,11 +174,14 @@ const renderBasics = (person: Person) => {
   `;
 };
 
-const renderWork = (person: Person) => renderRoles("Professional Experience", work(person));
+const renderWork = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.worksFor, work(person));
 
-const renderEducation = (person: Person) => renderRoles("Education", education(person));
+const renderEducation = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.alumniOf, education(person));
 
-const renderProjects = (person: Person) => renderRoles("Projects", projects(person));
+const renderProjects = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.projects, projects(person));
 
 const renderRoles = (heading: string, roles: Array<any>) => {
   return roles && roles.length
@@ -219,12 +224,13 @@ const renderRole = (role: any) => {
 `;
 };
 
-const renderLifeEvents = (person: Person) => {
+const renderLifeEvents = (person: Person, options: ThemeOptions) => {
   const { lifeEvent } = person;
+  const { headings } = options;
   return lifeEvent && lifeEvent.length
     ? `
       <section>
-        <h2>Life Events</h2>
+        <h2>${headings.lifeEvent}</h2>
         <div>
             ${lifeEvent
               .map(

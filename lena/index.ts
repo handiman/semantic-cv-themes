@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education, period } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeOptions } from "#themes/themeOptions.js";
 
 const id = "lena";
 const description =
@@ -42,7 +43,8 @@ export class LenaTheme extends Theme {
   }
 
   async renderHTML(person: Person): Promise<string> {
-    const { transformer } = this;
+    const { transformer, options } = this;
+    const { headings } = options;
 
     transformer.on("head", {
       element(head: any) {
@@ -66,20 +68,20 @@ export class LenaTheme extends Theme {
 
     transformer.on("main", {
       element(main: any) {
-        main.append(renderRoles("Featured projects", projects(person)), html);
-        main.append(renderRoles("Professional experience", work(person)), html);
-        main.append(renderRoles("Education", education(person)), html);
-        main.append(renderLifeEvents(person), html);
+        main.append(renderRoles(headings.projects, projects(person)), html);
+        main.append(renderRoles(headings.worksFor, work(person)), html);
+        main.append(renderRoles(headings.alumniOf, education(person)), html);
+        main.append(renderLifeEvents(person, options), html);
       }
     });
 
     transformer.on("aside", {
       element(aside: any) {
-        aside.append(renderContact(person), html);
-        aside.append(renderKnowsAbout(person), html);
-        aside.append(renderSkills(person), html);
-        aside.append(renderLanguages(person), html);
-        aside.append(renderCertifications(person), html);
+        aside.append(renderContact(person, options), html);
+        aside.append(renderKnowsAbout(person, options), html);
+        aside.append(renderSkills(person, options), html);
+        aside.append(renderLanguages(person, options), html);
+        aside.append(renderCertifications(person, options), html);
       }
     });
 
@@ -147,12 +149,13 @@ const renderHeader = (header: any, person: Person) => {
   );
 };
 
-const renderLifeEvents = (person: any) => {
+const renderLifeEvents = (person: any, options: ThemeOptions) => {
   const { lifeEvent } = person;
+  const { headings } = options;
   return lifeEvent && lifeEvent.length
     ? `
     <section>
-      <h2>Life events</h2>
+      <h2>${headings.lifeEvent}</h2>
       ${lifeEvent.map(renderLifeEvent).join("")}
     </section>
     `
@@ -174,8 +177,9 @@ const renderLifeEvent = (event: any) => {
   `;
 };
 
-const renderContact = (person: any) => {
+const renderContact = (person: any, options: ThemeOptions) => {
   const { email, telephone, url, sameAs } = person;
+  const { headings } = options;
   const links = normalizeArray(
     sameAs,
     url,
@@ -193,55 +197,59 @@ const renderContact = (person: any) => {
   return links && links.length
     ? `
       <section>
-        <h2>Contact Details</h2>
+        <h2>${headings.contact}</h2>
         <ul>${links.map((link: string) => `<li><a href="${link}" title="${link}">${iconFactory.faIcon(link)}<span>${linkText(link)}</span></a></li>`).join("")}</ul>
       </section>
         `
     : "";
 };
 
-const renderKnowsAbout = (person: any) => {
+const renderKnowsAbout = (person: any, options: ThemeOptions) => {
   const { knowsAbout } = person;
+  const { headings } = options;
   return knowsAbout && knowsAbout.length
     ? `
     <section>
-      <h2>Core Competencies</h2>
+      <h2>${headings.knowsAbout}</h2>
       <ul>${knowsAbout.map((area: string) => `<li>${area}</li>`).join("")}</ul>
     </section>
   `
     : "";
 };
 
-const renderSkills = (person: any) => {
+const renderSkills = (person: any, options: ThemeOptions) => {
   const { skills } = person;
+  const { headings } = options;
   return skills && skills.length
     ? `
     <section>
-      <h2>Skills</h2>
+      <h2>${headings.skills}</h2>
       <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("")}</ul>
     </section>
     `
     : "";
 };
 
-const renderLanguages = (person: any) => {
+const renderLanguages = (person: any, options: ThemeOptions) => {
   const { knowsLanguage } = person;
+  const { headings } = options;
   return knowsLanguage && knowsLanguage.length
     ? `
     <section>
-      <h2>Languages</h2>
+      <h2>${headings.knowsLanguage}</h2>
       <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}</ul>
     </section>
     `
     : "";
 };
 
-const renderCertifications = (person: any) => {
+const renderCertifications = (person: any, options: ThemeOptions) => {
   const certs = certifications(person);
+  const { headings } = options;
   return certs && certs.length
     ? `
     <section>
-      <h2>Certifications</h2>
+      <h2>${headings.certifications}</h2>
       <ul>${certs.map((cert: any) => `<li>${cert.name}</li>`).join("")}</ul>
     </section>
     `

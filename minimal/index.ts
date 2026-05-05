@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeOptions } from "#themes/themeOptions.js";
 
 const id = "minimal";
 const description =
@@ -42,8 +43,9 @@ export class MinimalTheme extends Theme {
   }
 
   async renderHTML(person: Person): Promise<string> {
-    const { transformer } = this;
+    const { transformer, options } = this;
     const iconFactory = new FaIconFactory(person);
+    const { headings } = options;
     const {
       image,
       name,
@@ -83,7 +85,7 @@ export class MinimalTheme extends Theme {
             aside.append(
               `
                 <section>
-                  <h2>Core Competencies</h2>
+                  <h2>${headings.knowsAbout}</h2>
                   <ul>${knowsAbout.map((thing: string) => `<li>${thing}</li>`).join("")}</ul>
                 </section>
               `,
@@ -94,7 +96,7 @@ export class MinimalTheme extends Theme {
             aside.append(
               `
                 <section>
-                  <h2>Tech Skills</h2>
+                  <h2>${headings.skills}</h2>
                   <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("")}</ul>
                 </section>
               `,
@@ -105,7 +107,7 @@ export class MinimalTheme extends Theme {
             aside.append(
               `
                 <section>
-                  <h2>Certifications</h2>
+                  <h2>${headings.certifications}</h2>
                   <ul>${certs.map((cert: any) => `<li>${cert.name}</li>`).join("")}</ul>
                 </section>
               `,
@@ -116,7 +118,7 @@ export class MinimalTheme extends Theme {
             aside.append(
               `
                 <section>
-                  <h2>Languages</h2>
+                  <h2>${headings.knowsLanguage}</h2>
                   <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}</ul>
                 </section>
               `,
@@ -137,9 +139,9 @@ export class MinimalTheme extends Theme {
                 ${description ? `<div>${description}</div>` : ""}
                 ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}</a></li>`).join("\n")}</ul>` : ""}
             </header>
-            ${renderProjects(person)}
-            ${renderWork(person)}
-            ${renderEducation(person)}
+            ${renderProjects(person, options)}
+            ${renderWork(person, options)}
+            ${renderEducation(person, options)}
           `,
           html
         );
@@ -148,7 +150,7 @@ export class MinimalTheme extends Theme {
           main.append(
             `
               <section>
-                <h2>Life Events</h2>
+                <h2>${headings.lifeEvent}</h2>
                 <ul>
                 ${lifeEvent
                   .map(
@@ -192,12 +194,14 @@ export class MinimalTheme extends Theme {
   }
 }
 
-const renderProjects = (person: Person) => renderRoles("Projects", "projects", projects(person));
+const renderProjects = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.projects, "projects", projects(person));
 
-const renderWork = (person: Person) => renderRoles("Professional Experience", "work", work(person));
+const renderWork = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.worksFor, "work", work(person));
 
-const renderEducation = (person: Person) =>
-  renderRoles("Education", "education", education(person));
+const renderEducation = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.alumniOf, "education", education(person));
 
 const renderRoles = (heading: string, className: string, roles: Array<any>) => {
   return roles && roles.length
