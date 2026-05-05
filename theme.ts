@@ -45,8 +45,8 @@ export abstract class Theme {
    * @param person Normalized JSON‑LD Person object.
    * @returns Promise resolving to a CSS string.
    */
-  renderCSS(_person: Person) {
-    return this.loadAsset(`${this.id}.css`);
+  async renderCSS(_person: Person) {
+    return withResetCSS(await this.loadAsset(`${this.id}.css`));
   }
 
   /**
@@ -71,3 +71,31 @@ const initCaps = (s: string) => {
   }
   return s;
 };
+
+const withResetCSS = (themeCss: string) => `
+:root {
+  --text-color: #222;
+  --background-color: #fff;
+  --accent-color: #007aff;
+  --link-color: #007aff;
+
+  --font-size-base: 16px;
+  --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+
+  --spacing-base: 1rem;
+  --border-radius-base: 4px;
+}  
+html, body, *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { font-size: var(--font-size-base); font-family: var(--font-family-base); color: var(--text-color); background-color: var(--background-color); }
+a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decoration: none; }
+a:hover { text-decoration: underline; }
+ul, ol, li, li:before, li:after {   list-style: none; margin: 0; padding: 0; }
+.page { display: grid; grid-template-columns: auto; grid-template-areas: "header" "aside" "main"; } .page header { grid-area: "header"; }
+aside { grid-area: "aside"; }
+main { grid-area: "main"; }
+.scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
+.print { display: none; }
+.no-print { display: reset; }
+@media print { .print { display: reset; } .no-print { display: none; }}
+${themeCss}    
+`;

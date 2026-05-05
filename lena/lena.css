@@ -31,9 +31,6 @@
 
 html,
 body {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
   color: var(--text-color-primary);
   background: var(--canvas);
   font-family: "Noto Sans", sans-serif;
@@ -44,23 +41,6 @@ body {
   letter-spacing: 0.1cap;
 }
 
-*,
-*::before,
-*::after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-}
-
-body > div {
-  display: grid;
-  grid-template-columns: auto;
-  grid-template-areas:
-    "header"
-    "aside"
-    "main";
-}
-
 p {
   margin-bottom: var(--space-0);
 }
@@ -69,19 +49,6 @@ p {
   width: 100%;
   max-width: var(--max-width);
   background: var(--background);
-}
-
-.scv-footer a {
-  color: var(--text-primary);
-}
-
-ul,
-li,
-li:before,
-li:after {
-  list-style: none;
-  margin: 0;
-  padding: 0;
 }
 
 a,
@@ -253,23 +220,17 @@ aside {
 
 /* MAIN */
 main {
-  grid-area: main;
-}
-
-main {
   width: 100%;
 }
 
 /* ------------------------------------------ */
 
 @media (min-width: 800px) {
-  body > div {
+  .page {
     grid-template-columns: calc(var(--max-width) - var(--aside-max-width)) var(--aside-max-width);
     grid-template-areas:
       "header header"
       "main aside";
-  }
-  .page {
     margin: var(--space-0) auto;
     box-shadow: 0 0 40px rgba(0, 0, 0, 0.1);
   }
