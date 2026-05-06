@@ -5,13 +5,13 @@ import Person, { projects, certifications, work, education, period } from "../pe
 import { ThemeTags } from "../themeTags.js";
 
 const id = "alice";
-const description = "Modern, responsive theme.";
+const description = "A bright, balanced two‑column theme with crisp typography, gentle contrast, and a confident, approachable rhythm.";
 const tags = [
   ThemeTags.twoCol,
-  ThemeTags.headshot,
-  ThemeTags.darkMode,
-  ThemeTags.wide,
-  ThemeTags.photo,
+  ThemeTags.neutral,
+  ThemeTags.lightMode,
+  ThemeTags.typographyForward,
+  ThemeTags.minimal,
   ThemeTags.resume
 ];
 const html = { html: true };
