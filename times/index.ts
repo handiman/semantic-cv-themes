@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeOptions } from "../themeOptions.js";
 
 const id = "times";
 const description =
@@ -46,7 +47,7 @@ export class TimesTheme extends Theme {
   }
 
   renderHTML(person: Person): Promise<string> {
-    const { transformer } = this;
+    const { transformer, options } = this;
     const iconFactory = new FaIconFactory(person);
     const renderSocial = () => {
       const { sameAs, url, email, telephone } = person;
@@ -95,11 +96,11 @@ export class TimesTheme extends Theme {
     transformer.on("main div", {
       element(el: any) {
         el.append(renderHeader(), html);
-        el.append(renderBasics(person), html);
-        el.append(renderProjects(person), html);
-        el.append(renderWork(person), html);
-        el.append(renderEducation(person), html);
-        el.append(renderLifeEvents(person), html);
+        el.append(renderBasics(person, options), html);
+        el.append(renderProjects(person, options), html);
+        el.append(renderWork(person, options), html);
+        el.append(renderEducation(person, options), html);
+        el.append(renderLifeEvents(person, options), html);
       }
     });
 
@@ -107,76 +108,83 @@ export class TimesTheme extends Theme {
   }
 }
 
-const renderBasics = (person: Person) => {
+const renderBasics = (person: Person, options: ThemeOptions) => {
   const { description } = person;
+  const { headings } = options;
   return `
     <section>
-        <h2 class="pirata-one-regular">Professional Summary</h2>
+        <h2 class="pirata-one-regular">${headings.description}</h2>
         ${description ? `<p>${description}</p>` : ""}
     </section>
     <section id="basics">
-        ${renderKnowsAbout(person)}
-        ${renderSkills(person)}
-        ${renderLanguages(person)}
-        ${renderCerts(person)}
+        ${renderKnowsAbout(person, options)}
+        ${renderSkills(person, options)}
+        ${renderLanguages(person, options)}
+        ${renderCerts(person, options)}
     </section>
   `;
 };
 
-const renderKnowsAbout = (person: Person) => {
+const renderKnowsAbout = (person: Person, options: ThemeOptions) => {
   const { knowsAbout } = person;
+  const { headings } = options;
   return knowsAbout && knowsAbout.length
     ? `
     <article>
-        <h2>Expertise</h2>
+        <h2>${headings.knowsAbout}</h2>
         <ul>${knowsAbout.map((area: string) => `<li>${area}</li>`).join("\n")}</ul>
     </article>
   `
     : "";
 };
 
-const renderSkills = (person: Person) => {
+const renderSkills = (person: Person, options: ThemeOptions) => {
   const { skills } = person;
+  const { headings } = options;
   return skills && skills.length
     ? `
     <article>
-        <h2>Skills</h2>
+        <h2>${headings.skills}</h2>
         <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("\n")}</ul>
     </article>
   `
     : "";
 };
 
-const renderLanguages = (person: Person) => {
+const renderLanguages = (person: Person, options: ThemeOptions) => {
   const { knowsLanguage } = person;
+  const { headings } = options;
   return knowsLanguage && knowsLanguage.length
     ? `
     <article>
-        <h2>Languages</h2>
+        <h2>${headings.knowsLanguage}</h2>
         <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("\n")}</ul>    
     </article>
   `
     : "";
 };
 
-const renderCerts = (person: Person) => {
+const renderCerts = (person: Person, options: ThemeOptions) => {
   const certs = certifications(person);
+  const { headings } = options;
   return certs && certs.length
     ? `
     <article>
-        <h2>Certifications</h2>
+        <h2>${headings.certifications}</h2>
         <ul>${certs.map((cert: any) => `<li>${cert.name}</li>`).join("\n")}</ul>    
     </article>
     `
     : "";
 };
 
-const renderWork = (person: Person) => renderRoles("Professional Experience", "work", work(person));
+const renderWork = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.worksFor, "work", work(person));
 
-const renderEducation = (person: Person) =>
-  renderRoles("Education", "education", education(person));
+const renderEducation = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.alumniOf, "education", education(person));
 
-const renderProjects = (person: Person) => renderRoles("Projects", "projects", projects(person));
+const renderProjects = (person: Person, options: ThemeOptions) =>
+  renderRoles(options.headings.projects, "projects", projects(person));
 
 const renderRoles = (heading: string, id: string, roles: Array<any>) =>
   roles && roles.length
@@ -220,12 +228,13 @@ function renderRole(role: any) {
   `;
 }
 
-const renderLifeEvents = (person: Person) => {
+const renderLifeEvents = (person: Person, options: ThemeOptions) => {
   const { lifeEvent } = person;
+  const { headings } = options;
   if (lifeEvent && lifeEvent.length) {
     return `
         <section>
-            <h2 class="pirata-one-regular">Life Events</h2>
+            <h2 class="pirata-one-regular">${headings.lifeEvent}</h2>
             <div id="events">
                 ${lifeEvent
                   .map(

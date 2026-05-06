@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeOptions } from "../themeOptions.js";
 
 const id = "gnap";
 const title = "GNAP!";
@@ -40,7 +41,7 @@ export class GnapTheme extends Theme {
   }
 
   renderHTML(person: Person): Promise<string> {
-    const { transformer } = this;
+    const { transformer, options } = this;
 
     transformer.on("head", {
       element(head: any) {
@@ -57,13 +58,13 @@ export class GnapTheme extends Theme {
     });
 
     renderHeader(transformer, person);
-    renderBasics(transformer, person);
-    renderProjects(transformer, person);
-    renderWork(transformer, person);
-    renderEducation(transformer, person);
-    renderCertificates(transformer, person);
-    renderLifeEvents(transformer, person);
-    renderFooter(transformer, person);
+    renderBasics(transformer, person, options);
+    renderProjects(transformer, person, options);
+    renderWork(transformer, person, options);
+    renderEducation(transformer, person, options);
+    renderCertificates(transformer, person, options);
+    renderLifeEvents(transformer, person, options);
+    renderFooter(transformer, person, options);
     renderMenu(transformer, person);
 
     return transformer.transform(`
@@ -130,13 +131,14 @@ const renderHeader = (transformer: HTMLTransformer, person: Person) => {
   });
 };
 
-const renderBasics = (transformer: HTMLTransformer, person: Person) => {
+const renderBasics = (transformer: HTMLTransformer, person: Person, options: ThemeOptions) => {
   const { knowsLanguage, knowsAbout, skills, description } = person;
+  const { headings } = options;
   const renderSummary = () => {
     if (description) {
       return `
         <div id="summary">
-            <h2>Profile</h2>
+            <h2>${headings.description}</h2>
             ${description ? `<div>${description}</div>` : ""}
         </div>
       `;
@@ -146,7 +148,7 @@ const renderBasics = (transformer: HTMLTransformer, person: Person) => {
   const renderSkills = () => {
     return `
         <div id="skills">
-            <h2>Skills & Expertise</h2>
+            <h2>${headings.knowsAbout} & ${headings.skills}</h2>
             <div>
               ${
                 knowsAbout && knowsAbout.length
@@ -175,7 +177,7 @@ const renderBasics = (transformer: HTMLTransformer, person: Person) => {
     if (knowsLanguage && knowsLanguage.length) {
       return `
             <div id="languages">
-                <h2>Languages</h2>
+                <h2>${headings.knowsLanguage}</h2>
                 <ul class="languages">
                     ${knowsLanguage
                       .map(
@@ -205,14 +207,15 @@ const renderBasics = (transformer: HTMLTransformer, person: Person) => {
   });
 };
 
-const renderProjects = (transformer: HTMLTransformer, person: Person) => {
+const renderProjects = (transformer: HTMLTransformer, person: Person, options: ThemeOptions) => {
+  const { headings } = options;
   const proj = projects(person);
   if (proj && proj.length) {
     transformer.on("#projects .container", {
       element(el: any) {
         el.append(
           `
-          <h2>Featured Projects</h2>
+          <h2>${headings.projects}</h2>
           <ul>
           ${proj.map((role: any) => `<li>${experience(role)}</li>`).join("")}
           </ul>
@@ -247,14 +250,15 @@ const experience = (role: any) => {
   `;
 };
 
-const renderWork = (transformer: HTMLTransformer, person: Person) => {
+const renderWork = (transformer: HTMLTransformer, person: Person, options: ThemeOptions) => {
   const worksFor = work(person);
+  const { headings } = options;
   if (worksFor && worksFor.length) {
     transformer.on("#work .container", {
       element(el: any) {
         el.append(
           `
-          <h2>Work Experience</h2>
+          <h2>${headings.worksFor}</h2>
           <ul>
           ${worksFor.map((role: any) => `<li>${experience(role)}</li>`).join("")}
           </ul>
@@ -266,14 +270,15 @@ const renderWork = (transformer: HTMLTransformer, person: Person) => {
   }
 };
 
-const renderEducation = (transformer: HTMLTransformer, person: Person) => {
+const renderEducation = (transformer: HTMLTransformer, person: Person, options: ThemeOptions) => {
   const alumniOf = education(person);
+  const { headings } = options;
   if (alumniOf && alumniOf.length) {
     transformer.on("#education .container", {
       element(el: any) {
         el.append(
           `
-          <h2>Education</h2>
+          <h2>${headings.alumniOf}</h2>
           <ul>
           ${alumniOf.map((role: any) => `<li>${experience(role)}</li>`).join("")}
           </ul>
@@ -285,14 +290,19 @@ const renderEducation = (transformer: HTMLTransformer, person: Person) => {
   }
 };
 
-const renderCertificates = (transformer: HTMLTransformer, person: Person) => {
+const renderCertificates = (
+  transformer: HTMLTransformer,
+  person: Person,
+  options: ThemeOptions
+) => {
   const certs = certifications(person);
+  const { headings } = options;
   if (certs && certs.length > 0) {
     transformer.on("#certificates .container", {
       element(el: any) {
         el.append(
           `
-            <h2>Certificates</h2>
+            <h2>${headings.certifications}</h2>
             <ul>${certs
               .map(
                 (cert) => `
@@ -310,14 +320,15 @@ const renderCertificates = (transformer: HTMLTransformer, person: Person) => {
   }
 };
 
-const renderLifeEvents = (transformer: HTMLTransformer, person: Person) => {
+const renderLifeEvents = (transformer: HTMLTransformer, person: Person, options: ThemeOptions) => {
   const { lifeEvent } = person;
+  const { headings } = options;
   transformer.on("#events .container", {
     element(el: any) {
       if (lifeEvent && lifeEvent.length) {
         el.append(
           `
-            <h2>Life Events</h2>
+            <h2>${headings.lifeEvent}</h2>
             <ul>${lifeEvent
               .map(
                 (event: any) => `
@@ -365,21 +376,21 @@ const social = (person: Person) => {
   }
 };
 
-const renderFooter = (transformer: HTMLTransformer, person: Person) => {
+const renderFooter = (transformer: HTMLTransformer, person: Person, options: ThemeOptions) => {
   const { lifeEvent } = person;
+  const { headings } = options;
 
   transformer.on("footer .container", {
     element(footer: any) {
       footer.append(
         `
         <ul class="row center inline inline-delimited">
-            <li><a href="#basics">Top of page</a></li>
-            <li><a href="#skills">Skills</a></li>
-            <li><a href="#work">Work Experience</a></li>
-            ${lifeEvent && lifeEvent.length ? `<li><a href="#events">Life events</a></li>` : ""}
+            <li><a href="#basics">${headings.description}</a></li>
+            <li><a href="#skills">${headings.skills}</a></li>
+            <li><a href="#work">${headings.worksFor}</a></li>
+            ${lifeEvent && lifeEvent.length ? `<li><a href="#events">${headings.lifeEvent}</a></li>` : ""}
         </ul>
         <div class="row center">
-          Thanks for visiting!
           ${social(person)}
         </div>
       `,
