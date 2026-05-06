@@ -1,4 +1,4 @@
-import { Theme, titleify } from "../theme.js";
+import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
@@ -6,6 +6,7 @@ import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "#themes/themeOptions.js";
 
 const id = "winter";
+const title = "Winter";
 const description = "A crisp, cool, spacious layout with bright whites and clean structure.";
 const tags = [
   ThemeTags.twoCol,
@@ -22,7 +23,7 @@ export class WinterTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(WinterTheme.id, loadAsset, titleify(id), description);
+    super(id, loadAsset, title, description);
   }
 
   static get id() {
@@ -30,7 +31,7 @@ export class WinterTheme extends Theme {
   }
 
   static get title() {
-    return;
+    return title;
   }
 
   static get description() {
@@ -70,7 +71,7 @@ export class WinterTheme extends Theme {
         main.append(renderWork(person, options), html);
         main.append(renderEducation(person, options), html);
         main.append(renderLifeEvents(person, options), html);
-        main.append(renderFooter(person, options), html);
+        main.append(renderFooter(person), html);
       }
     });
 

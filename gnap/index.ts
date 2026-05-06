@@ -57,7 +57,7 @@ export class GnapTheme extends Theme {
       }
     });
 
-    renderHeader(transformer, person, options);
+    renderHeader(transformer, person);
     renderBasics(transformer, person, options);
     renderProjects(transformer, person, options);
     renderWork(transformer, person, options);
@@ -65,7 +65,7 @@ export class GnapTheme extends Theme {
     renderCertificates(transformer, person, options);
     renderLifeEvents(transformer, person, options);
     renderFooter(transformer, person, options);
-    renderMenu(transformer, person, options);
+    renderMenu(transformer, person);
 
     return transformer.transform(`
         <main class="grey darken-4 white-text">
