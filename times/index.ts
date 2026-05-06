@@ -3,7 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
-import { ThemeOptions } from "#themes/themeOptions.js";
+import { ThemeOptions } from "../themeOptions.js";
 
 const id = "times";
 const description =
