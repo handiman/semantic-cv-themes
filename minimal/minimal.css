@@ -34,13 +34,15 @@ body {
 section {
   margin-block: calc(var(--space) * 3);
 }
-article,
-ul {
-  margin-block: var(--space);
+article{
+  margin-block: var(--space) calc(var(--space) * 3);
 }
+article p {
+  margin-top: var(--space);
+}
+
 h1,
-h2,
-h3 {
+h2 {
   margin: 0;
   padding: 0;
   padding-bottom: var(--space);

@@ -187,6 +187,7 @@ main > header {
   }
   article {
     padding-right: calc(var(--space-2) * 2);
+    padding-block: var(--space-1);
   }
   a i {
     order: 1;
