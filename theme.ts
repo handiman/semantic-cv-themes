@@ -1,4 +1,4 @@
-import { Person } from "./person.js";
+import { Person, period } from "./person.js";
 import { defaultOptions, ThemeOptions } from "./themeOptions.js";
 
 /**
@@ -30,7 +30,19 @@ export abstract class Theme {
     public title: string = titleify(id),
     public description: string = "",
     protected options: ThemeOptions = defaultOptions
-  ) {}
+  ) {
+    this.renderHTML = this.renderHTML.bind(this);
+    this.renderCSS = this.renderCSS.bind(this);
+    this.renderJS = this.renderJS.bind(this);
+    this.renderWorksFor = this.renderWorksFor.bind(this);
+    this.renderAlumniOf = this.renderAlumniOf.bind(this);
+    this.renderProjects = this.renderProjects.bind(this);
+    this.renderCertifications = this.renderCertifications.bind(this);
+    this.renderLifeEvents = this.renderLifeEvents.bind(this);
+    this.renderKnowsLanguage = this.renderKnowsLanguage.bind(this);
+    this.renderKnowsAbout = this.renderKnowsAbout.bind(this);
+    this.renderSkills = this.renderSkills.bind(this);
+  }
 
   /**
    * Render the main HTML fragment for the CV.
@@ -62,6 +74,102 @@ export abstract class Theme {
   renderJS(_person: Person) {
     return this.loadAsset(`${this.id}.js`);
   }
+
+  protected renderKnowsLanguage(knowsLanguage: Array<string>) {
+    const { headings } = this.options;
+    return knowsLanguage && knowsLanguage.length
+      ? `
+        <section id="knowsLanguage">
+          <h2>${headings.knowsLanguage}</h2>
+          <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}
+        </section>
+      `
+      : "";
+  }
+
+  protected renderKnowsAbout(knowsAbout: Array<string>) {
+    const { headings } = this.options;
+    return knowsAbout
+      ? `
+        <section id="knowsAbout">
+          <h2>${headings.knowsAbout}</h2>
+          <ul>${knowsAbout.map((area: string) => `<li>${area}</li>`).join("")}</ul>
+        </section>
+      `
+      : "";
+  }
+
+  protected renderSkills(skills: Array<string>) {
+    const { headings } = this.options;
+    return skills
+      ? `
+        <section id="skills">
+          <h2>${headings.skills}</h2>
+          <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("")}</ul>
+        </section>
+      `
+      : "";
+  }
+
+  protected renderWorksFor(worksFor: Array<any>) {
+    const { headings } = this.options;
+    return worksFor && worksFor.length
+      ? `
+        <section id="worksFor">
+          <h2>${headings.worksFor}</h2>
+          ${worksFor.map(renderRole).join("")}
+        </section>
+      `
+      : "";
+  }
+
+  protected renderAlumniOf(alumniOf: Array<any>) {
+    const { headings } = this.options;
+    return alumniOf && alumniOf.length
+      ? `
+        <section id="alumniOf">
+          <h2>${headings.alumniOf}</h2>
+          ${alumniOf.map(renderRole).join("")}
+        </section>
+      `
+      : "";
+  }
+
+  protected renderProjects(proj: Array<any>) {
+    const { headings } = this.options;
+    return proj && proj.length
+      ? `
+        <section id="project">
+          <h2>${headings.projects}</h2>
+          ${proj.map(renderRole).join("")}
+        </section>
+      `
+      : "";
+  }
+
+  protected renderLifeEvents(lifeEvent: Array<any>) {
+    const { headings } = this.options;
+    return lifeEvent && lifeEvent.length
+      ? `
+        <section id="lifeEvent">
+          <h2>${headings.lifeEvent}</h2>
+          ${lifeEvent.map(renderLifeEvent).join("")}
+        </section>
+      `
+      : "";
+  }
+
+  protected renderCertifications(certs: Array<any>) {
+    const { headings } = this.options;
+    return certs && certs.length
+      ? `
+        <section id="certifications">
+          <h2>${headings.certifications}</h2>
+          <ul>${certs.map((cert: any) => `<li>${cert.name}</li>`).join("")}</ul>
+        </section>
+      `
+      : "";
+  }
 }
 
 export default Theme;
@@ -90,15 +198,50 @@ const withResetCSS = (themeCss: string) => `
 }  
 html, body, *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { font-size: var(--font-size-base); font-family: var(--font-family-base); color: var(--text-color); background-color: var(--background-color); }
-a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decoration: none; }
-a:hover { text-decoration: underline; }
-ul, ol, li, li:before, li:after {   list-style: none; margin: 0; padding: 0; }
-.page { display: grid; grid-template-columns: auto; grid-template-areas: "header" "aside" "main"; } .page header { grid-area: "header"; }
-aside { grid-area: "aside"; }
-main { grid-area: "main"; }
+a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decoration: none; } a:hover { text-decoration: underline; }
+ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 .scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
-.print { display: none; }
-.no-print { display: reset; }
+.print { display: none; } .no-print { display: reset; }
 @media print { .print { display: reset; } .no-print { display: none; }}
 ${themeCss}    
 `;
+
+const renderRole = (role: any) => {
+  const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
+  const { name, location } = worksFor ?? alumniOf;
+  const duration =
+    startDate || endDate
+      ? `
+          ${startDate ? `<time datetime="${startDate}">${period(startDate)}</time>` : ""}
+          ${endDate ? ` &hyphen; <time datetime="${endDate}">${period(endDate)}</time>` : "present"}
+        `
+      : undefined;
+  return role
+    ? `
+      <article>
+        ${name ? `<h3>${name}</h3>` : ""}
+        <ul class="caption">
+          ${roleName ? `<li>${roleName}</li>` : ""}
+          ${duration ? `<li>${duration}</li>` : ""}
+          ${location ? `<li>${location}</li>` : ""}
+        </ul>
+        ${description ? `<p>${description}</p>` : ""}
+    </article>
+    `
+    : "";
+};
+
+const renderLifeEvent = (event: any) => {
+  const { name, startDate, description } = event;
+  const location = event.location ? event.location.name : undefined;
+  return `
+      <article>
+        ${name ? `<h3>${name}</h3>` : ""}
+        <ul class="caption">
+          ${startDate ? `<li><time datetime="${startDate}">${period(startDate)}</time></li>` : ""}
+          ${location ? `<li>${location}</li>` : ""}
+        </ul>
+        ${description ? `<p>${description}</p>` : ""}
+      </article>
+    `;
+};
