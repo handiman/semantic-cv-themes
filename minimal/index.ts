@@ -3,7 +3,6 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
-import { ThemeOptions } from "../themeOptions.js";
 
 const id = "minimal";
 const description =
@@ -43,9 +42,18 @@ export class MinimalTheme extends Theme {
   }
 
   async renderHTML(person: Person): Promise<string> {
-    const { transformer, options } = this;
+    const {
+      transformer,
+      renderWorksFor,
+      renderAlumniOf,
+      renderProjects,
+      renderKnowsLanguage,
+      renderKnowsAbout,
+      renderSkills,
+      renderLifeEvents,
+      renderCertifications
+    } = this;
     const iconFactory = new FaIconFactory(person);
-    const { headings } = options;
     const {
       image,
       name,
@@ -81,51 +89,11 @@ export class MinimalTheme extends Theme {
       element(aside: any) {
         if (image) {
           aside.append(`<img src="${image}" alt="${name ?? ""}" />`, html);
-          if (knowsAbout && knowsAbout.length) {
-            aside.append(
-              `
-                <section>
-                  <h2>${headings.knowsAbout}</h2>
-                  <ul>${knowsAbout.map((thing: string) => `<li>${thing}</li>`).join("")}</ul>
-                </section>
-              `,
-              html
-            );
-          }
-          if (skills && skills.length) {
-            aside.append(
-              `
-                <section>
-                  <h2>${headings.skills}</h2>
-                  <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("")}</ul>
-                </section>
-              `,
-              html
-            );
-          }
-          if (certs && certs.length) {
-            aside.append(
-              `
-                <section>
-                  <h2>${headings.certifications}</h2>
-                  <ul>${certs.map((cert: any) => `<li>${cert.name}</li>`).join("")}</ul>
-                </section>
-              `,
-              html
-            );
-          }
-          if (knowsLanguage && knowsLanguage.length) {
-            aside.append(
-              `
-                <section>
-                  <h2>${headings.knowsLanguage}</h2>
-                  <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}</ul>
-                </section>
-              `,
-              html
-            );
-          }
         }
+        aside.append(renderKnowsAbout(knowsAbout), html);
+        aside.append(renderSkills(skills), html);
+        aside.append(renderCertifications(certs), html);
+        aside.append(renderKnowsLanguage(knowsLanguage), html);
       }
     });
 
@@ -139,45 +107,14 @@ export class MinimalTheme extends Theme {
                 ${description ? `<div>${description}</div>` : ""}
                 ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}</a></li>`).join("\n")}</ul>` : ""}
             </header>
-            ${renderProjects(person, options)}
-            ${renderWork(person, options)}
-            ${renderEducation(person, options)}
+            ${renderProjects(projects(person))}
+            ${renderWorksFor(work(person))}
+            ${renderAlumniOf(education(person))}
           `,
           html
         );
 
-        if (lifeEvent && lifeEvent.length) {
-          main.append(
-            `
-              <section>
-                <h2>${headings.lifeEvent}</h2>
-                <ul>
-                ${lifeEvent
-                  .map(
-                    (event: any) =>
-                      `
-                    <li>
-                        ${event.name ? `<div>${event.name}</div>` : ""}
-                        ${
-                          event.startDate || (event.location && event.location.name)
-                            ? `
-                                <div>
-                                    ${event.startDate ? `${event.startDate}` : ""}
-                                    ${event.location && event.location.name ? `${event.location.name}` : ""}
-                                </div>`
-                            : ""
-                        }
-                        ${event.description ? `<div>${event.description}</div>` : ""}
-                    </li>
-                    `
-                  )
-                  .join("")}
-                </ul>
-              </section>
-            `,
-            html
-          );
-        }
+        main.append(renderLifeEvents(lifeEvent), html);
       }
     });
 
@@ -193,54 +130,3 @@ export class MinimalTheme extends Theme {
     return Promise.resolve("");
   }
 }
-
-const renderProjects = (person: Person, options: ThemeOptions) =>
-  renderRoles(options.headings.projects, "projects", projects(person));
-
-const renderWork = (person: Person, options: ThemeOptions) =>
-  renderRoles(options.headings.worksFor, "work", work(person));
-
-const renderEducation = (person: Person, options: ThemeOptions) =>
-  renderRoles(options.headings.alumniOf, "education", education(person));
-
-const renderRoles = (heading: string, className: string, roles: Array<any>) => {
-  return roles && roles.length
-    ? `
-      <section class="${className}">
-        <h2>${heading}</h2>
-        ${roles.map(renderRole).join("")}
-      </section>
-    `
-    : "";
-};
-
-const renderRole = (role: any) => {
-  const { roleName, startDate, endDate, worksFor, alumniOf, description } = role;
-  const { name, location } = worksFor ?? alumniOf;
-  const period = () => {
-    if (startDate || endDate) {
-      return `
-        ${startDate ? `<time datetime="${startDate}">${startDate}</time>` : ""}
-        ${endDate ? ` <time datetime="${endDate}">${endDate}</time>` : "present"}
-      `;
-    }
-  };
-  const header = () => {
-    const span = period();
-    return `
-      ${name ? `<h3>${name}</h3>` : ""}
-      <ul>
-        ${roleName ? `<li>${roleName}</li>` : ""}
-        ${span ? `<li>${span}</li>` : ""}
-        ${location ? ` <li>${location}</li>` : ""}
-      </ul>
-    `;
-  };
-
-  return `
-    <article>
-      ${header() ?? ""}
-      ${description ? `<p>${description}<p>` : ""}
-    </article>
-  `;
-};
