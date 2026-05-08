@@ -3,7 +3,7 @@ import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { Person } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
-import { ThemeMetadata } from "#themes/themeMetadata.js";
+import { ThemeMetadata } from "../themeMetadata.js";
 
 const meta = {
   id: "holden-wreck",

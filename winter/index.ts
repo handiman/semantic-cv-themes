@@ -3,7 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
-import { ThemeMetadata } from "#themes/themeMetadata.js";
+import { ThemeMetadata } from "../themeMetadata.js";
 
 const meta = {
   id: "winter",
