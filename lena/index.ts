@@ -88,8 +88,8 @@ export class LenaTheme extends Theme {
     return await transformer.transform(`
         <div class="page">
             <header></header>
-            <main></main>
             <aside></aside>
+            <main></main>
         </div>
     `);
   }

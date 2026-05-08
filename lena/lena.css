@@ -227,6 +227,7 @@ main {
 
 @media (min-width: 800px) {
   .page {
+    display: grid;
     grid-template-columns: calc(var(--max-width) - var(--aside-max-width)) var(--aside-max-width);
     grid-template-areas:
       "header header"
