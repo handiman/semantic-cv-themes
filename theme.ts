@@ -75,7 +75,7 @@ export abstract class Theme {
     return this.loadAsset(`${this.id}.js`);
   }
 
-  protected renderKnowsLanguage(knowsLanguage: Array<string>) {
+  protected renderKnowsLanguage(knowsLanguage: Array<string> | null | undefined): string {
     const { headings } = this.options;
     return knowsLanguage && knowsLanguage.length
       ? `
@@ -87,9 +87,9 @@ export abstract class Theme {
       : "";
   }
 
-  protected renderKnowsAbout(knowsAbout: Array<string>) {
+  protected renderKnowsAbout(knowsAbout: Array<string> | null | undefined): string {
     const { headings } = this.options;
-    return knowsAbout
+    return knowsAbout && knowsAbout.length
       ? `
         <section id="knowsAbout">
           <h2>${headings.knowsAbout}</h2>
@@ -99,9 +99,9 @@ export abstract class Theme {
       : "";
   }
 
-  protected renderSkills(skills: Array<string>) {
+  protected renderSkills(skills: Array<string> | null | undefined): string {
     const { headings } = this.options;
-    return skills
+    return skills && skills.length
       ? `
         <section id="skills">
           <h2>${headings.skills}</h2>
@@ -111,7 +111,7 @@ export abstract class Theme {
       : "";
   }
 
-  protected renderWorksFor(worksFor: Array<any>) {
+  protected renderWorksFor(worksFor: Array<any> | null | undefined): string {
     const { headings } = this.options;
     return worksFor && worksFor.length
       ? `
@@ -123,7 +123,7 @@ export abstract class Theme {
       : "";
   }
 
-  protected renderAlumniOf(alumniOf: Array<any>) {
+  protected renderAlumniOf(alumniOf: Array<any> | null | undefined): string {
     const { headings } = this.options;
     return alumniOf && alumniOf.length
       ? `
@@ -135,7 +135,7 @@ export abstract class Theme {
       : "";
   }
 
-  protected renderProjects(proj: Array<any>) {
+  protected renderProjects(proj: Array<any> | null | undefined): string {
     const { headings } = this.options;
     return proj && proj.length
       ? `
@@ -147,7 +147,7 @@ export abstract class Theme {
       : "";
   }
 
-  protected renderLifeEvents(lifeEvent: Array<any>) {
+  protected renderLifeEvents(lifeEvent: Array<any> | null | undefined): string {
     const { headings } = this.options;
     return lifeEvent && lifeEvent.length
       ? `
@@ -159,7 +159,7 @@ export abstract class Theme {
       : "";
   }
 
-  protected renderCertifications(certs: Array<any>) {
+  protected renderCertifications(certs: Array<any> | null | undefined): string {
     const { headings } = this.options;
     return certs && certs.length
       ? `
