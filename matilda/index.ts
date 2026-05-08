@@ -43,8 +43,56 @@ export class MatildaTheme extends Theme {
   }
 
   renderHTML(person: Person): Promise<string> {
-    const { transformer, options } = this;
+    const {
+      transformer,
+      options,
+      renderKnowsAbout,
+      renderSkills,
+      renderKnowsLanguage,
+      renderWorksFor,
+      renderAlumniOf,
+      renderProjects,
+      renderLifeEvents,
+      renderCertifications
+    } = this;
+    const { headings } = options;
+    const {
+      name,
+      image,
+      url,
+      email,
+      telephone,
+      sameAs,
+      knowsLanguage,
+      knowsAbout,
+      skills,
+      lifeEvent
+    } = person;
+    const iconFactory = new FaIconFactory(person);
+    const contactDetails = () => {
+      const linkText = (url: string) => {
+        if (url.indexOf("mailto:") > -1 || url.indexOf("tel:") > -1) {
+          return url.substring(url.indexOf(":") + 1);
+        }
 
+        const text = url.substring(url.indexOf("://") + 3).replace("www.", "");
+        return text.length > 26 ? text.substring(0, 25) + "…" : text;
+      };
+      const links = normalizeArray(
+        sameAs,
+        url,
+        email ? `mailto:${email}` : undefined,
+        telephone ? `tel:${telephone}` : undefined
+      );
+      return links.length
+        ? `
+          <section>
+            <h2>${headings.contact}</h2>
+            <ul>${links.map((link: string) => `<li><a href="${link}" title="${link}"><span>${linkText(link)}</span>${iconFactory.faIcon(link)}</a></li>`).join("")}</ul>
+          </section>
+        `
+        : "";
+    };
     transformer.on("head", {
       element(head: any) {
         head.append(
@@ -54,13 +102,54 @@ export class MatildaTheme extends Theme {
       }
     });
 
-    renderAside(transformer, person, options);
-    renderMain(transformer, person, options);
+    transformer.on(".photo", {
+      element(photo: any) {
+        if (image) {
+          photo.append(`<img src="${image}" alt="${name ?? ""}" />`, html);
+        } else {
+          photo.remove();
+        }
+      }
+    });
+
+    transformer.on("aside", {
+      element(aside: any) {
+        aside.append(
+          `
+            ${renderHeader(person)}
+            ${contactDetails()}
+            ${renderKnowsAbout(knowsAbout)}
+            ${renderSkills(skills)}
+            ${renderKnowsLanguage(knowsLanguage)}
+            ${renderCertifications(certifications(person))}
+          `,
+          html
+        );
+      }
+    });
+
+    transformer.on("main", {
+      element(main: any) {
+        main.append(
+          `
+            ${renderHeader(person)}
+            ${renderDescription(person, options)}
+            ${renderProjects(projects(person))}
+            ${renderWorksFor(work(person))}
+            ${renderAlumniOf(education(person))}
+            ${renderLifeEvents(lifeEvent)}
+        `,
+          html
+        );
+      }
+    });
 
     return transformer.transform(`
       <div class="desktop">
         <div class="cv">
-          <aside></aside>
+          <aside>
+            <section class="photo"></section>
+          </aside>
           <main></main>
         </div>
       </div>
@@ -68,140 +157,19 @@ export class MatildaTheme extends Theme {
   }
 }
 
-const renderAside = (transformer: HTMLTransformer, person: Person, options: ThemeOptions) => {
-  const iconFactory = new FaIconFactory(person);
-  const { image, name, email, telephone, url, sameAs } = person;
-  const { headings } = options;
-  const contactDetails = () => {
-    const linkText = (url: string) => {
-      if (url.indexOf("mailto:") > -1 || url.indexOf("tel:") > -1) {
-        return url.substring(url.indexOf(":") + 1);
-      }
-
-      const text = url.substring(url.indexOf("://") + 3).replace("www.", "");
-      return text.length > 26 ? text.substring(0, 25) + "…" : text;
-    };
-    const links = normalizeArray(
-      sameAs,
-      url,
-      email ? `mailto:${email}` : undefined,
-      telephone ? `tel:${telephone}` : undefined
-    );
-    return links.length
-      ? `
-          <section>
-            <h2>${headings.contact}</h2>
-            <ul>${links.map((link: string) => `<li><a href="${link}" title="${link}"><span>${linkText(link)}</span>${iconFactory.faIcon(link)}</a></li>`).join("")}</ul>
-          </section>
-        `
-      : "";
-  };
-
-  transformer.on("aside", {
-    element(aside: any) {
-      if (image) {
-        aside.append(
-          `
-            <section class="photo"><img src="${image}" alt="${name ?? ""}" /></section>
-            ${header(person)}
-            ${contactDetails()}
-            ${knowsAbout(person, options)}
-            ${skills(person, options)}
-            ${languages(person, options)}
-            ${renderCertifications(person, options)}
-            `,
-          html
-        );
-      }
-    }
-  });
-};
-
-const header = (person: any) => {
+const renderHeader = (person: any): string => {
   const { name, jobTitle } = person;
-  return `
-    <header>
-      <div><h1>${name ?? ""}</h1></div>
-      <div>${jobTitle ?? ""}</div>
-    </header>
-  `;
+  return name || jobTitle
+    ? `
+      <header>
+        <div><h1>${name ?? ""}</h1></div>
+        <div>${jobTitle ?? ""}</div>
+      </header>
+    `
+    : "";
 };
 
-const knowsAbout = (person: Person, options: ThemeOptions) => {
-  const { knowsAbout } = person;
-  const { headings } = options;
-  if (knowsAbout && knowsAbout.length) {
-    return `
-    <section>
-        <h2>${headings.knowsAbout}</h2>
-        <ul>${knowsAbout.map((item: string) => `<li>${item}</li>`).join("")}</ul>
-    </section>
-    `;
-  }
-  return "";
-};
-
-const skills = (person: Person, options: ThemeOptions) => {
-  const { skills } = person;
-  const { headings } = options;
-  if (skills && skills.length) {
-    return `
-      <section>
-        <h2>${headings.skills}</h2>
-        <ul>${skills.map((item: string) => `<li>${item}</li>`).join("")}</ul>
-      </section>
-    `;
-  }
-  return "";
-};
-
-const languages = (person: Person, options: ThemeOptions) => {
-  const { knowsLanguage } = person;
-  const { headings } = options;
-  if (knowsLanguage && knowsLanguage.length) {
-    return `
-      <section>
-        <h2>${headings.knowsLanguage}</h2>
-        <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}</ul>
-      </section>
-    `;
-  }
-  return "";
-};
-
-const renderCertifications = (person: Person, options: ThemeOptions) => {
-  const certs = certifications(person);
-  const { headings } = options;
-  if (certs && certs.length) {
-    return `
-      <section>
-        <h2>${headings.certifications}</h2>
-        <ul>${certs.map((cert) => `<li>${cert.name}</li>`).join("")}</ul>
-      </section>
-    `;
-  }
-  return "";
-};
-
-const renderMain = (transformer: HTMLTransformer, person: Person, options: ThemeOptions) => {
-  transformer.on("main", {
-    element(main: any) {
-      main.append(
-        `
-        ${header(person) ?? ""}
-        ${renderDescription(person, options) ?? ""}
-        ${renderProjects(person, options) ?? ""}
-        ${renderWork(person, options) ?? ""}
-        ${renderEducation(person, options) ?? ""}
-        ${lifeEvents(person, options) ?? ""}
-        `,
-        html
-      );
-    }
-  });
-};
-
-const renderDescription = (person: Person, options: ThemeOptions) => {
+const renderDescription = (person: Person, options: ThemeOptions): string => {
   const { description } = person;
   const { headings } = options;
   return description
@@ -212,68 +180,4 @@ const renderDescription = (person: Person, options: ThemeOptions) => {
       </section>
     `
     : "";
-};
-
-const renderProjects = (person: Person, options: ThemeOptions) =>
-  experiences(options.headings.projects, projects(person));
-const renderWork = (person: Person, options: ThemeOptions) =>
-  experiences(options.headings.worksFor, work(person));
-const renderEducation = (person: Person, options: ThemeOptions) =>
-  experiences(options.headings.alumniOf, education(person));
-
-const lifeEvents = (person: Person, options: ThemeOptions) => {
-  const { lifeEvent } = person;
-  const { headings } = options;
-  if (lifeEvent && lifeEvent.length) {
-    return `
-    <section class="life-events">
-      <h2>${headings.lifeEvent}</h2>
-      <ul>${lifeEvent
-        .map(
-          (e: any) => `
-        <li>
-          <div>
-            ${e.name ? `<h3>${e.name}</h3>` : ""}
-            ${e.startDate ? `<time datetime="${e.startDate}">${e.startDate}</time>` : ""}
-            ${e.location && e.location.name ? `<span>${e.location.name}</span>` : ""}
-          </div>
-        </li>`
-        )
-        .join("")}
-      </ul>
-    </section>
-    `;
-  }
-};
-
-const experiences = (heading: string, roles: Array<any>) => {
-  if (roles && roles.length) {
-    return `<section>
-      <h2>${heading}</h2>
-      ${roles.map(experience).join("")}
-    </section>`;
-  }
-};
-
-const experience = (role: any) => {
-  const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
-  const { name, location } = worksFor || alumniOf;
-  const period =
-    startDate || endDate
-      ? `
-        ${startDate ? `<time datetime="${startDate}">${startDate}</time>` : ""}
-        ${endDate ? ` <time datetime="${endDate}">${endDate}</time>` : "present"}
-      `
-      : undefined;
-  return `
-    <article>
-        <h3>${name ?? ""}</h3>
-        <ul class="caption">
-        ${roleName ? `<li>${roleName}</li>` : ""}
-        ${period ? `<li>${period}</li>` : ""}
-        ${location ? `<li>${location}</li>` : ""}
-        </ul>
-        <p>${description ?? ""}</p>
-    </article>
-    `;
 };

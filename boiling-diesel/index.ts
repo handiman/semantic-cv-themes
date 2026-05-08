@@ -2,7 +2,6 @@ import { Theme, titleify } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
-import { ThemeOptions } from "../themeOptions.js";
 
 const id = "boiling-diesel";
 const title = "Boiling Diesel";
@@ -47,7 +46,18 @@ export class BoilingDieselTheme extends Theme {
   }
 
   async renderHTML(person: Person): Promise<string> {
-    const { transformer, options } = this;
+    const {
+      transformer,
+      renderProjects,
+      renderWorksFor,
+      renderAlumniOf,
+      renderLifeEvents,
+      renderKnowsAbout,
+      renderSkills,
+      renderKnowsLanguage,
+      renderCertifications
+    } = this;
+    const { knowsAbout, skills, knowsLanguage, lifeEvent } = person;
 
     transformer
       .on("head", {
@@ -100,11 +110,27 @@ export class BoilingDieselTheme extends Theme {
         }
       });
 
-    renderSummary(transformer, person, options);
-    renderProjects(transformer, person, options);
-    renderWork(transformer, person, options);
-    renderEducation(transformer, person, options);
-    renderLifeEvents(transformer, person, options);
+    transformer.on("main", {
+      element(main: any) {
+        main.append(
+          `
+            <div>
+              <div class="grid">
+                ${renderKnowsAbout(knowsAbout)}
+                ${renderSkills(skills)}
+                ${renderKnowsLanguage(knowsLanguage)}
+                ${renderCertifications(certifications(person))}
+              </div>
+            </div>
+          `,
+          html
+        );
+        main.append(renderProjects(projects(person)), html);
+        main.append(renderWorksFor(work(person)), html);
+        main.append(renderAlumniOf(education(person)), html);
+        main.append(renderLifeEvents(lifeEvent ?? []), html);
+      }
+    });
 
     return await transformer.transform(`
       <div class="wrapper">
@@ -123,178 +149,4 @@ export class BoilingDieselTheme extends Theme {
       </div>
     `);
   }
-}
-
-const renderProjects = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
-  const { headings } = options;
-  transformer.on("main", {
-    element(main: any) {
-      const proj = projects(person);
-      if (proj && proj.length) {
-        main.append(renderRoles(headings.projects, proj), html);
-      }
-    }
-  });
-};
-
-const renderWork = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
-  const { headings } = options;
-  transformer.on("main", {
-    element(main: any) {
-      const worksFor = work(person);
-      if (worksFor && worksFor.length) {
-        main.append(renderRoles(headings.worksFor, worksFor), html);
-      }
-    }
-  });
-};
-
-const renderEducation = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
-  const { headings } = options;
-  transformer.on("main", {
-    element(main: any) {
-      const alumniOf = education(person);
-      if (alumniOf && alumniOf.length) {
-        main.append(renderRoles(headings.alumniOf, alumniOf), html);
-      }
-    }
-  });
-};
-
-const renderRoles = (heading: string, roles: Array<any>) =>
-  roles && roles.length
-    ? `
-  <section>
-    <h2>${heading}</h2>
-    ${roles.map(renderRole).join("")}
-  </section>
-`
-    : "";
-
-const renderRole = (role: any) => {
-  const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
-  const { name, location } = worksFor || alumniOf;
-  const period =
-    startDate || endDate
-      ? `
-        ${startDate ? `<time datetime="${startDate}">${startDate}</time>` : ""}
-        ${endDate ? ` <time datetime="${endDate}">${endDate}</time>` : "present"}
-      `
-      : undefined;
-
-  return `
-    <article>
-      <h3>${name ?? ""}</h3>
-      <ul class="caption">
-      ${roleName ? `<li>${roleName}</li>` : ""}
-      ${period ? `<li>${period}</li>` : ""}
-      ${location ? `<li>${location}</li>` : ""}
-      </ul>
-      <p>${description ?? ""}</p>
-    </article>
-  `;
-};
-
-const renderLifeEvents = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
-  const { headings } = options;
-  transformer.on("main", {
-    element(main: any) {
-      const { lifeEvent } = person;
-      if (lifeEvent && lifeEvent.length)
-        main.append(
-          `
-          <section>
-            <h2>${headings.lifeEvent}</h2>
-            ${lifeEvent
-              .map(
-                (e: any) => `
-               <div>
-                ${e.name ? `<h3>${e.name}</h3>` : ""}
-                ${e.startDate ? `<time datetime="${e.startDate}">${e.startDate}</time>` : ""}
-                ${e.location && e.location.name ? `<span>${e.location.name}</span>` : ""}
-              </div>`
-              )
-              .join("")}
-          </section>
-        `,
-          html
-        );
-    }
-  });
-};
-
-const renderSummary = (transformer: HTMLTransformer, person: any, options: ThemeOptions) => {
-  transformer.on("main", {
-    element(main: any) {
-      main.append(
-        `
-        <section>
-          <div class="grid">
-            ${renderKnowsAbout(person, options)}
-            ${renderSkills(person, options)}
-            ${renderLanguages(person, options)}
-            ${renderCerts(person, options)}
-          </div>
-        </section>
-        `,
-        html
-      );
-    }
-  });
-};
-
-const renderKnowsAbout = (person: any, options: ThemeOptions) => {
-  const { knowsAbout } = person;
-  const { headings } = options;
-  if (knowsAbout && knowsAbout.length) {
-    return `
-      <div>
-        <h3>${headings.knowsAbout}</h3>
-        <ul>${knowsAbout.map((thing: string) => `<li>${thing}</li>`).join("")}</ul>
-      </div>
-    `;
-  }
-  return "";
-};
-
-const renderSkills = (person: any, options: ThemeOptions) => {
-  const { skills } = person;
-  const { headings } = options;
-  if (skills && skills.length) {
-    return `
-      <div>
-        <h3>${headings.skills}</h3>
-        <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("")}</ul>
-      </div>
-    `;
-  }
-  return "";
-};
-
-const renderLanguages = (person: any, options: ThemeOptions) => {
-  const { knowsLanguage } = person;
-  const { headings } = options;
-  if (knowsLanguage && knowsLanguage.length) {
-    return `
-      <div>
-        <h3>${headings.knowsLanguage}</h3>
-        <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}</ul>
-      </div>
-    `;
-  }
-  return "";
-};
-
-const renderCerts = (person: any, options: ThemeOptions) => {
-  const certs = certifications(person);
-  const { headings } = options;
-  if (certs && certs.length) {
-    return `
-      <div>
-        <h3>${headings.certifications}</h3>
-        <ul>${certs.map((certs: any) => `<li>${certs.name}</li>`).join("")}</ul>
-      </div>
-    `;
-  }
-  return "";
-};
+} 

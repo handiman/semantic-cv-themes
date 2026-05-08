@@ -43,8 +43,19 @@ export class LenaTheme extends Theme {
   }
 
   async renderHTML(person: Person): Promise<string> {
-    const { transformer, options } = this;
-    const { headings } = options;
+    const {
+      transformer,
+      options,
+      renderProjects,
+      renderWorksFor,
+      renderAlumniOf,
+      renderLifeEvents,
+      renderCertifications,
+      renderKnowsLanguage,
+      renderKnowsAbout,
+      renderSkills
+    } = this;
+    const { lifeEvent, knowsLanguage, knowsAbout, skills } = person;
 
     transformer.on("head", {
       element(head: any) {
@@ -68,71 +79,35 @@ export class LenaTheme extends Theme {
 
     transformer.on("main", {
       element(main: any) {
-        main.append(renderRoles(headings.projects, projects(person)), html);
-        main.append(renderRoles(headings.worksFor, work(person)), html);
-        main.append(renderRoles(headings.alumniOf, education(person)), html);
-        main.append(renderLifeEvents(person, options), html);
+        main.append(renderProjects(projects(person)), html);
+        main.append(renderWorksFor(work(person)), html);
+        main.append(renderAlumniOf(education(person)), html);
+        main.append(renderLifeEvents(lifeEvent), html);
       }
     });
 
     transformer.on("aside", {
       element(aside: any) {
         aside.append(renderContact(person, options), html);
-        aside.append(renderKnowsAbout(person, options), html);
-        aside.append(renderSkills(person, options), html);
-        aside.append(renderLanguages(person, options), html);
-        aside.append(renderCertifications(person, options), html);
+        aside.append(renderKnowsAbout(knowsAbout), html);
+        aside.append(renderSkills(skills), html);
+        aside.append(renderKnowsLanguage(knowsLanguage), html);
+        aside.append(renderCertifications(certifications(person)), html);
       }
     });
 
     return await transformer.transform(`
-        <div class="page">
-            <header></header>
-            <main></main>
-            <aside></aside>
-        </div>
+      <div class="page">
+        <header></header>
+        <aside></aside>
+        <main></main>
+      </div>
     `);
   }
   renderJS(_person: Person): Promise<string> {
     return Promise.resolve("");
   }
 }
-
-const renderRoles = (heading: string, roles: Array<any>) => {
-  return roles && roles.length
-    ? `
-      <section>
-        <h2>${heading}</h2>
-        ${roles.map(renderRole).join("")}
-      </section>
-    `
-    : "";
-};
-
-const renderRole = (role: any) => {
-  const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
-  const { name, location } = worksFor ?? alumniOf;
-  const duration =
-    startDate || endDate
-      ? `
-        ${startDate ? `<time datetime="${startDate}">${period(startDate)}</time>` : ""}
-        ${endDate ? ` &hyphen; <time datetime="${endDate}">${period(endDate)}</time>` : "present"}
-      `
-      : undefined;
-  return role
-    ? `
-    <article>
-        ${name ? `<h3>${name}</h3>` : ""}
-        <ul class="caption">
-          ${roleName ? `<li>${roleName}</li>` : ""}
-          ${duration ? `<li>${duration}</li>` : ""}
-          ${location ? `<li>${location}</li>` : ""}
-        </ul>
-        ${description ? `<p>${description}</p>` : ""}
-    </article>
-  `
-    : "";
-};
 
 const renderHeader = (header: any, person: Person) => {
   const { image, name, jobTitle, description } = person;
@@ -147,34 +122,6 @@ const renderHeader = (header: any, person: Person) => {
     `,
     html
   );
-};
-
-const renderLifeEvents = (person: any, options: ThemeOptions) => {
-  const { lifeEvent } = person;
-  const { headings } = options;
-  return lifeEvent && lifeEvent.length
-    ? `
-    <section>
-      <h2>${headings.lifeEvent}</h2>
-      ${lifeEvent.map(renderLifeEvent).join("")}
-    </section>
-    `
-    : "";
-};
-
-const renderLifeEvent = (event: any) => {
-  const { name, startDate, description } = event;
-  const location = event.location ? event.location.name : undefined;
-  return `
-  <article>
-    ${name ? `<h3>${name}</h3>` : ""}
-    <ul class="caption">
-      ${startDate ? `<li><time datetime="${startDate}">${period(startDate)}</time></li>` : ""}
-      ${location ? `<li>${location}</li>` : ""}
-    </ul>
-    ${description ? `<p>${description}</p>` : ""}
-  </article>
-  `;
 };
 
 const renderContact = (person: any, options: ThemeOptions) => {
@@ -201,57 +148,5 @@ const renderContact = (person: any, options: ThemeOptions) => {
         <ul>${links.map((link: string) => `<li><a href="${link}" title="${link}">${iconFactory.faIcon(link)}<span>${linkText(link)}</span></a></li>`).join("")}</ul>
       </section>
         `
-    : "";
-};
-
-const renderKnowsAbout = (person: any, options: ThemeOptions) => {
-  const { knowsAbout } = person;
-  const { headings } = options;
-  return knowsAbout && knowsAbout.length
-    ? `
-    <section>
-      <h2>${headings.knowsAbout}</h2>
-      <ul>${knowsAbout.map((area: string) => `<li>${area}</li>`).join("")}</ul>
-    </section>
-  `
-    : "";
-};
-
-const renderSkills = (person: any, options: ThemeOptions) => {
-  const { skills } = person;
-  const { headings } = options;
-  return skills && skills.length
-    ? `
-    <section>
-      <h2>${headings.skills}</h2>
-      <ul>${skills.map((skill: string) => `<li>${skill}</li>`).join("")}</ul>
-    </section>
-    `
-    : "";
-};
-
-const renderLanguages = (person: any, options: ThemeOptions) => {
-  const { knowsLanguage } = person;
-  const { headings } = options;
-  return knowsLanguage && knowsLanguage.length
-    ? `
-    <section>
-      <h2>${headings.knowsLanguage}</h2>
-      <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}</ul>
-    </section>
-    `
-    : "";
-};
-
-const renderCertifications = (person: any, options: ThemeOptions) => {
-  const certs = certifications(person);
-  const { headings } = options;
-  return certs && certs.length
-    ? `
-    <section>
-      <h2>${headings.certifications}</h2>
-      <ul>${certs.map((cert: any) => `<li>${cert.name}</li>`).join("")}</ul>
-    </section>
-    `
     : "";
 };

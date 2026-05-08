@@ -159,6 +159,9 @@ header img {
     display: grid;
     grid-template-columns: repeat(auto-fill, 50%);
   }
+  .grid section {
+    margin-top: 0;
+  }
 }
 .scv-footer {
   margin-top: 1rem;

@@ -108,14 +108,14 @@ footer .social li {
 
 #projects li,
 #references li,
-#skills li,
+#knowledgeGrid li,
 #interests .col {
   padding-left: 0px;
 }
 
 #projects .row,
 #references .row,
-#skills .row,
+#knowledgeGrid .row,
 #interests .row {
   padding-left: 2px;
 }
@@ -183,16 +183,16 @@ ul.inline li:first-child {
 }
 
 @media (min-width: 700px) {
-  #skills > div {
+  #knowledgeGrid > div {
     display: grid;
     grid-auto-columns: 1fr 1fr;
     grid-template-areas: "left right";
     justify-content: start;
   }
-  #skills > div > div:first-child {
+  #knowledgeGrid > div > div:first-child {
     grid-area: left;
   }
-  #skills > div > div:last-child {
+  #knowledgeGrid > div > div:last-child {
     grid-area: right;
   }
 }
