@@ -1,19 +1,24 @@
-import { Theme, titleify } from "../theme.js";
+import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
-import Person, { projects, certifications, work, education, period } from "../person.js";
+import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeMetadata } from "../themeMetadata.js";
 
-const id = "alice";
-const description = "A bright, balanced two‑column theme with crisp typography, gentle contrast, and a confident, approachable rhythm.";
-const tags = [
-  ThemeTags.twoCol,
-  ThemeTags.neutral,
-  ThemeTags.lightMode,
-  ThemeTags.typographyForward,
-  ThemeTags.minimal,
-  ThemeTags.resume
-];
+const meta = {
+  id: "alice",
+  title: "Alice",
+  description:
+    "A bright, balanced two‑column theme with crisp typography, gentle contrast, and a confident, approachable rhythm.",
+  tags: [
+    ThemeTags.twoCol,
+    ThemeTags.neutral,
+    ThemeTags.lightMode,
+    ThemeTags.typographyForward,
+    ThemeTags.minimal,
+    ThemeTags.resume
+  ]
+};
 const html = { html: true };
 
 export class AliceTheme extends Theme {
@@ -21,23 +26,11 @@ export class AliceTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (_: string) => Promise<string>
   ) {
-    super(id, loadAsset, titleify(id), description);
+    super(loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   async renderHTML(person: Person): Promise<string> {

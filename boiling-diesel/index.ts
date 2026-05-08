@@ -1,44 +1,37 @@
-import { Theme, titleify } from "../theme.js";
+import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeMetadata } from "../themeMetadata.js";
 
-const id = "boiling-diesel";
-const title = "Boiling Diesel";
-const description =
-  "A bold, high‑contrast dark theme built for technical résumés that want a strong, confident presence.";
-const tags = [
-  ThemeTags.twoCol,
-  ThemeTags.resume,
-  ThemeTags.darkMode,
-  ThemeTags.highContrast,
-  ThemeTags.technical,
-  ThemeTags.bold
-];
+const meta = {
+  id: "boiling-diesel",
+  title: "Boiling Diesel",
+  description:
+    "A bold, high‑contrast dark theme built for technical résumés that want a strong, confident presence.",
+  tags: [
+    ThemeTags.twoCol,
+    ThemeTags.resume,
+    ThemeTags.darkMode,
+    ThemeTags.highContrast,
+    ThemeTags.technical,
+    ThemeTags.bold
+  ]
+};
+
 const html = { html: true };
 
 export class BoilingDieselTheme extends Theme {
   constructor(
     private transformer: HTMLTransformer,
-    loadAsset: (_: string) => Promise<string>
+    loadAsset: (_: string) => Promise<string>,
+    metadata?: ThemeMetadata
   ) {
-    super(id, loadAsset, titleify(id), description);
+    super(loadAsset, metadata ?? meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return title;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   renderJS(_person: any) {
@@ -149,4 +142,4 @@ export class BoilingDieselTheme extends Theme {
       </div>
     `);
   }
-} 
+}

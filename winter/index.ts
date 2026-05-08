@@ -3,17 +3,20 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeMetadata } from "../themeMetadata.js";
 
-const id = "winter";
-const title = "Winter";
-const description = "A crisp, cool, spacious layout with bright whites and clean structure.";
-const tags = [
-  ThemeTags.twoCol,
-  ThemeTags.headshot,
-  ThemeTags.lightMode,
-  ThemeTags.cool,
-  ThemeTags.resume
-];
+const meta = {
+  id: "winter",
+  title: "Winter",
+  description: "A crisp, cool, spacious layout with bright whites and clean structure.",
+  tags: [
+    ThemeTags.twoCol,
+    ThemeTags.headshot,
+    ThemeTags.lightMode,
+    ThemeTags.cool,
+    ThemeTags.resume
+  ]
+};
 
 const html = { html: true };
 
@@ -22,23 +25,11 @@ export class WinterTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(id, loadAsset, title, description);
+    super(loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return title;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   renderJS(_: Person): Promise<string> {

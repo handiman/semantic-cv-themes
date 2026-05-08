@@ -1,5 +1,4 @@
 import { ThemeRegistryEntry } from "./themeRegistryEntry.js";
-import { titleify } from "./theme.js";
 import { AliceTheme } from "./alice/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { GnapTheme } from "./gnap/index.js";
@@ -11,65 +10,65 @@ import { TimesTheme } from "./times/index.js";
 import { TypewriterTheme } from "./typewriter/index.js";
 import { WinterTheme } from "./winter/index.js";
 const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
-  [AliceTheme.id]: {
+  [AliceTheme.meta.id]: {
     type: AliceTheme,
-    title: AliceTheme.title ?? titleify(AliceTheme.id),
-    description: AliceTheme.description,
-    tags: AliceTheme.tags
+    title: AliceTheme.meta.title,
+    description: AliceTheme.meta.description,
+    tags: AliceTheme.meta.tags
   },
-  [BoilingDieselTheme.id]: {
+  [BoilingDieselTheme.meta.id]: {
     type: BoilingDieselTheme,
-    title: BoilingDieselTheme.title ?? titleify(BoilingDieselTheme.id),
-    description: BoilingDieselTheme.description,
-    tags: BoilingDieselTheme.tags
+    title: BoilingDieselTheme.meta.title,
+    description: BoilingDieselTheme.meta.description,
+    tags: BoilingDieselTheme.meta.tags
   },
-  [GnapTheme.id]: {
+  [GnapTheme.meta.id]: {
     type: GnapTheme,
-    title: GnapTheme.title ?? titleify(GnapTheme.id),
-    description: GnapTheme.description,
-    tags: GnapTheme.tags
+    title: GnapTheme.meta.title,
+    description: GnapTheme.meta.description,
+    tags: GnapTheme.meta.tags
   },
-  [HoldenWreckTheme.id]: {
+  [HoldenWreckTheme.meta.id]: {
     type: HoldenWreckTheme,
-    title: HoldenWreckTheme.title ?? titleify(HoldenWreckTheme.id),
-    description: HoldenWreckTheme.description,
-    tags: HoldenWreckTheme.tags
+    title: HoldenWreckTheme.meta.title,
+    description: HoldenWreckTheme.meta.description,
+    tags: HoldenWreckTheme.meta.tags
   },
-  [LenaTheme.id]: {
+  [LenaTheme.meta.id]: {
     type: LenaTheme,
-    title: LenaTheme.title ?? titleify(LenaTheme.id),
-    description: LenaTheme.description,
-    tags: LenaTheme.tags
+    title: LenaTheme.meta.title,
+    description: LenaTheme.meta.description,
+    tags: LenaTheme.meta.tags
   },
-  [MatildaTheme.id]: {
+  [MatildaTheme.meta.id]: {
     type: MatildaTheme,
-    title: MatildaTheme.title ?? titleify(MatildaTheme.id),
-    description: MatildaTheme.description,
-    tags: MatildaTheme.tags
+    title: MatildaTheme.meta.title,
+    description: MatildaTheme.meta.description,
+    tags: MatildaTheme.meta.tags
   },
-  [MinimalTheme.id]: {
+  [MinimalTheme.meta.id]: {
     type: MinimalTheme,
-    title: MinimalTheme.title ?? titleify(MinimalTheme.id),
-    description: MinimalTheme.description,
-    tags: MinimalTheme.tags
+    title: MinimalTheme.meta.title,
+    description: MinimalTheme.meta.description,
+    tags: MinimalTheme.meta.tags
   },
-  [TimesTheme.id]: {
+  [TimesTheme.meta.id]: {
     type: TimesTheme,
-    title: TimesTheme.title ?? titleify(TimesTheme.id),
-    description: TimesTheme.description,
-    tags: TimesTheme.tags
+    title: TimesTheme.meta.title,
+    description: TimesTheme.meta.description,
+    tags: TimesTheme.meta.tags
   },
-  [TypewriterTheme.id]: {
+  [TypewriterTheme.meta.id]: {
     type: TypewriterTheme,
-    title: TypewriterTheme.title ?? titleify(TypewriterTheme.id),
-    description: TypewriterTheme.description,
-    tags: TypewriterTheme.tags
+    title: TypewriterTheme.meta.title,
+    description: TypewriterTheme.meta.description,
+    tags: TypewriterTheme.meta.tags
   },
-  [WinterTheme.id]: {
+  [WinterTheme.meta.id]: {
     type: WinterTheme,
-    title: WinterTheme.title ?? titleify(WinterTheme.id),
-    description: WinterTheme.description,
-    tags: WinterTheme.tags
+    title: WinterTheme.meta.title,
+    description: WinterTheme.meta.description,
+    tags: WinterTheme.meta.tags
   }    
 };
 export default ThemeRegistry;
