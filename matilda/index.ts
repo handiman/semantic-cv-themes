@@ -1,21 +1,25 @@
-import { Theme, titleify } from "../theme.js";
+import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
+import { ThemeMetadata } from "#themes/themeMetadata.js";
 
-const id = "matilda";
-const description =
-  "A soft, pastel‑toned two‑column theme with gentle typography and a friendly, editorial touch.";
-const tags = [
-  ThemeTags.twoCol,
-  ThemeTags.headshot,
-  ThemeTags.lightMode,
-  ThemeTags.pastel,
-  ThemeTags.resume,
-  ThemeTags.technical
-];
+const meta = {
+  id: "matilda",
+  title: "Matilda",
+  description:
+    "A soft, pastel‑toned two‑column theme with gentle typography and a friendly, editorial touch.",
+  tags: [
+    ThemeTags.twoCol,
+    ThemeTags.headshot,
+    ThemeTags.lightMode,
+    ThemeTags.pastel,
+    ThemeTags.resume,
+    ThemeTags.technical
+  ]
+};
 const html = { html: true };
 
 export class MatildaTheme extends Theme {
@@ -23,23 +27,11 @@ export class MatildaTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (_: string) => Promise<string>
   ) {
-    super(id, loadAsset, titleify(id), description);
+    super(loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   renderHTML(person: Person): Promise<string> {

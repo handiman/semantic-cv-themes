@@ -1,19 +1,23 @@
-import { Theme, titleify } from "../theme.js";
+import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeMetadata } from "#themes/themeMetadata.js";
 
-const id = "typewriter";
-const description =
-  "A retro, monochrome résumé styled like a typewritten page. Charmingly imperfect and intentionally quirky.";
-const tags = [
-  ThemeTags.singleCol,
-  ThemeTags.lightMode,
-  ThemeTags.monoChrome,
-  ThemeTags.resume,
-  ThemeTags.humorous,
-  ThemeTags.retro
-];
+const meta = {
+  id: "typewriter",
+  title: "Typewriter",
+  description:
+    "A retro, monochrome résumé styled like a typewritten page. Charmingly imperfect and intentionally quirky.",
+  tags: [
+    ThemeTags.singleCol,
+    ThemeTags.lightMode,
+    ThemeTags.monoChrome,
+    ThemeTags.resume,
+    ThemeTags.humorous,
+    ThemeTags.retro
+  ]
+};
 
 const html = { html: true };
 
@@ -22,23 +26,11 @@ export class TypewriterTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(id, loadAsset, titleify(id), description);
+    super(loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   renderJS(_person: Person): Promise<string> {

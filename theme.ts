@@ -1,4 +1,5 @@
 import { Person, period } from "./person.js";
+import { ThemeMetadata } from "./themeMetadata.js";
 import { defaultOptions, ThemeOptions } from "./themeOptions.js";
 
 /**
@@ -16,19 +17,14 @@ export abstract class Theme {
   /**
    * Create a new theme instance.
    *
-   * @param id Unique identifier for the theme. Used for asset resolution
-   *           and for generating enhancement element names such as
-   *           `<semantic-cv-theme-{id}>`.
    * @param loadAsset Function that loads a theme asset (CSS/JS) by name.
    *                  Implemented differently in CLI and Worker runtimes.
-   * @param title Optional human friendly theme title
    * @param options Theme options such as headings. Custom values require a subscription. (or forking the repo and building your own implementation for the creative ones out there)
+   * @param meta Theme metadata such as id, title, description and tags.
    */
   constructor(
-    public id: string,
     private loadAsset: (assetName: string) => Promise<string>,
-    public title: string = titleify(id),
-    public description: string = "",
+    private meta: ThemeMetadata,
     protected options: ThemeOptions = defaultOptions
   ) {
     this.renderHTML = this.renderHTML.bind(this);
@@ -61,7 +57,7 @@ export abstract class Theme {
    * @returns Promise resolving to a CSS string.
    */
   async renderCSS(_person: Person) {
-    return withResetCSS(await this.loadAsset(`${this.id}.css`));
+    return withResetCSS(await this.loadAsset(`${this.meta.id}.css`));
   }
 
   /**
@@ -72,7 +68,19 @@ export abstract class Theme {
    * @returns Promise resolving to a JavaScript string.
    */
   renderJS(_person: Person) {
-    return this.loadAsset(`${this.id}.js`);
+    return this.loadAsset(`${this.meta.id}.js`);
+  }
+
+  public get id() {
+    return this.meta.id;
+  }
+
+  public get title() {
+    return this.meta.title;
+  }
+
+  public get description() {
+    return this.meta.description;
   }
 
   protected renderKnowsLanguage(knowsLanguage: Array<string> | null | undefined): string {
@@ -173,15 +181,6 @@ export abstract class Theme {
 }
 
 export default Theme;
-
-export const titleify = (s: string) => initCaps(s).replaceAll("-", " ").replaceAll("_", " ").trim();
-
-const initCaps = (s: string) => {
-  if (s.length) {
-    return `${s[0].toUpperCase()}${s.substring(1)}`;
-  }
-  return s;
-};
 
 const withResetCSS = (themeCss: string) => `
 :root {

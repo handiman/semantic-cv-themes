@@ -1,20 +1,24 @@
-import { Theme, titleify } from "../theme.js";
+import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeMetadata } from "#themes/themeMetadata.js";
 
-const id = "minimal";
-const description =
-  "A neutral, understated single‑column layout designed to be readable, reliable, and universally suitable.";
-const tags = [
-  ThemeTags.singleCol,
-  ThemeTags.lightMode,
-  ThemeTags.minimal,
-  ThemeTags.neutral,
-  ThemeTags.resume,
-  ThemeTags.default
-];
+const meta = {
+  id: "minimal",
+  title: "Minimal",
+  description:
+    "A neutral, understated single‑column layout designed to be readable, reliable, and universally suitable.",
+  tags: [
+    ThemeTags.singleCol,
+    ThemeTags.lightMode,
+    ThemeTags.minimal,
+    ThemeTags.neutral,
+    ThemeTags.resume,
+    ThemeTags.default
+  ]
+};
 const html = { html: true };
 
 export class MinimalTheme extends Theme {
@@ -22,23 +26,11 @@ export class MinimalTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(id, loadAsset, titleify(id), description);
+    super(loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   async renderHTML(person: Person): Promise<string> {

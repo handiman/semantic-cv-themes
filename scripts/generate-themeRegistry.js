@@ -44,17 +44,16 @@ const writeLine = (data) => {
 };
 
 writeLine(`import { ThemeRegistryEntry } from "./themeRegistryEntry.js";`);
-writeLine(`import { titleify } from "./theme.js";`);
 for (const theme of themes) {
   writeLine(`import { ${theme.themeName} } from "./${theme.themeSlug}/index.js";`);
 }
 writeLine(`const ThemeRegistry: Record<string, ThemeRegistryEntry> = {${themes
   .map(
-    (theme) => `\n  [${theme.themeName}.id]: {
+    (theme) => `\n  [${theme.themeName}.meta.id]: {
     type: ${theme.themeName},
-    title: ${theme.themeName}.title ?? titleify(${theme.themeName}.id),
-    description: ${theme.themeName}.description,
-    tags: ${theme.themeName}.tags
+    title: ${theme.themeName}.meta.title,
+    description: ${theme.themeName}.meta.description,
+    tags: ${theme.themeName}.meta.tags
   }`
   )
   .join(",")}    

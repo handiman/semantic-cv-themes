@@ -1,21 +1,25 @@
-import { Theme, titleify } from "../theme.js";
+import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
-import Person, { projects, certifications, work, education, period } from "../person.js";
+import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
+import { ThemeMetadata } from "#themes/themeMetadata.js";
 
-const id = "lena";
-const description =
-  "A modern two‑column theme with clean typography, subtle accents, and a calm, well‑organized visual flow.";
-const tags = [
-  ThemeTags.twoCol,
-  ThemeTags.headshot,
-  ThemeTags.lightMode,
-  ThemeTags.calm,
-  ThemeTags.typographyForward,
-  ThemeTags.photo
-];
+const meta = {
+  id: "lena",
+  title: "Lena",
+  description:
+    "A modern two‑column theme with clean typography, subtle accents, and a calm, well‑organized visual flow.",
+  tags: [
+    ThemeTags.twoCol,
+    ThemeTags.headshot,
+    ThemeTags.lightMode,
+    ThemeTags.calm,
+    ThemeTags.typographyForward,
+    ThemeTags.photo
+  ]
+};
 const html = { html: true };
 
 export class LenaTheme extends Theme {
@@ -23,23 +27,11 @@ export class LenaTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (_: string) => Promise<string>
   ) {
-    super(id, loadAsset, titleify(id), description);
+    super(loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   async renderHTML(person: Person): Promise<string> {

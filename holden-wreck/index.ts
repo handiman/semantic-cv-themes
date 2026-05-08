@@ -3,41 +3,32 @@ import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { Person } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeMetadata } from "#themes/themeMetadata.js";
 
-const id = "holden-wreck";
-const title = "Holden wreck";
-const description =
-  "A clean, approachable two‑column résumé with a light, balanced layout and clear structure.";
-const tags = [
-  ThemeTags.twoCol,
-  ThemeTags.resume,
-  ThemeTags.lightMode,
-  ThemeTags.minimal,
-  ThemeTags.editorial,
-  ThemeTags.calm
-];
+const meta = {
+  id: "holden-wreck",
+  title: "Holden wreck",
+  description:
+    "A clean, approachable two‑column résumé with a light, balanced layout and clear structure.",
+  tags: [
+    ThemeTags.twoCol,
+    ThemeTags.resume,
+    ThemeTags.lightMode,
+    ThemeTags.minimal,
+    ThemeTags.editorial,
+    ThemeTags.calm
+  ]
+};
 
 export class HoldenWreckTheme extends Theme {
   private base: BoilingDieselTheme;
   constructor(transformer: HTMLTransformer, loadAsset: (_: string) => Promise<string>) {
-    super(id, loadAsset, title, description);
-    this.base = new BoilingDieselTheme(transformer, loadAsset);
+    super(loadAsset, meta);
+    this.base = new BoilingDieselTheme(transformer, loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return title;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   renderHTML(person: Person): Promise<string> {

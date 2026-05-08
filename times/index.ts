@@ -1,19 +1,23 @@
-import { Theme, titleify } from "../theme.js";
+import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeMetadata } from "#themes/themeMetadata.js";
 
-const id = "times";
-const description =
-  "A playful newspaper‑inspired résumé with an editorial layout and a subtle sense of humor.";
-const tags = [
-  ThemeTags.twoCol,
-  ThemeTags.lightMode,
-  ThemeTags.editorial,
-  ThemeTags.typographyForward,
-  ThemeTags.playful
-];
+const meta = {
+  id: "times",
+  title: "Times",
+  description:
+    "A playful newspaper‑inspired résumé with an editorial layout and a subtle sense of humor.",
+  tags: [
+    ThemeTags.twoCol,
+    ThemeTags.lightMode,
+    ThemeTags.editorial,
+    ThemeTags.typographyForward,
+    ThemeTags.playful
+  ]
+};
 
 const html = { html: true };
 
@@ -22,23 +26,11 @@ export class TimesTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(id, loadAsset, titleify(id), description);
+    super(loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-
-  static get title() {
-    return;
-  }
-
-  static get description() {
-    return description;
-  }
-
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   renderJS(_person: Person) {

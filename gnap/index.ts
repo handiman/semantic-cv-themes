@@ -3,18 +3,21 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import { FaIconFactory } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { ThemeMetadata } from "#themes/themeMetadata.js";
 
-const id = "gnap";
-const title = "GNAP!";
-const description = "Smurf‑inspired black & white theme with splashes of green";
-const tags = [
-  ThemeTags.heroFullscreen,
-  ThemeTags.darkMode,
-  ThemeTags.monoChrome,
-  ThemeTags.accented,
-  ThemeTags.playful,
-  ThemeTags.bold
-];
+const meta = {
+  id: "gnap",
+  title: "GNAP!",
+  description: "Smurf‑inspired black & white theme with splashes of green",
+  tags: [
+    ThemeTags.heroFullscreen,
+    ThemeTags.darkMode,
+    ThemeTags.monoChrome,
+    ThemeTags.accented,
+    ThemeTags.playful,
+    ThemeTags.bold
+  ]
+};
 
 const html = { html: true };
 
@@ -23,20 +26,11 @@ export class GnapTheme extends Theme {
     private transformer: HTMLTransformer,
     loadAsset: (assetName: string) => Promise<string>
   ) {
-    super(id, loadAsset, title, description);
+    super(loadAsset, meta);
   }
 
-  static get id() {
-    return id;
-  }
-  static get title() {
-    return title;
-  }
-  static get description() {
-    return description;
-  }
-  static get tags() {
-    return tags;
+  static get meta(): ThemeMetadata {
+    return meta;
   }
 
   renderHTML(person: Person): Promise<string> {
