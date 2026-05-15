@@ -1,6 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { FaIconFactory, normalizeArray } from "#themes/utils.js";
+import { normalizeArray } from "#themes/utils.js";
+import { FaIconFactory } from "#themes/fontawesome.js";
 
 describe("faIcon", () => {
   let sut = new FaIconFactory({

@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import fa from "../fontawesome.js";
 
 const meta = {
   id: "boiling-diesel",
@@ -56,7 +57,7 @@ export class BoilingDieselTheme extends Theme {
       .on("head", {
         element(head: any) {
           head.append(
-            `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css" />\n`,
+            `<link rel="stylesheet" href="${fa}" />\n`,
             html
           );
         }
@@ -126,7 +127,7 @@ export class BoilingDieselTheme extends Theme {
     });
 
     return await transformer.transform(`
-      <div class="wrapper">
+      <div class="page">
           <header>
               <div>
                   <img />

@@ -1,9 +1,10 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
-import { FaIconFactory, normalizeArray } from "../utils.js";
+import { normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import fa, { FaIconFactory } from "../fontawesome.js";
 
 const meta = {
   id: "minimal",
@@ -71,7 +72,7 @@ export class MinimalTheme extends Theme {
     transformer.on("head", {
       element(head: any) {
         head.append(
-          `<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"  />\n`,
+          `<link rel="stylesheet" href="${fa}"  />\n`,
           html
         );
       }
@@ -111,7 +112,7 @@ export class MinimalTheme extends Theme {
     });
 
     return await transformer.transform(`
-      <div class="wrapper">      
+      <div class="page">      
         <aside></aside>
         <main></main>
       </div>

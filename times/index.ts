@@ -1,9 +1,10 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
-import { FaIconFactory, normalizeArray } from "../utils.js";
+import { normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import fa, { FaIconFactory } from "../fontawesome.js";
 
 const meta = {
   id: "times",
@@ -117,7 +118,7 @@ export class TimesTheme extends Theme {
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
             <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet" />
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.9.0/css/all.min.css"  />
+            <link rel="stylesheet" href="${fa}"  />
           `,
           html
         );

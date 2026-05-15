@@ -54,7 +54,7 @@ main {
   padding: var(--space-3);
 }
 
-.wrapper {
+.page {
   border-bottom: var(--space-1) solid var(--header-color);
 }
 
