@@ -201,7 +201,7 @@ a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decor
 ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 .scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
 .print { display: none; } .no-print { display: reset; }
-@media print { .print { display: unset; } .no-print { display: none; }}
+@media print { .print { display: unset; } .no-print, .scv-footer { display: none; }}
 ${themeCss}    
 `;
 
