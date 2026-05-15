@@ -1,5 +1,3 @@
-import { Person } from "./person.js";
-
 /**
  * Small normalization helpers used throughout Semantic‑CV.
  *
