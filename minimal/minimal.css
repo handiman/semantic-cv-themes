@@ -64,7 +64,7 @@ img {
   padding: 0;
 }
 
-.wrapper {
+.page {
   max-width: 960px;
   margin: 0 auto;
   padding: calc(var(--space) * 2);
@@ -129,7 +129,7 @@ time:last-child::after {
 }
 
 @media (min-width: 700px) {
-  .wrapper {
+  .page {
     display: grid;
     grid-template-areas: "left right";
     justify-content: start;
