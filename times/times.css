@@ -44,7 +44,7 @@ article {
 
 header .grid {
   display: grid;
-  grid-auto-columns: 1fr 1fr;
+  grid-auto-columns: 1fr 2fr;
   grid-template-areas: "left right";
   justify-content: space-evenly;
 }
@@ -114,4 +114,12 @@ h2,
 h3 {
   font-size: 1.5rem;
   margin-top: 1.5rem;
+}
+@media print {
+  .social li {
+    display: block;
+  }
+  .social li div {
+    margin-left: 0.5rem;
+  }
 }
