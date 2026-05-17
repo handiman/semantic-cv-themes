@@ -218,9 +218,9 @@ ul.inline li:first-child {
   section,
   blockquote {
     border: none;
+    padding: 0;
   }
-
-  blockquote {
+  section:last-child {
     padding: 0;
   }
   .print {
@@ -229,8 +229,18 @@ ul.inline li:first-child {
   .no-print {
     display: none;
   }
+  h1 {
+    font-size: 3rem !important;
+  }
+  h2 {
+    font-size: 2rem !important;
+  }
+  h3, h4 {
+    font-size: 1.5rem !important;
+  }
 }
 
-.scv-footer, .scv-footer * {
+.scv-footer,
+.scv-footer * {
   color: var(--black) !important;
 }

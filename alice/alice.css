@@ -157,3 +157,17 @@ article ul li:last-child::after {
     font-size: var(--h2-size);
   }
 }
+
+@media print {
+  aside li {
+    display: inline-block;
+  }
+  aside li::after {
+    content: ", ";
+    margin-right: 0.5rcap;
+  }
+  aside li::after:last-child {
+    content: "";
+    margin-right: 0;
+  }
+}

@@ -166,3 +166,15 @@ header img {
 .scv-footer {
   margin-top: 1rem;
 }
+
+@media print {
+  .page {
+    border-bottom: none;
+  }
+  h1 {
+    color: var(--text-color) !important;
+  }
+  header {
+    padding-block: 0;
+  }
+}

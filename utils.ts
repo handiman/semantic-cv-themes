@@ -30,3 +30,12 @@ export const normalizeArray = (...args: Array<any>) => {
   }
   return result.filter((item) => (item ? true : false));
 };
+
+/**
+ * Remove the protocol part from a URL and return the result.
+ */
+export const removeProtocol = (url: string) => {
+  const result = url.replace("mailto:", "").replace("tel:", "");
+  const pos = result.indexOf("://");
+  return pos > -1 ? result.substring(pos + 3) : result;
+};

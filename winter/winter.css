@@ -118,3 +118,27 @@ h3 {
     gap: var(--spacing-1);
   }
 }
+
+@media print {
+  footer {
+    text-align: left;
+  }
+  .title li i {
+    margin-right: 0;
+  }
+  .title li,
+  footer li {
+    display: block;
+  }
+  .title li div,
+  footer li div {
+    margin-left: var(--spacing-0);
+  }
+  .grid {
+    grid-template-columns: auto auto;
+  }
+  .grid section {
+    width: auto;
+    max-width: auto;
+  }
+}

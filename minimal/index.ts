@@ -1,6 +1,6 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
-import { normalizeArray } from "../utils.js";
+import { normalizeArray, removeProtocol } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
@@ -71,18 +71,31 @@ export class MinimalTheme extends Theme {
 
     transformer.on("head", {
       element(head: any) {
-        head.append(
-          `<link rel="stylesheet" href="${fa}"  />\n`,
-          html
+        head.append(`<link rel="stylesheet" href="${fa}"  />\n`, html);
+      }
+    });
+
+    transformer.on("header", {
+      element(header: any) {
+        if (image) {
+          header.append(`<picture><img src="${image}" alt="${name ?? ""}" /></picture>`, html);
+        }
+        header.append(
+          `
+            <div>
+              <h1>${name}</h1>
+              ${jobTitle ? `<div>${jobTitle}</div>` : ""}
+              ${description ? `<div>${description}</div>` : ""}
+              ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}<div class="print">${removeProtocol(link)}</div></a></li>`).join("\n")}</ul>` : ""}
+            </div>              
+        `,
+          html  
         );
       }
     });
 
     transformer.on("aside", {
       element(aside: any) {
-        if (image) {
-          aside.append(`<img src="${image}" alt="${name ?? ""}" />`, html);
-        }
         aside.append(renderKnowsAbout(knowsAbout), html);
         aside.append(renderSkills(skills), html);
         aside.append(renderCertifications(certs), html);
@@ -94,12 +107,6 @@ export class MinimalTheme extends Theme {
       element(main: any) {
         main.append(
           `
-            <header>
-                <h1>${name}</h1>
-                ${jobTitle ? `<div>${jobTitle}</div>` : ""}
-                ${description ? `<div>${description}</div>` : ""}
-                ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}</a></li>`).join("\n")}</ul>` : ""}
-            </header>
             ${renderProjects(projects(person))}
             ${renderWorksFor(work(person))}
             ${renderAlumniOf(education(person))}
@@ -113,6 +120,7 @@ export class MinimalTheme extends Theme {
 
     return await transformer.transform(`
       <div class="page">      
+        <header></header>
         <aside></aside>
         <main></main>
       </div>

@@ -324,4 +324,10 @@ main {
     padding: 0;
     margin-right: 0.5cap !important;
   }
+  aside section:first-child li {
+    display: block;
+  }
+  aside section:first-child li::after {
+    content: "";
+  }
 }

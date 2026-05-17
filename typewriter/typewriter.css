@@ -56,4 +56,15 @@ h3 {
     border: none;
     box-shadow: none;
   }
+  #skills li, #knowsLanguage li, #knowsAbout li {
+    display: inline-block;
+    margin-right: 1cap;
+  }
+  #skills li::after, #knowsLanguage li::after, #knowsAbout li::after {
+    content: ",";
+  }
+  #skills li:last-child::after, #knowsLanguage li:last-child::after, #knowsAbout li:last-child::after {
+    content: "";
+    margin-right: 0;
+  }
 }
