@@ -215,4 +215,16 @@ main > header {
   .scv-footer {
     margin-block: var(--space-1);
   }
+  .cv {
+    box-shadow: none;
+    margin: 0;
+  }
+  .desktop {
+    padding: 0;
+    margin: 0;
+  }
+  @page {
+    margin: 0;
+    padding: 0;
+  }
 }
