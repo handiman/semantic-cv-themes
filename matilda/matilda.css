@@ -207,24 +207,32 @@ main > header {
   margin-bottom: var(--space-1);
 }
 @media print {
-  aside,
-  main {
-    border-bottom: none;
+  body > div, .scv-footer {
+    display:block !important;
   }
-
   .scv-footer {
-    margin-block: var(--space-1);
+    display:block !important;
+    background-color: var(text-color-muted);
+    opacity: 1 !important;
+    padding: var(--space-1) !important;
+    margin: 0;
+  }
+  .scv-footer a {
+    color: inherit !important;
+    opacity: 1 !important;
   }
   .cv {
     box-shadow: none;
     margin: 0;
   }
+  aside, main {
+    border: none;
+  }
   .desktop {
     padding: 0;
     margin: 0;
   }
-  @page {
-    margin: 0;
-    padding: 0;
+  .desktop::before {
+    background-color: transparent !important;
   }
 }

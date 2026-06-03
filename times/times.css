@@ -123,3 +123,8 @@ h3 {
     margin-left: 0.5rem;
   }
 }
+
+@page {
+  padding: 3rem !important;
+  margin: 0;
+}

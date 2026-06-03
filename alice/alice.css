@@ -170,4 +170,18 @@ article ul li:last-child::after {
     content: "";
     margin-right: 0;
   }
+  .page {
+    padding-block: var(--space-2);
+    padding-inline: calc(var(--space-2) * 1.5);
+  }
+  aside, main, section, article {
+    padding-block: 0 !important;
+    margin-block: 0 !important;
+  }
+  h2 {
+    padding-top: calc(var(--space-2) * 1.5) !important;
+  }
+  h3 {
+    padding-top: var(--space-1);
+  }
 }
