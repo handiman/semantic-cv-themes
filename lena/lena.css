@@ -330,4 +330,19 @@ main {
   aside section:first-child li::after {
     content: "";
   }
+  .summary p:last-child, h2, article, aside ul {
+    padding-inline: var(--space-2) !important;
+  }
+  section {
+    margin-top: 0 !important;
+    padding-top:0 !important;
+    margin-bottom: var(--space-0) !important;
+  }
+  h2 {
+    margin-bottom: var(--space-1) !important;
+  }
+  html, body {
+    background: var(--background) !important;
+  }
 }
+

@@ -120,6 +120,19 @@ h3 {
 }
 
 @media print {
+  section, article {
+    padding-top: var(--spacing-1);
+  }
+  h3 {
+    margin: 0 !important;
+    padding: 0 !important;
+  }
+  .grid section, section:first-child {
+    padding-top: 0;
+  }
+  body > header, body > div {
+    padding-inline: calc(var(--spacing-2) + var(--spacing-0)) !important;
+  }
   footer {
     text-align: left;
   }

@@ -154,13 +154,17 @@ header img {
   header h1 {
     color: #fafafa;
   }
-
+  main {
+    margin-top: 0;
+    padding-top: 0;
+  }
   .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, 50%);
   }
   .grid section {
     margin-top: 0;
+    padding-bottom: var(--space-1);
   }
 }
 .scv-footer {
@@ -171,10 +175,14 @@ header img {
   .page {
     border-bottom: none;
   }
-  h1 {
-    color: var(--text-color) !important;
-  }
   header {
+    padding-inline: calc(var(--space-2)) !important;
     padding-block: 0;
+  }
+  main {
+    padding-inline: calc(var(--space-3) * 2) !important;
+  }
+  section {
+    padding-top: calc(var(--space-3) * 1.5) !important;
   }
 }
