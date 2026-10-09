@@ -11,7 +11,7 @@
     "rimraf": "6.1.3",
     "tsx": "4.23.15",
     "typescript": "5.9.3",
-    "jsdom": "^29.0.0"
+    "jsdom": "^30.1.2"
   },
   "imports": {
     "#themes/*": "./dist/*"
