@@ -20,6 +20,10 @@ The repository contains the **base theme classes** and the **default themes** th
 - Normalization, analysis, or rendering logic from the core package
 - Paid or premium themes
 
+## Contributing
+
+New themes, fixes and ideas are welcome. See [CONTRIBUTING.md](CONTRIBUTING.md) and the [code of conduct](CODE_OF_CONDUCT.md).
+
 ## License
 All themes in this repository are free to use and adapt.
 
