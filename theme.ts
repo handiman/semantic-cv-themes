@@ -95,7 +95,7 @@ export abstract class Theme {
       ? `
         <section id="knowsLanguage">
           <h2>${headings.knowsLanguage}</h2>
-          <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}
+          <ul>${knowsLanguage.map((language: string) => `<li>${language}</li>`).join("")}</ul>
         </section>
       `
       : "";

@@ -78,7 +78,7 @@ export class AliceTheme extends Theme {
 
     transformer.on("#description", {
       element(el: any) {
-        if (el) {
+        if (description) {
           el.replace(
             `
             <section id="description">
