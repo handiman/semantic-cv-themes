@@ -34,13 +34,24 @@ export const education = (person: Person) => {
 
 /**
  * Convert a date to the format YYYY-MM.
- * @param date
+ *
+ * ISO strings ("2021-10", "2021-10-21", "2021-10-21T08:00:00Z") are read
+ * as written, so the result never shifts with the local time zone.
+ * Anything that isn't a valid date is returned unchanged.
  */
 export const period = (value: string | Date) => {
+  if ("string" === typeof value) {
+    const iso = /^(\d{4})-(\d{2})/.exec(value);
+    if (iso) {
+      return `${iso[1]}-${iso[2]}`;
+    }
+  }
   const date = "string" === typeof value ? new Date(value) : value;
-  const year = date.getFullYear();
-  const month = date.getMonth();
-  return `${year}-${month < 10 ? `0${month}` : month}`;
+  if (isNaN(date.getTime())) {
+    return String(value);
+  }
+  const month = date.getUTCMonth() + 1; // getUTCMonth() is zero-based
+  return `${date.getUTCFullYear()}-${String(month).padStart(2, "0")}`;
 };
 
 /**
