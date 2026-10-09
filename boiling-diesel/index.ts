@@ -88,7 +88,9 @@ export class BoilingDieselTheme extends Theme {
         element(div: any) {
           const { description, email, telephone } = person;
           if (description) {
-            div.append(description);
+            // Already HTML-escaped by semantic-cv-core; insert as HTML so it
+            // isn't escaped twice.
+            div.append(description, html);
           }
           if (email || telephone) {
             div.append(

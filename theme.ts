@@ -12,6 +12,12 @@ import { defaultOptions, ThemeOptions } from "./themeOptions.js";
  * Subclasses must implement `renderHTML()`. The base class provides
  * default implementations for `renderCSS()` and `renderJS()` that load
  * assets named after the theme's `id` (e.g. "minimal.css", "minimal.js").
+ *
+ * Security: the Person passed to the render methods comes from
+ * semantic-cv-core's renderHTML, which has already HTML-escaped every
+ * string and removed unsafe URLs (javascript:, data:, …). Themes therefore
+ * insert values as HTML (`{ html: true }`) and must not escape them again.
+ * Never call a theme with an unescaped Person.
  */
 export abstract class Theme {
   /**
