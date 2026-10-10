@@ -1,6 +1,6 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
-import { normalizeArray } from "../utils.js";
+import { locationText, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
@@ -119,6 +119,7 @@ const renderHeader = (header: any, person: Person) => {
 
 const renderContact = (person: any, options: ThemeOptions) => {
   const { email, telephone, url, sameAs } = person;
+  const location = locationText(person.workLocation);
   const { headings } = options;
   const links = normalizeArray(
     sameAs,
@@ -134,11 +135,11 @@ const renderContact = (person: any, options: ThemeOptions) => {
 
     return url.substring(url.indexOf("://") + 3).replace("www.", "");
   };
-  return links && links.length
+  return links.length || location
     ? `
       <section>
         <h2>${headings.contact}</h2>
-        <ul>${links.map((link: string) => `<li><a href="${link}" title="${link}">${iconFactory.faIcon(link)}<span>${linkText(link)}</span></a></li>`).join("")}</ul>
+        <ul>${location ? `<li><a><i class="fas fa-location-dot"></i><span>${location}</span></a></li>` : ""}${links.map((link: string) => `<li><a href="${link}" title="${link}">${iconFactory.faIcon(link)}<span>${linkText(link)}</span></a></li>`).join("")}</ul>
       </section>
         `
     : "";

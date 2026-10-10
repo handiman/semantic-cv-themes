@@ -1,6 +1,6 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
-import { normalizeArray, removeProtocol } from "../utils.js";
+import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
@@ -85,6 +85,7 @@ export class MinimalTheme extends Theme {
             <div>
               <h1>${name}</h1>
               ${jobTitle ? `<div>${jobTitle}</div>` : ""}
+              ${locationText(person.workLocation) ? `<div>${locationText(person.workLocation)}</div>` : ""}
               ${description ? `<div>${description}</div>` : ""}
               ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}<div class="print">${removeProtocol(link)}</div></a></li>`).join("\n")}</ul>` : ""}
             </div>              

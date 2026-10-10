@@ -2,6 +2,7 @@ import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
+import { linkText, locationText, normalizeArray } from "../utils.js";
 import { ThemeMetadata } from "../themeMetadata.js";
 
 const meta = {
@@ -52,6 +53,13 @@ export class TypewriterTheme extends Theme {
     } = this;
     const { headings } = options;
     const { name, jobTitle, description, knowsAbout, skills, knowsLanguage, lifeEvent } = person;
+    const location = locationText(person.workLocation);
+    const contacts = normalizeArray(
+      person.email ? `mailto:${person.email}` : undefined,
+      person.telephone ? `tel:${person.telephone}` : undefined,
+      person.url,
+      person.sameAs
+    );
 
     transformer.on("head", {
       element(head: any) {
@@ -73,6 +81,14 @@ export class TypewriterTheme extends Theme {
             <header>
               <h1>${name ?? ""}</h1>
               <div>${jobTitle ?? ""}</div>
+              ${
+                location || contacts.length
+                  ? `<ul class="contact">
+                      ${location ? `<li>${location}</li>` : ""}
+                      ${contacts.map((link: string) => `<li><a href="${link}">${linkText(link)}</a></li>`).join("")}
+                    </ul>`
+                  : ""
+              }
             </header>
             <section id="basics">
                 ${
