@@ -178,6 +178,10 @@ ul.inline li:first-child {
 .print {
   display: none;
 }
+header .contact li {
+  display: inline-block;
+  margin-right: 1.5rem;
+}
 .no-print {
   display: "";
 }
@@ -219,7 +223,7 @@ ul.inline li:first-child {
     padding: 0;
   }
   .print {
-    display: "";
+    display: block;
   }
   .no-print {
     display: none;

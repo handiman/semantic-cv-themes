@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { linkText, locationText, normalizeArray } from "../utils.js";
 import fa, { FaIconFactory } from "../fontawesome.js";
 
 const meta = {
@@ -49,6 +50,15 @@ export class GnapTheme extends Theme {
     const { headings } = options;
     const { name, description, jobTitle, telephone, lifeEvent, knowsLanguage, knowsAbout, skills } =
       person;
+    const location = locationText(person.workLocation);
+    // The menu and footer show icon-only links and are hidden in print, so
+    // print gets the addresses as text in the header.
+    const printContacts = normalizeArray(
+      person.email ? `mailto:${person.email}` : undefined,
+      telephone ? `tel:${telephone}` : undefined,
+      person.url,
+      person.sameAs
+    );
 
     const renderSummary = () => {
       if (description) {
@@ -83,7 +93,8 @@ export class GnapTheme extends Theme {
             <div class="no-print">Hi, I'm</div>
             <h1>${name ?? ""}</h1>
             ${jobTitle ? `<h4 class="job-title" id="job-title">${jobTitle}</h4>` : ""}
-            ${telephone ? `<div class="print"><i class="fas fa-phone"></i> ${telephone}</div>` : ""}
+            ${location ? `<div class="location">${location}</div>` : ""}
+            ${printContacts.length ? `<ul class="print contact">${printContacts.map((link: string) => `<li>${linkText(link)}</li>`).join("")}</ul>` : ""}
           `,
           html
         );

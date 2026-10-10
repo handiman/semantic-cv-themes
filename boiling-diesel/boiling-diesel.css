@@ -110,6 +110,9 @@ a i {
   display: inline;
   padding-right: var(--space-1);
 }
+header li {
+  white-space: nowrap;
+}
 
 article {
   padding-block: var(--space-1);
@@ -174,6 +177,28 @@ header img {
 @media print {
   .page {
     border-bottom: none;
+  }
+  /* Keep the description in flow so a long contact list can't overlap
+     main. The band is pinned to the photo's centre line instead of 50% of
+     the (now taller) header, and the name sits just above that line. */
+  header {
+    height: auto;
+  }
+  header::before,
+  header::after {
+    height: var(--half-header-height);
+  }
+  header > div {
+    align-items: flex-start;
+  }
+  header img {
+    flex: none;
+  }
+  header > div > div {
+    margin-top: calc(var(--image-size) / 2 - 3rem);
+  }
+  header .description {
+    position: static;
   }
   header {
     padding-inline: calc(var(--space-2)) !important;

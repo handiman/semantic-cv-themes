@@ -236,3 +236,16 @@ main > header {
     background-color: transparent !important;
   }
 }
+
+/* Long contact links wrap on screen instead of being cut off. In print a
+   wrapped link reads as two broken lines to an ATS, so keep it on one line. */
+aside a span {
+  overflow-wrap: anywhere;
+}
+@media print {
+  aside a span {
+    overflow-wrap: normal;
+    white-space: nowrap;
+    font-size: 0.8em;
+  }
+}
