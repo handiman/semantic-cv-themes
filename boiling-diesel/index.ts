@@ -3,7 +3,8 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import fa from "../fontawesome.js";
+import fa, { FaIconFactory } from "../fontawesome.js";
+import { linkText, locationText, normalizeArray } from "../utils.js";
 
 const meta = {
   id: "boiling-diesel",
@@ -86,18 +87,26 @@ export class BoilingDieselTheme extends Theme {
       })
       .on("header .description", {
         element(div: any) {
-          const { description, email, telephone } = person;
+          const { description, email, telephone, url, sameAs, workLocation } = person;
           if (description) {
             // Already HTML-escaped by semantic-cv-core; insert as HTML so it
             // isn't escaped twice.
             div.append(description, html);
           }
-          if (email || telephone) {
+          const iconFactory = new FaIconFactory(person);
+          const links = normalizeArray(
+            email ? `mailto:${email}` : undefined,
+            telephone ? `tel:${telephone}` : undefined,
+            url,
+            sameAs
+          );
+          const location = locationText(workLocation);
+          if (links.length || location) {
             div.append(
               `
                 <ul>
-                  ${email ? `<li><a href="mailto:${email}"><i class="fas fa-envelope"></i><span>${email}</span></a></li>` : ""}
-                  ${telephone ? `<li><a href="tel:${telephone}"><i class="fas fa-phone"></i><span>${telephone}</span></a></li>` : ""}
+                  ${location ? `<li><a><i class="fas fa-location-dot"></i><span>${location}</span></a></li>` : ""}
+                  ${links.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}<span>${linkText(link)}</span></a></li>`).join("\n")}
                 </ul>
               `,
               html

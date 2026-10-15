@@ -1,6 +1,6 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
-import { normalizeArray } from "../utils.js";
+import { locationText, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
@@ -68,8 +68,7 @@ export class MatildaTheme extends Theme {
           return url.substring(url.indexOf(":") + 1);
         }
 
-        const text = url.substring(url.indexOf("://") + 3).replace("www.", "");
-        return text.length > 26 ? text.substring(0, 25) + "…" : text;
+        return url.substring(url.indexOf("://") + 3).replace("www.", "");
       };
       const links = normalizeArray(
         sameAs,
@@ -77,11 +76,12 @@ export class MatildaTheme extends Theme {
         email ? `mailto:${email}` : undefined,
         telephone ? `tel:${telephone}` : undefined
       );
-      return links.length
+      const location = locationText(person.workLocation);
+      return links.length || location
         ? `
           <section>
             <h2>${headings.contact}</h2>
-            <ul>${links.map((link: string) => `<li><a href="${link}" title="${link}"><span>${linkText(link)}</span>${iconFactory.faIcon(link)}</a></li>`).join("")}</ul>
+            <ul>${location ? `<li><a><span>${location}</span><i class="fas fa-location-dot"></i></a></li>` : ""}${links.map((link: string) => `<li><a href="${link}" title="${link}"><span>${linkText(link)}</span>${iconFactory.faIcon(link)}</a></li>`).join("")}</ul>
           </section>
         `
         : "";

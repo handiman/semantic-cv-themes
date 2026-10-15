@@ -1,6 +1,6 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
-import { normalizeArray, removeProtocol } from "../utils.js";
+import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
@@ -75,7 +75,7 @@ export class TimesTheme extends Theme {
         telephone ? `tel:${telephone}` : undefined
       );
       if (links.length > 0) {
-        return `<ul class="social">${links.map((item: string) => `<li><a href="${item}">${iconFactory.faIcon(item)}</a><div class="print">${removeProtocol(item)}</div></a></li>`).join("\n")}</ul>`;
+        return `<ul class="social">${links.map((item: string) => `<li><a href="${item}">${iconFactory.faIcon(item)}</a><div class="print">${removeProtocol(item)}</div></li>`).join("\n")}</ul>`;
       }
     };
 
@@ -86,6 +86,7 @@ export class TimesTheme extends Theme {
             <h1>
                 ${name ?? ""}
                 <small>${jobTitle ?? ""}</small>
+                ${locationText(person.workLocation) ? `<small>${locationText(person.workLocation)}</small>` : ""}
             </h1>
             <div class="grid">
                 <div>${now.toLocaleDateString()}</div>

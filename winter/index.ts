@@ -1,7 +1,7 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
-import { normalizeArray, removeProtocol } from "../utils.js";
+import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
 import fa, { FaIconFactory } from "../fontawesome.js";
@@ -91,7 +91,7 @@ export class WinterTheme extends Theme {
           telephone ? `tel:${telephone}` : undefined
         );
         if (links && links.length) {
-          return `<ul">${links.map((link: any) => `<li><a href="${link}">${iconFactory.faIcon(link)}</a><div class="print">${removeProtocol(link)}</div></li>`).join("\n")}</ul>`;
+          return `<ul>${links.map((link: any) => `<li><a href="${link}">${iconFactory.faIcon(link)}</a><div class="print">${removeProtocol(link)}</div></li>`).join("\n")}</ul>`;
         }
       };
 
@@ -106,11 +106,12 @@ export class WinterTheme extends Theme {
         <div class="title">
             <h1>${name ?? ""}</h1>
             ${jobTitle ? `<div>${jobTitle}</div>` : ""}
+            ${locationText(person.workLocation) ? `<div>${locationText(person.workLocation)}</div>` : ""}
             <ul>
             ${email ? `<li><a href="mailto:${email}"><i class="fas fa-envelope"></i><div class="print">${email}</div></a></li>` : ""}
             ${telephone ? `<li><a href="tel:${telephone}"><i class="fas fa-phone"></i><div class="print">${telephone}</div></a></li>` : ""}
             </ul>
-        </title>
+        </div>
       `;
     };
 

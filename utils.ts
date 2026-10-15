@@ -32,6 +32,19 @@ export const normalizeArray = (...args: Array<any>) => {
 };
 
 /**
+ * Visible text for a contact link: the address without protocol or a
+ * leading "www.". Never truncated, so printed CVs keep the full link.
+ */
+export const linkText = (url: string) => removeProtocol(url).replace(/^www\./, "");
+
+/**
+ * Text for `workLocation`, which may be a plain string or a schema.org
+ * Place with a name.
+ */
+export const locationText = (location: any): string | undefined =>
+  typeof location === "string" ? location : (location?.name ?? undefined);
+
+/**
  * Remove the protocol part from a URL and return the result.
  */
 export const removeProtocol = (url: string) => {

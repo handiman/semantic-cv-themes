@@ -41,6 +41,12 @@ h3 {
 
   line-height: 1.6;
 }
+header .contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0 1.5rem;
+  margin-top: 5px;
+}
 .scv-footer {
   margin-top: 2rem;
 }

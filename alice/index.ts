@@ -1,6 +1,6 @@
 import { Theme } from "../theme.js";
 import { HTMLTransformer } from "../htmlTransformer.js";
-import { normalizeArray } from "../utils.js";
+import { locationText, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
@@ -209,6 +209,7 @@ export class AliceTheme extends Theme {
 
 const renderContactDetails = (person: Person) => {
   const { email, telephone, url, sameAs } = person;
+  const location = locationText(person.workLocation);
   const contactDetails = normalizeArray(
     email ? `mailto:${email}` : email,
     telephone ? `tel:${telephone}` : telephone,
@@ -223,10 +224,10 @@ const renderContactDetails = (person: Person) => {
 
     return url.substring(url.indexOf("://") + 3).replace("www.", "");
   };
-  return contactDetails.length
+  return contactDetails.length || location
     ? `
     <div id="contact">
-        <ul>${contactDetails
+        <ul>${location ? `<li><a><i class="fas fa-location-dot"></i>${location}</a></li>` : ""}${contactDetails
           .map((url: string) => {
             const icon = iconFactory.faIcon(url);
             return `<li><a href="${url}">${icon}${linkText(url)}</a></li>`;
