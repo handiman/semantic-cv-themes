@@ -206,10 +206,16 @@ html, body { font-size: var(--font-size-base); font-family: var(--font-family-ba
 a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decoration: none; } a:hover { text-decoration: underline; }
 ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 .scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
+.scv-description { white-space: pre-line; }
 .print { display: none; } .no-print { display: reset; }
 @media print { 
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  section, article { break-inside: avoid; page-break-inside: avoid; }
+  /* Keep one role together; a whole section rarely fits on a page. */
+  article { break-inside: avoid; page-break-inside: avoid; }
+  h1, h2, h3 { break-after: avoid; page-break-after: avoid; }
+  /* Contextual alternates (e.g. Inter's) print "-" and ":" as glyphs with
+     no Unicode mapping, so ATS text extraction loses them. */
+  html, body { font-feature-settings: "calt" 0; }
   .print { display: unset; } 
   .no-print { display: none; }
 }
@@ -224,7 +230,7 @@ const renderRole = (role: any) => {
     startDate || endDate
       ? `
           ${startDate ? `<time datetime="${startDate}">${period(startDate)}</time>` : ""}
-          &hyphen; ${endDate ? ` <time datetime="${endDate}">${period(endDate)}</time>` : "present"}
+          &ndash; ${endDate ? ` <time datetime="${endDate}">${period(endDate)}</time>` : "present"}
         `
       : undefined;
   return role
@@ -236,7 +242,7 @@ const renderRole = (role: any) => {
           ${duration ? `<li>${duration}</li>` : ""}
           ${location ? `<li>${location}</li>` : ""}
         </ul>
-        ${description ? `<p>${description}</p>` : ""}
+        ${description ? `<p class="scv-description">${String(description).trim()}</p>` : ""}
     </article>
     `
     : "";
@@ -252,7 +258,7 @@ const renderLifeEvent = (event: any) => {
           ${startDate ? `<li><time datetime="${startDate}">${period(startDate)}</time></li>` : ""}
           ${location ? `<li>${location}</li>` : ""}
         </ul>
-        ${description ? `<p>${description}</p>` : ""}
+        ${description ? `<p class="scv-description">${String(description).trim()}</p>` : ""}
       </article>
     `;
 };

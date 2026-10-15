@@ -41,4 +41,43 @@ describe("Theme section renderers", () => {
     assert.match(html, />2020-01</);
     assert.match(html, />2021-12</);
   });
+
+  it("separates role dates with an en dash", () => {
+    const html = theme.renderWorksFor([
+      { startDate: "2020-01-15", endDate: "2021-12-31", worksFor: { name: "Acme" } }
+    ]);
+    assert.match(html, /&ndash;/);
+    assert.doesNotMatch(html, /&hyphen;/);
+  });
+
+  it("keeps the line breaks in role and life event descriptions", () => {
+    const role = theme.renderWorksFor([{ description: "One\nTwo\n", worksFor: { name: "Acme" } }]);
+    const event = theme.renderLifeEvents([{ name: "Moved", description: "One\nTwo" }]);
+    assert.match(role, /<p class="scv-description">One\nTwo<\/p>/);
+    assert.match(event, /<p class="scv-description">One\nTwo<\/p>/);
+  });
+});
+
+describe("Theme base CSS", () => {
+  const css = () => new TestTheme().renderCSS({});
+
+  it("preserves description line breaks", async () => {
+    assert.match(await css(), /\.scv-description \{ white-space: pre-line; \}/);
+  });
+
+  it("only keeps articles, not whole sections, on one printed page", async () => {
+    const print = (await css()).split("@media print")[1];
+    assert.match(print, /\n\s*article \{ break-inside: avoid;/);
+    assert.doesNotMatch(print, /section,? *article|section \{ break-inside/);
+  });
+
+  it("keeps headings with the content that follows them in print", async () => {
+    const print = (await css()).split("@media print")[1];
+    assert.match(print, /h1, h2, h3 \{ break-after: avoid;/);
+  });
+
+  it("turns off contextual alternates in print", async () => {
+    const print = (await css()).split("@media print")[1];
+    assert.match(print, /font-feature-settings: "calt" 0/);
+  });
 });

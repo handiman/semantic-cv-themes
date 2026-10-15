@@ -35,7 +35,6 @@ article {
   #events {
     grid-template-columns: repeat(auto-fill, 300px);
   }
-  section,
   article {
     page-break-inside: avoid;
     border: 0;
