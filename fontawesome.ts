@@ -7,6 +7,19 @@ export const CDN = {
 
 export default CDN.v6;
 
+/** Host name of a URL without a leading "www.", or "" if it is not an absolute URL. */
+const hostOf = (value: string): string => {
+  try {
+    return new URL(value).hostname.toLowerCase().replace(/^www\./, "");
+  } catch {
+    return "";
+  }
+};
+
+/** True if host is the domain itself or one of its subdomains. */
+const isHostOf = (host: string, domain: string): boolean =>
+  host === domain || host.endsWith(`.${domain}`);
+
 /**
  * Factory for generating Font Awesome icon markup based on a URL or
  * contact string. Attempts to infer the appropriate icon glyph and
@@ -30,10 +43,11 @@ export class FaIconFactory {
       }
     };
     const faGlyph = (url: string) => {
-      if (url.indexOf("microsoft.com") > -1) {
+      const host = hostOf(url);
+      if (isHostOf(host, "microsoft.com")) {
         return "windows";
       }
-      if (url.indexOf("://x.com") > 1 || url.indexOf("://www.x.com") > -1) {
+      if (host === "x.com") {
         return "twitter";
       }
       if (url.indexOf("mailto:") > -1) {
