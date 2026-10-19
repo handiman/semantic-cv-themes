@@ -75,14 +75,39 @@ const expected = [
   "linkedin.com/in/ada-lovelace-analytical-engine-programmer/"
 ];
 
-const renderText = async (themeId) => {
+const renderText = async (themeId, subject = person) => {
   const transformer = new JsdomTransformer();
   const theme = new ThemeLoader(transformer, loadAsset).loadTheme(themeId);
-  const html = await theme.renderHTML(person);
+  const html = await theme.renderHTML(subject);
   const { document } = new JSDOM(html).window;
   document.querySelectorAll("script, style, link").forEach((el) => el.remove());
   return document.body.textContent.replace(/\s+/g, " ");
 };
+
+const role = (location) => ({
+  "@type": "Role",
+  roleName: "Analyst",
+  startDate: "2020-01-15",
+  worksFor: { "@type": "Organization", name: "Acme", location }
+});
+
+describe("Places", () => {
+  const stockholm = { "@type": "Place", name: "Stockholm" };
+  const address = { "@type": "PostalAddress", addressLocality: "Malmö", addressCountry: "SE" };
+
+  for (const themeId of Object.keys(ThemeRegistry)) {
+    it(`${themeId} renders a Place and a PostalAddress as text`, async () => {
+      const text = await renderText(themeId, {
+        ...person,
+        workLocation: address,
+        worksFor: [role(stockholm)]
+      });
+      assert.ok(text.includes("Malmö, SE"), `${themeId} is missing the work location`);
+      assert.ok(text.includes("Stockholm"), `${themeId} is missing the role location`);
+      assert.ok(!text.includes("[object Object]"), `${themeId} prints an object`);
+    });
+  }
+});
 
 describe("Contact details", () => {
   for (const themeId of Object.keys(ThemeRegistry)) {
