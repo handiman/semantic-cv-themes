@@ -1,6 +1,7 @@
 import { Person, period } from "./person.js";
 import { ThemeMetadata } from "./themeMetadata.js";
 import { defaultOptions, ThemeOptions } from "./themeOptions.js";
+import { locationText } from "./utils.js";
 
 /**
  * Base class for all Semantic‑CV themes.
@@ -225,7 +226,8 @@ ${themeCss}
 
 const renderRole = (role: any) => {
   const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
-  const { name, location } = worksFor ?? alumniOf;
+  const { name } = worksFor ?? alumniOf;
+  const location = locationText((worksFor ?? alumniOf).location);
   const duration =
     startDate || endDate
       ? `
@@ -250,7 +252,7 @@ const renderRole = (role: any) => {
 
 const renderLifeEvent = (event: any) => {
   const { name, startDate, description } = event;
-  const location = event.location ? event.location.name : undefined;
+  const location = locationText(event.location);
   return `
       <article>
         ${name ? `<h3>${name}</h3>` : ""}

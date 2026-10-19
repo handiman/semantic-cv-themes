@@ -38,11 +38,26 @@ export const normalizeArray = (...args: Array<any>) => {
 export const linkText = (url: string) => removeProtocol(url).replace(/^www\./, "");
 
 /**
- * Text for `workLocation`, which may be a plain string or a schema.org
- * Place with a name.
+ * Text for a location such as `workLocation`: a plain string as it is, the
+ * name of a schema.org Place, or the parts of a PostalAddress joined with
+ * commas. Undefined when there is nothing to show.
  */
-export const locationText = (location: any): string | undefined =>
-  typeof location === "string" ? location : (location?.name ?? undefined);
+export const locationText = (location: any): string | undefined => {
+  if (typeof location === "string") {
+    return location;
+  }
+  if (location?.name) {
+    return location.name;
+  }
+  const parts = [
+    location?.streetAddress,
+    location?.postalCode,
+    location?.addressLocality,
+    location?.addressRegion,
+    location?.addressCountry
+  ].filter((part) => typeof part === "string" && part.trim());
+  return parts.length ? parts.join(", ") : undefined;
+};
 
 /**
  * Remove the protocol part from a URL and return the result.
