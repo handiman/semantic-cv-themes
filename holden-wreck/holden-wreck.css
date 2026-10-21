@@ -214,3 +214,9 @@ header img {
     padding-top: calc(var(--space-3) * 1.5) !important;
   }
 }
+
+/* The keywords of a role get a quiet border, like the footer text. */
+.scv-keywords li {
+  border-color: color-mix(in srgb, var(--text-color) 50%, transparent);
+  opacity: 1;
+}
