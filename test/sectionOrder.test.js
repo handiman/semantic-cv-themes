@@ -1,9 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { JSDOM } from "jsdom";
-import { ThemeLoader } from "#themes/themeLoader.js";
 import { ThemeRegistry } from "#themes/themeRegistry.js";
-import { JsdomTransformer, loadAsset } from "./jsdomTransformer.js";
+import { renderDocument } from "./jsdomTransformer.js";
 
 const person = {
   name: "Yoda",
@@ -26,8 +24,7 @@ const person = {
 };
 
 const headingsOf = async (themeId) => {
-  const theme = new ThemeLoader(new JsdomTransformer(), loadAsset).loadTheme(themeId);
-  const { document } = new JSDOM(await theme.renderHTML(person)).window;
+  const document = await renderDocument(themeId, person);
   return [...document.querySelectorAll("h2")].map((h2) => h2.textContent.trim());
 };
 

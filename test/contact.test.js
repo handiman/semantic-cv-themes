@@ -1,9 +1,7 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { JSDOM } from "jsdom";
-import { ThemeLoader } from "#themes/themeLoader.js";
 import { ThemeRegistry } from "#themes/themeRegistry.js";
-import { JsdomTransformer, loadAsset } from "./jsdomTransformer.js";
+import { renderDocument, loadAsset } from "./jsdomTransformer.js";
 
 const person = {
   name: "Ada Lovelace",
@@ -28,10 +26,7 @@ const expected = [
 ];
 
 const renderText = async (themeId, subject = person) => {
-  const transformer = new JsdomTransformer();
-  const theme = new ThemeLoader(transformer, loadAsset).loadTheme(themeId);
-  const html = await theme.renderHTML(subject);
-  const { document } = new JSDOM(html).window;
+  const document = await renderDocument(themeId, subject);
   document.querySelectorAll("script, style, link").forEach((el) => el.remove());
   return document.body.textContent.replace(/\s+/g, " ");
 };

@@ -1,6 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import { JSDOM } from "jsdom";
+import { ThemeLoader } from "#themes/themeLoader.js";
 
 /**
  * Minimal HTMLTransformer on top of jsdom, enough to render a theme in a
@@ -47,4 +48,10 @@ const themeRoot = path.resolve(import.meta.dirname, "..");
 export const loadAsset = (name) => {
   const file = path.join(themeRoot, path.parse(name).name, name);
   return Promise.resolve(fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "");
+};
+
+/** Renders the theme with the given id and returns the page as a DOM document. */
+export const renderDocument = async (themeId, person) => {
+  const theme = new ThemeLoader(new JsdomTransformer(), loadAsset).loadTheme(themeId);
+  return new JSDOM(await theme.renderHTML(person)).window.document;
 };
