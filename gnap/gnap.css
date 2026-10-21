@@ -32,7 +32,7 @@ header.valign-wrapper h1 {
   margin: 0;
   padding: 0;
 }
-header.valign-wrapper h4 {
+header.valign-wrapper .subtitle {
   font-size: 2em;
   margin: 0;
   padding: 0;
@@ -133,8 +133,7 @@ footer .social li {
 
 h1,
 h2,
-h3,
-h4 {
+h3 {
   font-weight: lighter;
 }
 
@@ -234,7 +233,7 @@ header .contact li {
   h2 {
     font-size: 2rem !important;
   }
-  h3, h4 {
+  h3, .subtitle {
     font-size: 1.5rem !important;
   }
   main > article > header .container {
