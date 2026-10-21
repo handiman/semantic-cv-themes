@@ -191,3 +191,10 @@ article ul.scv-keywords li::after,
 article ul.scv-keywords li:last-child::after {
   content: none;
 }
+
+/* The keywords of a role get a quiet border; the text keeps its look. */
+.scv-keywords li {
+  color: color-mix(in srgb, var(--background-color) 80%, transparent);
+  border-color: color-mix(in srgb, var(--background-color) 50%, transparent);
+  opacity: 1;
+}
