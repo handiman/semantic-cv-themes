@@ -1,5 +1,7 @@
 {
+  "name": "semantic-cv-themes",
   "version": "0.1.0",
+  "license": "MIT",
   "type": "module",
   "scripts": {
     "clean": "rimraf dist",
