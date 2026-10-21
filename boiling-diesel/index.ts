@@ -79,10 +79,10 @@ export class BoilingDieselTheme extends Theme {
           h1.replace(`<h1>${name ?? ""}</h1>`, html);
         }
       })
-      .on("header h2", {
-        element(h2: any) {
+      .on("header .job-title", {
+        element(p: any) {
           const { jobTitle } = person;
-          h2.replace(`<h2>${jobTitle ?? ""}</h2>`, html);
+          p.replace(`<p class="job-title">${jobTitle ?? ""}</p>`, html);
         }
       })
       .on("header .description", {
@@ -144,7 +144,7 @@ export class BoilingDieselTheme extends Theme {
                   <img />
                   <div>
                       <h1></h1>
-                      <h2></h2>
+                      <p class="job-title"></p>
                       <div class="description"></div>
                   </div>
               </div>
