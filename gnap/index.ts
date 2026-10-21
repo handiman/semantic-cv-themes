@@ -72,17 +72,6 @@ export class GnapTheme extends Theme {
       return "";
     };
 
-    transformer.on("head", {
-      element(head: any) {
-        head.append(
-          `
-            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
-          `,
-          html
-        );
-      }
-    });
-
     transformer.on("main article header .container", {
       element(el: any) {
         el.append(
