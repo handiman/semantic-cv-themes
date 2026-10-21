@@ -281,3 +281,93 @@ header .contact li {
   border-color: color-mix(in srgb, var(--black) 50%, transparent);
   opacity: 1;
 }
+
+/* What Gnap used to get from Materialize 1.0.0, which it no longer loads. This block is the end of the
+   file on purpose: Materialize came after the rules above and won over them where they are equally
+   specific, and the look of the page is the look it gave. */
+html {
+  font-size: 14px;
+  line-height: 1.5;
+  color: rgba(0, 0, 0, 0.87);
+  text-size-adjust: 100%;
+  -webkit-text-size-adjust: 100%;
+}
+@media (min-width: 992px) {
+  html {
+    font-size: 14.5px;
+  }
+}
+@media (min-width: 1200px) {
+  html {
+    font-size: 15px;
+  }
+}
+
+h1,
+h2,
+h3 {
+  font-weight: 400;
+  line-height: 110%;
+}
+h1 {
+  font-size: 4.2rem;
+  margin: 2.8rem 0 1.68rem 0;
+}
+h2 {
+  font-size: 3.56rem;
+  margin: 2.3733333333rem 0 1.424rem 0;
+}
+h3 {
+  font-size: 2.92rem;
+  margin: 1.9466666667rem 0 1.168rem 0;
+}
+
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+.container {
+  margin: 0 auto;
+  max-width: 1280px;
+  width: 90%;
+}
+@media (min-width: 601px) {
+  .container {
+    width: 85%;
+  }
+}
+@media (min-width: 993px) {
+  .container {
+    width: 70%;
+  }
+}
+.row {
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 20px;
+}
+.center {
+  text-align: center;
+}
+.valign-wrapper {
+  display: flex;
+  align-items: center;
+}
+.grey.darken-4 {
+  background-color: #212121 !important;
+}
+.white {
+  background-color: #fff !important;
+}
+.white-text {
+  color: #fff !important;
+}
+.black-text {
+  color: #000 !important;
+}
+
+/* The credit line at the end is printed, as in the other themes. Gnap hides footers when printing, but
+   Materialize's normalization made every footer a block again, so the line was printed all along. */
+.scv-footer {
+  display: block;
+}

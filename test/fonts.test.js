@@ -11,11 +11,6 @@ const embedded = {
   typewriter: ["Special Elite"]
 };
 
-/** The one external stylesheet that is left, until Gnap stops using Materialize (#59). */
-const external = {
-  gnap: ["https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css"]
-};
-
 const person = { name: "Yoda", jobTitle: "Jedi Master", description: "Small, green." };
 
 const cssOf = (themeId) => loadTheme(themeId).renderCSS(person);
@@ -32,14 +27,14 @@ for (const themeId of Object.keys(ThemeRegistry)) {
       assert.doesNotMatch(css, /url\(\s*["']?https?:/);
     });
 
-    it("links to nothing outside the page except what is on the list", async () => {
+    it("links to nothing outside the page", async () => {
       const document = await renderDocument(themeId, person);
       const links = [...document.querySelectorAll("link[href], script[src]")].map(
         (el) => el.getAttribute("href") ?? el.getAttribute("src")
       );
       assert.deepStrictEqual(
         links.filter((link) => /^(https?:)?\/\//.test(link)),
-        external[themeId] ?? []
+        []
       );
     });
   });
