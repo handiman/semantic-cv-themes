@@ -201,3 +201,9 @@ time:last-child::after {
   padding: 3rem !important;
   margin: 0;
 }
+
+/* The keywords of a role use the same border color as the headings. */
+.scv-keywords li {
+  border-color: var(--color-border);
+  opacity: 1;
+}
