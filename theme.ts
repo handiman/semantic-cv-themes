@@ -1,7 +1,7 @@
 import { Person, period } from "./person.js";
 import { ThemeMetadata } from "./themeMetadata.js";
 import { defaultOptions, ThemeOptions } from "./themeOptions.js";
-import { locationText } from "./utils.js";
+import { arrayOf, locationText } from "./utils.js";
 
 /**
  * Base class for all Semantic‑CV themes.
@@ -208,6 +208,8 @@ a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decor
 ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 .scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
 .scv-description { white-space: pre-line; }
+.scv-keywords { display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin-top: .5rem; font-size: .85em; }
+.scv-keywords li { padding: .1rem .5rem; border: 1px solid currentColor; border-radius: var(--border-radius-base); opacity: .8; }
 .print { display: none; } .no-print { display: reset; }
 @media print { 
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -228,6 +230,9 @@ const renderRole = (role: any) => {
   const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
   const { name } = worksFor ?? alumniOf;
   const location = locationText((worksFor ?? alumniOf).location);
+  const keywords = arrayOf(role.keywords)
+    .map((keyword: any) => keyword?.name)
+    .filter(Boolean);
   const duration =
     startDate || endDate
       ? `
@@ -245,6 +250,7 @@ const renderRole = (role: any) => {
           ${location ? `<li>${location}</li>` : ""}
         </ul>
         ${description ? `<p class="scv-description">${String(description).trim()}</p>` : ""}
+        ${keywords.length ? `<ul class="scv-keywords">${keywords.map((k: string) => `<li>${k}</li>`).join("")}</ul>` : ""}
     </article>
     `
     : "";
