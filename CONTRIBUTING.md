@@ -40,6 +40,7 @@ Never place Person values inside a `<script>`, an `on…` attribute or a `style`
 1. Branch from `master`, named after the kind of change: `fix/…`, `feat/…`, `docs/…`, `refactor/…`.
 2. Add or update tests in `test/` for anything that isn't purely visual.
 3. Run `npm test`. CI runs it and it must pass before a merge.
+   - `test/snapshot.test.js` compares the HTML of every theme with the files in `test/snapshots`. If your change is meant to change a theme's markup (or adds a theme), run `npm run test:update-snapshots` and commit the updated files, so reviewers can see what changed. If you didn't mean to change any markup, the snapshots must stay as they are.
 4. Write commit messages as `type(Scope): Subject`, for example `feat(Themes): Add theme "My theme"`.
 5. Open a pull request against `master`. Say what it changes and why, add a screenshot for visual changes, and link the issue it closes (`Closes #123`).
 
