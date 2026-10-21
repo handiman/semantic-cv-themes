@@ -198,3 +198,10 @@ article ul.scv-keywords li:last-child::after {
   border-color: color-mix(in srgb, var(--background-color) 50%, transparent);
   opacity: 1;
 }
+
+/* In print the page is dark text on white, so the border follows the text color. */
+@media print {
+  .scv-keywords li {
+    border-color: color-mix(in srgb, var(--text-color) 50%, transparent);
+  }
+}
