@@ -28,8 +28,13 @@ skeleton live in `semantic-cv-core`, not here.
   `<id>.css` / `<id>.js` through `loadAsset`.
 - Tags come from `ThemeTags` ([themeTags.ts](themeTags.ts)); don't invent free-form strings.
 - Shared building blocks live in [person.ts](person.ts) (`work`, `education`, `projects`, `certifications`),
-  [utils.ts](utils.ts) (`normalizeArray`, `linkText`, `locationText`) and [fontawesome.ts](fontawesome.ts). Use them
+  [utils.ts](utils.ts) (`normalizeArray`, `linkText`, `locationText`) and [icons.ts](icons.ts). Use them
   rather than re-deriving the same filters in a theme.
+- **Icons are inline SVG** ([icons.ts](icons.ts)), never an icon font or anything loaded from the network, so a
+  printed page has no private-use characters in its text. `IconFactory.icon(url)` picks the icon of a contact link;
+  a link that shows nothing but the icon gets `aria-label="${iconFactory.label(url)}"`. To give another site an icon,
+  add a row to `networks` and copy the shape from Bootstrap Icons (MIT); keep [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)
+  up to date.
 - Import paths end in `.js` (ESM, `module: node20`). Tests import the compiled output through `#themes/*`.
 - Prettier is authoritative: double quotes, no trailing commas, width 100.
 

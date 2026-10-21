@@ -67,7 +67,7 @@ a:hover {
 aside a {
   color: var(--text-primary) !important;
 }
-aside a i {
+aside a .icon {
   margin-right: var(--space-0);
   color: var(--link-color);
 }
@@ -319,7 +319,7 @@ main {
     content: "";
     margin: 0;
   }
-  a i {
+  a .icon {
     margin: 0;
     padding: 0;
     margin-right: 0.5cap !important;

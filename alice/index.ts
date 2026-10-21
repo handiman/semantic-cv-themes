@@ -4,7 +4,7 @@ import { locationText, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import fa, { FaIconFactory } from "../fontawesome.js";
+import { IconFactory, icon } from "../icons.js";
 
 const meta = {
   id: "alice",
@@ -53,12 +53,6 @@ export class AliceTheme extends Theme {
     const proj = projects(person);
     const worksFor = work(person);
     const alumniOf = education(person);
-
-    transformer.on("head", {
-      element(head: any) {
-        head.append(`<link rel="stylesheet" href="${fa}"  />`, html);
-      }
-    });
 
     transformer.on("picture", {
       element(img: any) {
@@ -216,7 +210,7 @@ const renderContactDetails = (person: Person) => {
     url,
     sameAs
   );
-  const iconFactory = new FaIconFactory(person);
+  const iconFactory = new IconFactory(person);
   const linkText = (url: string) => {
     if (url.indexOf("mailto:") > -1 || url.indexOf("tel:") > -1) {
       return url.substring(url.indexOf(":") + 1);
@@ -227,9 +221,9 @@ const renderContactDetails = (person: Person) => {
   return contactDetails.length || location
     ? `
     <div id="contact">
-        <ul>${location ? `<li><a><i class="fas fa-location-dot"></i>${location}</a></li>` : ""}${contactDetails
+        <ul>${location ? `<li><a>${icon("location")}${location}</a></li>` : ""}${contactDetails
           .map((url: string) => {
-            const icon = iconFactory.faIcon(url);
+            const icon = iconFactory.icon(url);
             return `<li><a href="${url}">${icon}${linkText(url)}</a></li>`;
           })
           .join("\n")}

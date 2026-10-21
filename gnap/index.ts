@@ -4,7 +4,7 @@ import Person, { projects, certifications, work, education } from "../person.js"
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
 import { linkText, locationText, normalizeArray } from "../utils.js";
-import fa, { FaIconFactory } from "../fontawesome.js";
+import { IconFactory } from "../icons.js";
 
 const meta = {
   id: "gnap",
@@ -77,7 +77,6 @@ export class GnapTheme extends Theme {
         head.append(
           `
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css" />
-            <link rel="stylesheet" href="${fa}"  />
             <link rel="preconnect" href="https://fonts.gstatic.com" />
             <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,300;0,400;0,600;0,700;0,800;1,300;1,400;1,600;1,700;1,800&display=swap" />
           `,
@@ -213,7 +212,7 @@ export class GnapTheme extends Theme {
 }
 
 const social = (person: Person) => {
-  const iconFactory = new FaIconFactory(person);
+  const iconFactory = new IconFactory(person);
   const { sameAs, url, email, telephone } = person;
   let links = [...(sameAs ?? [])];
   if (url) {
@@ -226,6 +225,6 @@ const social = (person: Person) => {
     links.push(`tel:${telephone}`);
   }
   if (links.length > 0) {
-    return `<ul class="social">${links.map((url) => `<li><a href="${url}">${iconFactory.faIcon(url)}</a></li>`).join("\n")}</ul>`;
+    return `<ul class="social">${links.map((url) => `<li><a href="${url}" aria-label="${iconFactory.label(url)}">${iconFactory.icon(url)}</a></li>`).join("\n")}</ul>`;
   }
 };

@@ -4,7 +4,7 @@ import Person, { projects, certifications, work, education } from "../person.js"
 import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import fa, { FaIconFactory } from "../fontawesome.js";
+import { IconFactory, icon } from "../icons.js";
 
 const meta = {
   id: "winter",
@@ -83,7 +83,7 @@ export class WinterTheme extends Theme {
 
     const renderFooter = () => {
       const renderSocial = () => {
-        const iconFactory = new FaIconFactory(person);
+        const iconFactory = new IconFactory(person);
         const links = normalizeArray(
           sameAs,
           url,
@@ -91,7 +91,7 @@ export class WinterTheme extends Theme {
           telephone ? `tel:${telephone}` : undefined
         );
         if (links && links.length) {
-          return `<ul>${links.map((link: any) => `<li><a href="${link}">${iconFactory.faIcon(link)}</a><div class="print">${removeProtocol(link)}</div></li>`).join("\n")}</ul>`;
+          return `<ul>${links.map((link: any) => `<li><a href="${link}" aria-label="${iconFactory.label(link)}">${iconFactory.icon(link)}</a><div class="print">${removeProtocol(link)}</div></li>`).join("\n")}</ul>`;
         }
       };
 
@@ -108,21 +108,13 @@ export class WinterTheme extends Theme {
             ${jobTitle ? `<div>${jobTitle}</div>` : ""}
             ${locationText(person.workLocation) ? `<div>${locationText(person.workLocation)}</div>` : ""}
             <ul>
-            ${email ? `<li><a href="mailto:${email}"><i class="fas fa-envelope"></i><div class="print">${email}</div></a></li>` : ""}
-            ${telephone ? `<li><a href="tel:${telephone}"><i class="fas fa-phone"></i><div class="print">${telephone}</div></a></li>` : ""}
+            ${email ? `<li><a href="mailto:${email}" aria-label="Email">${icon("envelope")}<div class="print">${email}</div></a></li>` : ""}
+            ${telephone ? `<li><a href="tel:${telephone}" aria-label="Phone">${icon("phone")}<div class="print">${telephone}</div></a></li>` : ""}
             </ul>
         </div>
       `;
     };
 
-    transformer.on("head", {
-      element(head: any) {
-        head.append(
-          `<link rel="stylesheet" href="${fa}"  />`,
-          html
-        );
-      }
-    });
 
     transformer.on("header div", {
       element(header: any) {

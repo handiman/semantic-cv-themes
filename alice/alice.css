@@ -43,7 +43,7 @@ header h1 {
   grid-area: heading;
 }
 
-header i {
+header .icon {
   margin-right: var(--space-1);
 }
 

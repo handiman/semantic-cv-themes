@@ -3,7 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import fa, { FaIconFactory } from "../fontawesome.js";
+import { IconFactory, icon } from "../icons.js";
 import { linkText, locationText, normalizeArray } from "../utils.js";
 
 const meta = {
@@ -55,14 +55,6 @@ export class BoilingDieselTheme extends Theme {
     const { knowsAbout, skills, knowsLanguage, lifeEvent } = person;
 
     transformer
-      .on("head", {
-        element(head: any) {
-          head.append(
-            `<link rel="stylesheet" href="${fa}" />\n`,
-            html
-          );
-        }
-      })
       .on("header img", {
         element(photo: any) {
           const { image, name } = person;
@@ -93,7 +85,7 @@ export class BoilingDieselTheme extends Theme {
             // isn't escaped twice.
             div.append(description, html);
           }
-          const iconFactory = new FaIconFactory(person);
+          const iconFactory = new IconFactory(person);
           const links = normalizeArray(
             email ? `mailto:${email}` : undefined,
             telephone ? `tel:${telephone}` : undefined,
@@ -105,8 +97,8 @@ export class BoilingDieselTheme extends Theme {
             div.append(
               `
                 <ul>
-                  ${location ? `<li><a><i class="fas fa-location-dot"></i><span>${location}</span></a></li>` : ""}
-                  ${links.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}<span>${linkText(link)}</span></a></li>`).join("\n")}
+                  ${location ? `<li><a>${icon("location")}<span>${location}</span></a></li>` : ""}
+                  ${links.map((link: string) => `<li><a href="${link}">${iconFactory.icon(link)}<span>${linkText(link)}</span></a></li>`).join("\n")}
                 </ul>
               `,
               html

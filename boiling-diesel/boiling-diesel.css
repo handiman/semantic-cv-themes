@@ -111,10 +111,12 @@ header ul {
 }
 
 header li,
-article li,
-a i {
+article li {
   display: inline;
   padding-right: var(--space-1);
+}
+a .icon {
+  margin-right: var(--space-1);
 }
 header li {
   white-space: nowrap;
