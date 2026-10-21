@@ -249,3 +249,9 @@ header .contact li {
 .scv-footer * {
   color: var(--black) !important;
 }
+
+/* The keywords of a role keep their own left padding. */
+#projects .scv-keywords li,
+#work .scv-keywords li {
+  padding-left: 0.5rem;
+}

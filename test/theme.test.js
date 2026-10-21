@@ -62,6 +62,13 @@ describe("Theme section renderers", () => {
     const items = (html) => [...html.matchAll(/<li>([^<]*)<\/li>/g)].map((match) => match[1]);
     const keywordsOf = (html) => html.match(/<ul class="scv-keywords">(.*?)<\/ul>/s)?.[1];
 
+    it("are a list, one item per keyword", () => {
+      const html = theme.renderWorksFor([
+        { keywords: [term("Rust"), term("Go")], worksFor: { name: "Acme" } }
+      ]);
+      assert.match(html, /<ul class="scv-keywords"><li>Rust<\/li><li>Go<\/li><\/ul>/);
+    });
+
     it("are listed after the description of a work entry", () => {
       const html = theme.renderWorksFor([
         {

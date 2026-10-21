@@ -34,6 +34,10 @@ export class TypewriterTheme extends Theme {
     return meta;
   }
 
+  protected renderKeywords(keywords: Array<string>): string {
+    return `<p>Skills: ${keywords.join(", ")}</p>`;
+  }
+
   renderJS(_person: Person): Promise<string> {
     return Promise.resolve("");
   }

@@ -45,6 +45,7 @@ export abstract class Theme {
     this.renderKnowsLanguage = this.renderKnowsLanguage.bind(this);
     this.renderKnowsAbout = this.renderKnowsAbout.bind(this);
     this.renderSkills = this.renderSkills.bind(this);
+    this.renderKeywords = this.renderKeywords.bind(this);
   }
 
   /**
@@ -132,7 +133,7 @@ export abstract class Theme {
       ? `
         <section id="worksFor">
           <h2>${headings.worksFor}</h2>
-          ${worksFor.map(renderRole).join("")}
+          ${worksFor.map((role) => renderRole(role, this.renderKeywords)).join("")}
         </section>
       `
       : "";
@@ -144,7 +145,7 @@ export abstract class Theme {
       ? `
         <section id="alumniOf">
           <h2>${headings.alumniOf}</h2>
-          ${alumniOf.map(renderRole).join("")}
+          ${alumniOf.map((role) => renderRole(role, this.renderKeywords)).join("")}
         </section>
       `
       : "";
@@ -156,7 +157,7 @@ export abstract class Theme {
       ? `
         <section id="project">
           <h2>${headings.projects}</h2>
-          ${proj.map(renderRole).join("")}
+          ${proj.map((role) => renderRole(role, this.renderKeywords)).join("")}
         </section>
       `
       : "";
@@ -172,6 +173,14 @@ export abstract class Theme {
         </section>
       `
       : "";
+  }
+
+  /**
+   * The keywords of a role, already escaped. A theme can override this to
+   * show them another way.
+   */
+  protected renderKeywords(keywords: Array<string>): string {
+    return `<ul class="scv-keywords">${keywords.map((keyword) => `<li>${keyword}</li>`).join("")}</ul>`;
   }
 
   protected renderCertifications(certs: Array<any> | null | undefined): string {
@@ -226,7 +235,7 @@ ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 ${themeCss}    
 `;
 
-const renderRole = (role: any) => {
+const renderRole = (role: any, renderKeywords: (keywords: Array<string>) => string) => {
   const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
   const { name } = worksFor ?? alumniOf;
   const location = locationText((worksFor ?? alumniOf).location);
@@ -250,7 +259,7 @@ const renderRole = (role: any) => {
           ${location ? `<li>${location}</li>` : ""}
         </ul>
         ${description ? `<p class="scv-description">${String(description).trim()}</p>` : ""}
-        ${keywords.length ? `<ul class="scv-keywords">${keywords.map((k: string) => `<li>${k}</li>`).join("")}</ul>` : ""}
+        ${keywords.length ? renderKeywords(keywords) : ""}
     </article>
     `
     : "";
