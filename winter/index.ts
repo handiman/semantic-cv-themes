@@ -69,8 +69,12 @@ export class WinterTheme extends Theme {
       const { headings } = options;
       return `
     <section>
-      <h2>${headings.description}</h2>
-      ${description ? `<p>${description}</p>` : ""}
+      ${
+        description
+          ? `<h2>${headings.description}</h2>
+      <p>${description}</p>`
+          : ""
+      }
       <div class="grid">
         ${renderKnowsAbout(knowsAbout)}
         ${renderSkills(skills)}
@@ -95,7 +99,8 @@ export class WinterTheme extends Theme {
         }
       };
 
-      return `<footer>${renderSocial()}</footer>`;
+      const social = renderSocial();
+      return social ? `<footer>${social}</footer>` : "";
     };
 
     const renderHeader = () => {
@@ -114,7 +119,6 @@ export class WinterTheme extends Theme {
         </div>
       `;
     };
-
 
     transformer.on("header div", {
       element(header: any) {

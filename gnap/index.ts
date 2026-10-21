@@ -146,7 +146,7 @@ export class GnapTheme extends Theme {
                 ${lifeEvent && lifeEvent.length ? `<li><a href="#events">${headings.lifeEvent}</a></li>` : ""}
             </ul>
             <div class="row center">
-              ${social(person)}
+              ${social(person) ?? ""}
             </div>
           `,
           html
