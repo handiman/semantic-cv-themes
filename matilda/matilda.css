@@ -249,3 +249,9 @@ aside a span {
     font-size: 0.8em;
   }
 }
+
+/* The keywords of a role use the same border color as the headings. */
+.scv-keywords li {
+  border-color: var(--text-color-muted);
+  opacity: 1;
+}
