@@ -35,6 +35,11 @@ skeleton live in `semantic-cv-core`, not here.
   a link that shows nothing but the icon gets `aria-label="${iconFactory.label(url)}"`. To give another site an icon,
   add a row to `networks` and copy the shape from Bootstrap Icons (MIT); keep [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md)
   up to date.
+- **Fonts are embedded** in the CSS of the theme as base64 woff2 `@font-face` rules, between the markers that
+  [scripts/embed-fonts.mjs](scripts/embed-fonts.mjs) writes. Never link to a font CDN. To change the fonts of a theme,
+  edit the table in the script, run `node scripts/embed-fonts.mjs <theme>`, commit the result and update
+  [THIRD-PARTY-NOTICES.md](THIRD-PARTY-NOTICES.md). Lena has only the Latin subset, because the Latin Extended subset of
+  the Noto fonts is about 165 kB each.
 - Import paths end in `.js` (ESM, `module: node20`). Tests import the compiled output through `#themes/*`.
 - Prettier is authoritative: double quotes, no trailing commas, width 100.
 
