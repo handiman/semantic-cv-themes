@@ -168,7 +168,7 @@ const renderDescription = (person: Person, options: ThemeOptions): string => {
   return description
     ? `
       <section>
-        <h2${headings.description}</h2>
+        <h2>${headings.description}</h2>
         <div>${description}</div>
       </section>
     `
