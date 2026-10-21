@@ -134,8 +134,8 @@ export class TimesTheme extends Theme {
       element(el: any) {
         el.append(renderHeader(), html);
         el.append(renderBasics(), html);
-        el.append(renderProjects(projects(person)), html);
         el.append(renderWorksFor(work(person)), html);
+        el.append(renderProjects(projects(person)), html);
         el.append(renderAlumniOf(education(person)), html);
         el.append(renderLifeEvents(lifeEvent), html);
       }

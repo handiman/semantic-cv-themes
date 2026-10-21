@@ -126,8 +126,8 @@ export class MatildaTheme extends Theme {
           `
             ${renderHeader(person)}
             ${renderDescription(person, options)}
-            ${renderProjects(projects(person))}
             ${renderWorksFor(work(person))}
+            ${renderProjects(projects(person))}
             ${renderAlumniOf(education(person))}
             ${renderLifeEvents(lifeEvent)}
         `,

@@ -133,8 +133,8 @@ export class WinterTheme extends Theme {
     transformer.on("main", {
       element(main: any) {
         main.append(renderBasics(), html);
-        main.append(renderProjects(projects(person)), html);
         main.append(renderWorksFor(work(person)), html);
+        main.append(renderProjects(projects(person)), html);
         main.append(renderAlumniOf(education(person)), html);
         main.append(renderLifeEvents(lifeEvent), html);
         main.append(renderFooter(), html);

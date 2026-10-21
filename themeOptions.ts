@@ -23,7 +23,7 @@ export const defaultOptions: ThemeOptions = {
     certifications: "Certifications",
     worksFor: "Work Experience",
     alumniOf: "Education",
-    projects: "Featured Projects",
+    projects: "Projects",
     lifeEvent: "Events"
   }
 };

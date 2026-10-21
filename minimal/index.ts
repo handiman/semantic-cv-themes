@@ -108,8 +108,8 @@ export class MinimalTheme extends Theme {
       element(main: any) {
         main.append(
           `
-            ${renderProjects(projects(person))}
             ${renderWorksFor(work(person))}
+            ${renderProjects(projects(person))}
             ${renderAlumniOf(education(person))}
           `,
           html

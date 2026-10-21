@@ -110,8 +110,8 @@ export class TypewriterTheme extends Theme {
                 ${renderKnowsLanguage(knowsLanguage)}
                 ${renderCertifications(certifications(person))}
             </section>
-            ${renderProjects(projects(person))}
             ${renderWorksFor(work(person))}
+            ${renderProjects(projects(person))}
             ${renderAlumniOf(education(person))}
             ${renderLifeEvents(lifeEvent)}
           `,
