@@ -127,12 +127,8 @@ header {
   place-content: center;
   width: 100%;
 }
-aside > header {
-  display: block;
-}
-
 main > header {
-  display: none;
+  display: block;
 }
 
 .life-events time,
@@ -140,13 +136,38 @@ main > header {
   padding-right: var(--space-1);
 }
 
-@media (min-width: 600px) {
-  aside > header {
-    display: none;
+/* On a narrow screen the page is one column: the photo, the header (which is in main,
+   so the page has a single h1), then the rest of aside, then the rest of main. */
+@media (max-width: 599.98px) {
+  .cv {
+    display: flex;
+    flex-direction: column;
+    padding-block: var(--space-2);
+    background: var(--bg-color);
+  }
+  aside,
+  main {
+    display: contents;
+  }
+  aside > .photo {
+    order: 0;
   }
   main > header {
-    display: block;
+    order: 1;
   }
+  aside > :not(.photo) {
+    order: 2;
+  }
+  /* The padding that aside and main had between them. */
+  aside > :last-child {
+    margin-bottom: calc(var(--space-2) * 2);
+  }
+  main > :not(header) {
+    order: 3;
+  }
+}
+
+@media (min-width: 600px) {
   .desktop::before {
     width: var(--aside-right);
   }
