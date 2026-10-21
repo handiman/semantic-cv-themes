@@ -183,10 +183,10 @@ export class GnapTheme extends Theme {
             <section id="basics">
               <div class="container"></div>
             </section>
-            <section id="projects">
+            <section id="work">
               <div class="container"></div>
             </section>
-            <section id="work">
+            <section id="projects">
               <div class="container"></div>
             </section>
             <section id="education">
