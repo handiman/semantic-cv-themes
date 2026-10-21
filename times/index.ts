@@ -116,19 +116,6 @@ export class TimesTheme extends Theme {
       `;
     };
 
-    transformer.on("head", {
-      element(head: any) {
-        head.append(
-          `
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-            <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet" />
-          `,
-          html
-        );
-      }
-    });
-
     transformer.on("main div", {
       element(el: any) {
         el.append(renderHeader(), html);

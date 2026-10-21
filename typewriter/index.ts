@@ -65,19 +65,6 @@ export class TypewriterTheme extends Theme {
       person.sameAs
     );
 
-    transformer.on("head", {
-      element(head: any) {
-        head.append(
-          `
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-            <link href="https://fonts.googleapis.com/css2?family=Special+Elite&display=swap" rel="stylesheet" />
-          `,
-          html
-        );
-      }
-    });
-
     transformer.on("article", {
       element(article: any) {
         article.append(

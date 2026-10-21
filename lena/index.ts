@@ -50,19 +50,6 @@ export class LenaTheme extends Theme {
     } = this;
     const { lifeEvent, knowsLanguage, knowsAbout, skills } = person;
 
-    transformer.on("head", {
-      element(head: any) {
-        head.prepend(
-          `
-            <link rel="preconnect" href="https://fonts.googleapis.com" />
-            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-            <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
-          `,
-          html
-        );
-      }
-    });
-
     transformer.on("header", {
       element(header: any) {
         renderHeader(header, person);

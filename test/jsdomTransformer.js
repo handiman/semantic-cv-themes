@@ -22,7 +22,7 @@ export class JsdomTransformer {
         hooks.element(wrap(el));
       }
     }
-    return document.body.innerHTML;
+    return document.documentElement.outerHTML;
   }
 }
 
@@ -50,8 +50,10 @@ export const loadAsset = (name) => {
   return Promise.resolve(fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "");
 };
 
+/** The theme with the given id, set up to render with this transformer. */
+export const loadTheme = (themeId) =>
+  new ThemeLoader(new JsdomTransformer(), loadAsset).loadTheme(themeId);
+
 /** Renders the theme with the given id and returns the page as a DOM document. */
-export const renderDocument = async (themeId, person) => {
-  const theme = new ThemeLoader(new JsdomTransformer(), loadAsset).loadTheme(themeId);
-  return new JSDOM(await theme.renderHTML(person)).window.document;
-};
+export const renderDocument = async (themeId, person) =>
+  new JSDOM(await loadTheme(themeId).renderHTML(person)).window.document;
