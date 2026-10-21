@@ -155,3 +155,9 @@ h3 {
     max-width: auto;
   }
 }
+
+/* The keywords of a role use the same border color as the line below the header. */
+.scv-keywords li {
+  border-color: lightgray;
+  opacity: 1;
+}

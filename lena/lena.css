@@ -346,3 +346,15 @@ main {
   }
 }
 
+/* The keywords of a role are labels: every one keeps its border and padding,
+   and the border has the color of the headings. */
+article ul.scv-keywords li,
+article ul.scv-keywords li:last-child {
+  margin: 0;
+  padding: 0.1rem 0.5rem;
+  border: 1px solid var(--heading-color);
+  opacity: 1;
+}
+article ul.scv-keywords li::after {
+  content: none;
+}

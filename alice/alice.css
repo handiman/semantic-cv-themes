@@ -185,3 +185,23 @@ article ul li:last-child::after {
     padding-top: var(--space-1);
   }
 }
+
+/* The keywords of a role are labels, not a comma separated line. */
+article ul.scv-keywords li::after,
+article ul.scv-keywords li:last-child::after {
+  content: none;
+}
+
+/* The keywords of a role get a quiet border; the text keeps its look. */
+.scv-keywords li {
+  color: color-mix(in srgb, var(--background-color) 80%, transparent);
+  border-color: color-mix(in srgb, var(--background-color) 50%, transparent);
+  opacity: 1;
+}
+
+/* In print the page is dark text on white, so the border follows the text color. */
+@media print {
+  .scv-keywords li {
+    border-color: color-mix(in srgb, var(--text-color) 50%, transparent);
+  }
+}

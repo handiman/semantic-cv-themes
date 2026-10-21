@@ -1,7 +1,7 @@
 import { Person, period } from "./person.js";
 import { ThemeMetadata } from "./themeMetadata.js";
 import { defaultOptions, ThemeOptions } from "./themeOptions.js";
-import { locationText } from "./utils.js";
+import { arrayOf, locationText } from "./utils.js";
 
 /**
  * Base class for all Semantic‑CV themes.
@@ -45,6 +45,7 @@ export abstract class Theme {
     this.renderKnowsLanguage = this.renderKnowsLanguage.bind(this);
     this.renderKnowsAbout = this.renderKnowsAbout.bind(this);
     this.renderSkills = this.renderSkills.bind(this);
+    this.renderKeywords = this.renderKeywords.bind(this);
   }
 
   /**
@@ -132,7 +133,7 @@ export abstract class Theme {
       ? `
         <section id="worksFor">
           <h2>${headings.worksFor}</h2>
-          ${worksFor.map(renderRole).join("")}
+          ${worksFor.map((role) => renderRole(role, this.renderKeywords)).join("")}
         </section>
       `
       : "";
@@ -144,7 +145,7 @@ export abstract class Theme {
       ? `
         <section id="alumniOf">
           <h2>${headings.alumniOf}</h2>
-          ${alumniOf.map(renderRole).join("")}
+          ${alumniOf.map((role) => renderRole(role, this.renderKeywords)).join("")}
         </section>
       `
       : "";
@@ -156,7 +157,7 @@ export abstract class Theme {
       ? `
         <section id="project">
           <h2>${headings.projects}</h2>
-          ${proj.map(renderRole).join("")}
+          ${proj.map((role) => renderRole(role, this.renderKeywords)).join("")}
         </section>
       `
       : "";
@@ -172,6 +173,14 @@ export abstract class Theme {
         </section>
       `
       : "";
+  }
+
+  /**
+   * The keywords of a role, already escaped. A theme can override this to
+   * show them another way.
+   */
+  protected renderKeywords(keywords: Array<string>): string {
+    return `<ul class="scv-keywords">${keywords.map((keyword) => `<li>${keyword}</li>`).join("")}</ul>`;
   }
 
   protected renderCertifications(certs: Array<any> | null | undefined): string {
@@ -208,6 +217,8 @@ a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decor
 ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 .scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
 .scv-description { white-space: pre-line; }
+.scv-keywords { display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin-top: .5rem; font-size: .85em; }
+.scv-keywords li { padding: .1rem .5rem; border: 1px solid currentColor; border-radius: var(--border-radius-base); opacity: .8; }
 .print { display: none; } .no-print { display: reset; }
 @media print { 
   * { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
@@ -224,10 +235,13 @@ ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 ${themeCss}    
 `;
 
-const renderRole = (role: any) => {
+const renderRole = (role: any, renderKeywords: (keywords: Array<string>) => string) => {
   const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
   const { name } = worksFor ?? alumniOf;
   const location = locationText((worksFor ?? alumniOf).location);
+  const keywords = arrayOf(role.keywords)
+    .map((keyword: any) => keyword?.name)
+    .filter(Boolean);
   const duration =
     startDate || endDate
       ? `
@@ -245,6 +259,7 @@ const renderRole = (role: any) => {
           ${location ? `<li>${location}</li>` : ""}
         </ul>
         ${description ? `<p class="scv-description">${String(description).trim()}</p>` : ""}
+        ${keywords.length ? renderKeywords(keywords) : ""}
     </article>
     `
     : "";

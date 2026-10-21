@@ -249,3 +249,15 @@ header .contact li {
 .scv-footer * {
   color: var(--black) !important;
 }
+
+/* The keywords of a role keep their own left padding. */
+#projects .scv-keywords li,
+#work .scv-keywords li {
+  padding-left: 0.5rem;
+}
+
+/* The keywords of a role get a quiet border, like the footer text. */
+.scv-keywords li {
+  border-color: color-mix(in srgb, var(--black) 50%, transparent);
+  opacity: 1;
+}
