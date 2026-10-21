@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { period } from "#themes/person.js";
+import { certifications, period } from "#themes/person.js";
 
 describe("period", () => {
   for (const [input, expected] of [
@@ -18,5 +18,29 @@ describe("period", () => {
 
   it("returns text that isn't a date unchanged", () => {
     assert.strictEqual(period("Spring term"), "Spring term");
+  });
+});
+
+describe("certifications", () => {
+  it("lists certifications and then credentials", () => {
+    const person = {
+      hasCertification: [{ name: "AZ-204" }],
+      hasCredential: [{ name: "MSc" }]
+    };
+    assert.deepStrictEqual(
+      certifications(person).map((cert) => cert.name),
+      ["AZ-204", "MSc"]
+    );
+  });
+
+  it("leaves out one without a name", () => {
+    const person = {
+      hasCertification: [{ "@type": "Certification", issuedBy: "Microsoft" }],
+      hasCredential: [{ "@type": "EducationalOccupationalCredential" }, { name: "MSc" }]
+    };
+    assert.deepStrictEqual(
+      certifications(person).map((cert) => cert.name),
+      ["MSc"]
+    );
   });
 });
