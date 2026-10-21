@@ -1,10 +1,13 @@
 import { arrayOf } from "./utils.js";
 
 /**
- * All certifications and credentials held by the person.
+ * All certifications and credentials held by the person. One without a name has nothing to show,
+ * so it is left out.
  */
 export const certifications = (person: Person) => {
-  return [...arrayOf(person.hasCertification), ...arrayOf(person.hasCredential)];
+  return [...arrayOf(person.hasCertification), ...arrayOf(person.hasCredential)].filter(
+    (cert: any) => cert?.name
+  );
 };
 
 /**
