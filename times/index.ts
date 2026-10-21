@@ -103,10 +103,14 @@ export class TimesTheme extends Theme {
 
     const renderBasics = () => {
       return `
-        <section>
+        ${
+          description
+            ? `<section>
             <h2 class="pirata-one-regular">${headings.description}</h2>
-            ${description ? `<p>${description}</p>` : ""}
-        </section>
+            <p>${description}</p>
+        </section>`
+            : ""
+        }
         <section id="basics">
             ${renderKnowsAbout(knowsAbout)}
             ${renderSkills(skills)}
