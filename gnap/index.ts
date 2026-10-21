@@ -92,7 +92,7 @@ export class GnapTheme extends Theme {
           `        
             <div class="no-print">Hi, I'm</div>
             <h1>${name ?? ""}</h1>
-            ${jobTitle ? `<p class="subtitle">${jobTitle}</p>` : ""}
+            ${jobTitle ? `<p class="job-title">${jobTitle}</p>` : ""}
             ${location ? `<div class="location">${location}</div>` : ""}
             ${printContacts.length ? `<ul class="print contact">${printContacts.map((link: string) => `<li>${linkText(link)}</li>`).join("")}</ul>` : ""}
           `,

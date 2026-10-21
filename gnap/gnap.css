@@ -32,7 +32,7 @@ header.valign-wrapper h1 {
   margin: 0;
   padding: 0;
 }
-header.valign-wrapper .subtitle {
+header.valign-wrapper .job-title {
   font-size: 2em;
   margin: 0;
   padding: 0;
@@ -233,7 +233,7 @@ header .contact li {
   h2 {
     font-size: 2rem !important;
   }
-  h3, .subtitle {
+  h3, .job-title {
     font-size: 1.5rem !important;
   }
   main > article > header .container {

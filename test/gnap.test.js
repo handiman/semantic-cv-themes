@@ -23,14 +23,14 @@ const render = (person) =>
   new GnapTheme(new CollectingTransformer(), () => Promise.resolve("")).renderHTML(person);
 
 describe("gnap", () => {
-  it("renders the job title as a subtitle, not as a heading", async () => {
+  it("renders the job title as a paragraph, not as a heading", async () => {
     const html = await render({ name: "Yoda", jobTitle: "Jedi Master" });
-    assert.match(html, /<h1>Yoda<\/h1>\s*<p class="subtitle">Jedi Master<\/p>/);
+    assert.match(html, /<h1>Yoda<\/h1>\s*<p class="job-title">Jedi Master<\/p>/);
     assert.doesNotMatch(html, /<h4/);
   });
 
-  it("leaves out the subtitle when there is no job title", async () => {
+  it("leaves out the job title when there is none", async () => {
     const html = await render({ name: "Yoda" });
-    assert.doesNotMatch(html, /subtitle/);
+    assert.doesNotMatch(html, /job-title/);
   });
 });
