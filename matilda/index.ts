@@ -109,7 +109,6 @@ export class MatildaTheme extends Theme {
       element(aside: any) {
         aside.append(
           `
-            ${renderHeader(person)}
             ${contactDetails()}
             ${renderKnowsAbout(knowsAbout)}
             ${renderSkills(skills)}
