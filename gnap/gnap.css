@@ -75,7 +75,7 @@ a:visited {
 }
 
 .menu li a,
-.menu li i {
+.menu li .icon {
   color: inherit;
 }
 

@@ -4,7 +4,7 @@ import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import fa, { FaIconFactory } from "../fontawesome.js";
+import { IconFactory } from "../icons.js";
 
 const meta = {
   id: "minimal",
@@ -46,7 +46,7 @@ export class MinimalTheme extends Theme {
       renderLifeEvents,
       renderCertifications
     } = this;
-    const iconFactory = new FaIconFactory(person);
+    const iconFactory = new IconFactory(person);
     const {
       image,
       name,
@@ -69,12 +69,6 @@ export class MinimalTheme extends Theme {
       telephone ? `tel:${telephone}` : undefined
     );
 
-    transformer.on("head", {
-      element(head: any) {
-        head.append(`<link rel="stylesheet" href="${fa}"  />\n`, html);
-      }
-    });
-
     transformer.on("header", {
       element(header: any) {
         if (image) {
@@ -87,7 +81,7 @@ export class MinimalTheme extends Theme {
               ${jobTitle ? `<div>${jobTitle}</div>` : ""}
               ${locationText(person.workLocation) ? `<div>${locationText(person.workLocation)}</div>` : ""}
               ${description ? `<div>${description}</div>` : ""}
-              ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}">${iconFactory.faIcon(link)}<div class="print">${removeProtocol(link)}</div></a></li>`).join("\n")}</ul>` : ""}
+              ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}" aria-label="${iconFactory.label(link)}">${iconFactory.icon(link)}<div class="print">${removeProtocol(link)}</div></a></li>`).join("\n")}</ul>` : ""}
             </div>              
         `,
           html  

@@ -112,7 +112,7 @@ header ul {
 
 header li,
 article li,
-a i {
+a .icon {
   display: inline;
   padding-right: var(--space-1);
 }

@@ -5,7 +5,7 @@ import Person, { projects, certifications, work, education } from "../person.js"
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import fa, { FaIconFactory } from "../fontawesome.js";
+import { IconFactory, icon } from "../icons.js";
 
 const meta = {
   id: "matilda",
@@ -61,7 +61,7 @@ export class MatildaTheme extends Theme {
       skills,
       lifeEvent
     } = person;
-    const iconFactory = new FaIconFactory(person);
+    const iconFactory = new IconFactory(person);
     const contactDetails = () => {
       const linkText = (url: string) => {
         if (url.indexOf("mailto:") > -1 || url.indexOf("tel:") > -1) {
@@ -81,19 +81,11 @@ export class MatildaTheme extends Theme {
         ? `
           <section>
             <h2>${headings.contact}</h2>
-            <ul>${location ? `<li><a><span>${location}</span><i class="fas fa-location-dot"></i></a></li>` : ""}${links.map((link: string) => `<li><a href="${link}" title="${link}"><span>${linkText(link)}</span>${iconFactory.faIcon(link)}</a></li>`).join("")}</ul>
+            <ul>${location ? `<li><a><span>${location}</span>${icon("location")}</a></li>` : ""}${links.map((link: string) => `<li><a href="${link}" title="${link}"><span>${linkText(link)}</span>${iconFactory.icon(link)}</a></li>`).join("")}</ul>
           </section>
         `
         : "";
     };
-    transformer.on("head", {
-      element(head: any) {
-        head.append(
-          `<link rel="stylesheet" href="${fa}"  />`,
-          html
-        );
-      }
-    });
 
     transformer.on(".photo", {
       element(photo: any) {

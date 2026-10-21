@@ -5,7 +5,7 @@ import Person, { projects, certifications, work, education } from "../person.js"
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import fa, { FaIconFactory } from "../fontawesome.js";
+import { IconFactory, icon } from "../icons.js";
 
 const meta = {
   id: "lena",
@@ -57,7 +57,6 @@ export class LenaTheme extends Theme {
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
             <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Display:ital,wght@0,100..900;1,100..900&family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet" />
-            <link rel="stylesheet" href="${fa}"  />
           `,
           html
         );
@@ -127,7 +126,7 @@ const renderContact = (person: any, options: ThemeOptions) => {
     email ? `mailto:${email}` : undefined,
     telephone ? `tel:${telephone}` : undefined
   );
-  const iconFactory = new FaIconFactory(person);
+  const iconFactory = new IconFactory(person);
   const linkText = (url: string) => {
     if (url.indexOf("mailto:") > -1 || url.indexOf("tel:") > -1) {
       return url.substring(url.indexOf(":") + 1);
@@ -139,7 +138,7 @@ const renderContact = (person: any, options: ThemeOptions) => {
     ? `
       <section>
         <h2>${headings.contact}</h2>
-        <ul>${location ? `<li><a><i class="fas fa-location-dot"></i><span>${location}</span></a></li>` : ""}${links.map((link: string) => `<li><a href="${link}" title="${link}">${iconFactory.faIcon(link)}<span>${linkText(link)}</span></a></li>`).join("")}</ul>
+        <ul>${location ? `<li><a>${icon("location")}<span>${location}</span></a></li>` : ""}${links.map((link: string) => `<li><a href="${link}" title="${link}">${iconFactory.icon(link)}<span>${linkText(link)}</span></a></li>`).join("")}</ul>
       </section>
         `
     : "";

@@ -217,6 +217,7 @@ a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decor
 ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 .scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
 .scv-description { white-space: pre-line; }
+.icon { width: 1em; height: 1em; vertical-align: -0.125em; flex: none; }
 .scv-keywords { display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin-top: .5rem; font-size: .85em; }
 .scv-keywords li { padding: .1rem .5rem; border: 1px solid currentColor; border-radius: var(--border-radius-base); opacity: .8; }
 .print { display: none; } .no-print { display: reset; }

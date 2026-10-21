@@ -4,7 +4,7 @@ import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import fa, { FaIconFactory } from "../fontawesome.js";
+import { IconFactory } from "../icons.js";
 
 const meta = {
   id: "times",
@@ -55,7 +55,7 @@ export class TimesTheme extends Theme {
       renderProjects,
       renderLifeEvents
     } = this;
-    const iconFactory = new FaIconFactory(person);
+    const iconFactory = new IconFactory(person);
     const {
       name,
       jobTitle,
@@ -79,7 +79,7 @@ export class TimesTheme extends Theme {
         telephone ? `tel:${telephone}` : undefined
       );
       if (links.length > 0) {
-        return `<ul class="social">${links.map((item: string) => `<li><a href="${item}">${iconFactory.faIcon(item)}</a><div class="print">${removeProtocol(item)}</div></li>`).join("\n")}</ul>`;
+        return `<ul class="social">${links.map((item: string) => `<li><a href="${item}" aria-label="${iconFactory.label(item)}">${iconFactory.icon(item)}</a><div class="print">${removeProtocol(item)}</div></li>`).join("\n")}</ul>`;
       }
     };
 
@@ -123,7 +123,6 @@ export class TimesTheme extends Theme {
             <link rel="preconnect" href="https://fonts.googleapis.com" />
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
             <link href="https://fonts.googleapis.com/css2?family=Pirata+One&display=swap" rel="stylesheet" />
-            <link rel="stylesheet" href="${fa}"  />
           `,
           html
         );
