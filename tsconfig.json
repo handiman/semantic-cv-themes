@@ -6,6 +6,8 @@
     "moduleResolution": "node16",
     "strict": true,
     "esModuleInterop": true,
+    "inlineSources": true,
+    "inlineSourceMap": true,
     "forceConsistentCasingInFileNames": true,
     "useDefineForClassFields": false,
     "skipLibCheck": true,
