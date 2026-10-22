@@ -1,40 +1,24 @@
-import { Theme } from "../theme.js";
-import { HTMLTransformer } from "../htmlTransformer.js";
+import { Theme, html } from "../theme.js";
 import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory } from "../icons.js";
 
-const meta = {
-  id: "times",
-  title: "Times",
-  description:
-    "A playful newspaper‑inspired résumé with an editorial layout and a subtle sense of humor.",
-  tags: [
-    ThemeTags.twoCol,
-    ThemeTags.lightMode,
-    ThemeTags.editorial,
-    ThemeTags.typographyForward,
-    ThemeTags.playful
-  ]
-};
-
-const html = { html: true };
-
 export class TimesTheme extends Theme {
-  constructor(
-    private transformer: HTMLTransformer,
-    loadAsset: (assetName: string) => Promise<string>,
-    options?: ThemeOptions
-  ) {
-    super(loadAsset, meta, options);
-  }
-
-  static get meta(): ThemeMetadata {
-    return meta;
-  }
+  static readonly meta: ThemeMetadata = {
+    id: "times",
+    title: "Times",
+    description:
+      "A playful newspaper‑inspired résumé with an editorial layout and a subtle sense of humor.",
+    tags: [
+      ThemeTags.twoCol,
+      ThemeTags.lightMode,
+      ThemeTags.editorial,
+      ThemeTags.typographyForward,
+      ThemeTags.playful
+    ]
+  };
 
   protected renderKeywords(keywords: Array<string>): string {
     return `<p>${this.options.headings.skills}: ${keywords.join(", ")}</p>`;

@@ -1,42 +1,24 @@
 import { BoilingDieselTheme } from "../boiling-diesel/index.js";
-import { Theme } from "../theme.js";
-import { HTMLTransformer } from "../htmlTransformer.js";
-import { Person } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { ThemeOptions } from "../themeOptions.js";
 
-const meta = {
-  id: "holden-wreck",
-  title: "Holden wreck",
-  description:
-    "A clean, approachable two‑column résumé with a light, balanced layout and clear structure.",
-  tags: [
-    ThemeTags.twoCol,
-    ThemeTags.resume,
-    ThemeTags.lightMode,
-    ThemeTags.minimal,
-    ThemeTags.editorial,
-    ThemeTags.calm
-  ]
-};
-
-export class HoldenWreckTheme extends Theme {
-  private base: BoilingDieselTheme;
-  constructor(
-    transformer: HTMLTransformer,
-    loadAsset: (_: string) => Promise<string>,
-    options?: ThemeOptions
-  ) {
-    super(loadAsset, meta, options);
-    this.base = new BoilingDieselTheme(transformer, loadAsset, options, meta);
-  }
-
-  static get meta(): ThemeMetadata {
-    return meta;
-  }
-
-  renderHTML(person: Person): Promise<string> {
-    return this.base.renderHTML(person);
-  }
+/**
+ * Boiling Diesel's layout with its own colors: the HTML comes from Boiling Diesel, the CSS from
+ * holden-wreck.css.
+ */
+export class HoldenWreckTheme extends BoilingDieselTheme {
+  static readonly meta: ThemeMetadata = {
+    id: "holden-wreck",
+    title: "Holden wreck",
+    description:
+      "A clean, approachable two‑column résumé with a light, balanced layout and clear structure.",
+    tags: [
+      ThemeTags.twoCol,
+      ThemeTags.resume,
+      ThemeTags.lightMode,
+      ThemeTags.minimal,
+      ThemeTags.editorial,
+      ThemeTags.calm
+    ]
+  };
 }

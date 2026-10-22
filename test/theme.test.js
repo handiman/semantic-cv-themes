@@ -3,8 +3,9 @@ import assert from "node:assert";
 import { Theme } from "#themes/theme.js";
 
 class TestTheme extends Theme {
+  static meta = { id: "test", title: "Test", description: "", tags: [] };
   constructor() {
-    super(() => Promise.resolve(""), { id: "test", title: "Test", description: "", tags: [] });
+    super(undefined, () => Promise.resolve(""));
   }
   renderHTML() {
     return Promise.resolve("");
