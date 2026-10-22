@@ -87,78 +87,42 @@ export class GnapTheme extends Theme {
       }
     });
 
-    transformer.on("#basics .container", {
-      element(el: any) {
-        el.append(
-          `
-            ${renderSummary()}
-            <div id="knowledgeGrid">
-              <div>
-                ${renderKnowsAbout(knowsAbout)}
-                ${renderSkills(skills)}
-                ${renderKnowsLanguage(knowsLanguage)}          
-              </div>
+    const knowledge = [
+      renderKnowsAbout(knowsAbout),
+      renderSkills(skills),
+      renderKnowsLanguage(knowsLanguage)
+    ].join("");
+    const basics = `
+      ${renderSummary()}
+      ${knowledge.trim() ? `<div id="knowledgeGrid"><div>${knowledge}</div></div>` : ""}
+    `;
+    const works = renderWorksFor(work(person));
+    const events = renderLifeEvents(lifeEvent);
+    const socialLinks = social(person);
+
+    // Only sections with content go into the page (#76), and the footer links only to those.
+    const section = (id: string, content: string) =>
+      content.trim() ? `<section id="${id}"><div class="container">${content}</div></section>` : "";
+    const footerLinks = [
+      basics.trim() ? `<li><a href="#basics">${headings.description}</a></li>` : "",
+      skills && skills.length ? `<li><a href="#skills">${headings.skills}</a></li>` : "",
+      works.trim() ? `<li><a href="#work">${headings.worksFor}</a></li>` : "",
+      events.trim() ? `<li><a href="#events">${headings.lifeEvent}</a></li>` : ""
+    ].join("");
+    const footer =
+      footerLinks || socialLinks
+        ? `
+          <footer class="grey darken-4 white-text no-print">
+            <div class="container">
+              ${footerLinks ? `<ul class="row center inline inline-delimited">${footerLinks}</ul>` : ""}
+              ${socialLinks ? `<div class="row center">${socialLinks}</div>` : ""}
             </div>
-        `,
-          html
-        );
-      }
-    });
-
-    transformer.on("#projects .container", {
-      element(el: any) {
-        el.append(renderProjects(projects(person)), html);
-      }
-    });
-
-    transformer.on("#work .container", {
-      element(el: any) {
-        el.append(renderWorksFor(work(person)), html);
-      }
-    });
-
-    transformer.on("#education .container", {
-      element(el: any) {
-        el.append(renderAlumniOf(education(person)), html);
-      }
-    });
-
-    transformer.on("#certificates .container", {
-      element(el: any) {
-        el.append(renderCertifications(certifications(person)), html);
-      }
-    });
-
-    transformer.on("#events .container", {
-      element(el: any) {
-        el.append(renderLifeEvents(lifeEvent), html);
-      }
-    });
-
-    transformer.on("footer .container", {
-      element(footer: any) {
-        footer.append(
-          `
-            <ul class="row center inline inline-delimited">
-                <li><a href="#basics">${headings.description}</a></li>
-                <li><a href="#skills">${headings.skills}</a></li>
-                <li><a href="#work">${headings.worksFor}</a></li>
-                ${lifeEvent && lifeEvent.length ? `<li><a href="#events">${headings.lifeEvent}</a></li>` : ""}
-            </ul>
-            <div class="row center">
-              ${social(person) ?? ""}
-            </div>
-          `,
-          html
-        );
-      }
-    });
-
-    transformer.on(".menu", {
-      element(menu: any) {
-        menu.append(`<div>${social(person) ?? ""}</div>`, html);
-      }
-    });
+          </footer>
+        `
+        : "";
+    const menu = socialLinks
+      ? `<div class="menu" role="navigation" aria-label="primary"><div>${socialLinks}</div></div>`
+      : "";
 
     return transformer.transform(`
         <main class="grey darken-4 white-text">
@@ -166,29 +130,15 @@ export class GnapTheme extends Theme {
             <header class="valign-wrapper grey darken-4 white-text">
               <div class="container"></div>
             </header>
-            <section id="basics">
-              <div class="container"></div>
-            </section>
-            <section id="work">
-              <div class="container"></div>
-            </section>
-            <section id="projects">
-              <div class="container"></div>
-            </section>
-            <section id="education">
-              <div class="container"></div>
-            </section>
-            <section id="certificates">
-              <div class="container"></div>
-            </section>
-            <section id="events">
-              <div class="container"></div>
-            </section>                    
+            ${section("basics", basics)}
+            ${section("work", works)}
+            ${section("projects", renderProjects(projects(person)))}
+            ${section("education", renderAlumniOf(education(person)))}
+            ${section("certificates", renderCertifications(certifications(person)))}
+            ${section("events", events)}
           </article>
-          <footer class="grey darken-4 white-text no-print">
-            <div class="container"></div>
-          </footer>
-          <div class="menu" role="navigation" aria-label="primary"></div>
+          ${footer}
+          ${menu}
         </main>
     `);
   }

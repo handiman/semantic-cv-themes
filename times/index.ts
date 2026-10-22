@@ -90,7 +90,7 @@ export class TimesTheme extends Theme {
         <header>
             <h1>
                 ${name ?? ""}
-                <small>${jobTitle ?? ""}</small>
+                ${jobTitle ? `<small>${jobTitle}</small>` : ""}
                 ${locationText(person.workLocation) ? `<small>${locationText(person.workLocation)}</small>` : ""}
             </h1>
             ${social ? `<div class="grid"><div>${social}</div></div>` : ""}
@@ -100,6 +100,12 @@ export class TimesTheme extends Theme {
     };
 
     const renderBasics = () => {
+      const basics = [
+        renderKnowsAbout(knowsAbout),
+        renderSkills(skills),
+        renderKnowsLanguage(knowsLanguage),
+        renderCertifications(certifications(person))
+      ].join("");
       return `
         ${
           description
@@ -109,12 +115,7 @@ export class TimesTheme extends Theme {
         </section>`
             : ""
         }
-        <section id="basics">
-            ${renderKnowsAbout(knowsAbout)}
-            ${renderSkills(skills)}
-            ${renderKnowsLanguage(knowsLanguage)}
-            ${renderCertifications(certifications(person))}
-        </section>
+        ${basics.trim() ? `<section id="basics">${basics}</section>` : ""}
       `;
     };
 
