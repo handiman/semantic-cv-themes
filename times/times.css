@@ -82,6 +82,11 @@ header .grid > *:last-child {
   text-align: right;
   grid-area: right;
 }
+/* The date line from times.js stays on the left, also when it is the only cell. */
+header .grid > :first-child:has(.dateline) {
+  text-align: left;
+  grid-area: left;
+}
 header li,
 .caption li {
   display: inline;
