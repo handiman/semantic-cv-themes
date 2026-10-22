@@ -1,9 +1,10 @@
 import { Theme, html } from "../theme.js";
-import { locationText, normalizeArray } from "../utils.js";
+import { locationText } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { IconFactory, icon } from "../icons.js";
+import { icon } from "../icons.js";
+import { contactLinks } from "../contact.js";
 
 export class AliceTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -185,30 +186,13 @@ export class AliceTheme extends Theme {
 }
 
 const renderContactDetails = (person: Person) => {
-  const { email, telephone, url, sameAs } = person;
   const location = locationText(person.workLocation);
-  const contactDetails = normalizeArray(
-    email ? `mailto:${email}` : email,
-    telephone ? `tel:${telephone}` : telephone,
-    url,
-    sameAs
-  );
-  const iconFactory = new IconFactory(person);
-  const linkText = (url: string) => {
-    if (url.indexOf("mailto:") > -1 || url.indexOf("tel:") > -1) {
-      return url.substring(url.indexOf(":") + 1);
-    }
-
-    return url.substring(url.indexOf("://") + 3).replace("www.", "");
-  };
+  const contactDetails = contactLinks(person);
   return contactDetails.length || location
     ? `
     <div id="contact">
         <ul>${location ? `<li><a>${icon("location")}${location}</a></li>` : ""}${contactDetails
-          .map((url: string) => {
-            const icon = iconFactory.icon(url);
-            return `<li><a href="${url}">${icon}${linkText(url)}</a></li>`;
-          })
+          .map((link) => `<li><a href="${link.href}">${link.icon}${link.text}</a></li>`)
           .join("\n")}
         </ul>
     </div>

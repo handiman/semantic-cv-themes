@@ -1,9 +1,9 @@
 import { Theme, html } from "../theme.js";
-import { locationText, normalizeArray, removeProtocol } from "../utils.js";
+import { locationText } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { IconFactory } from "../icons.js";
+import { contactLinks } from "../contact.js";
 
 export class TimesTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -37,31 +37,13 @@ export class TimesTheme extends Theme {
       renderProjects,
       renderLifeEvents
     } = this;
-    const iconFactory = new IconFactory(person);
-    const {
-      name,
-      jobTitle,
-      description,
-      sameAs,
-      url,
-      email,
-      telephone,
-      knowsLanguage,
-      knowsAbout,
-      skills,
-      lifeEvent
-    } = person;
+    const { name, jobTitle, description, knowsLanguage, knowsAbout, skills, lifeEvent } = person;
     const { headings } = options;
 
     const renderSocial = () => {
-      const links = normalizeArray(
-        sameAs,
-        url,
-        email ? `mailto:${email}` : undefined,
-        telephone ? `tel:${telephone}` : undefined
-      );
+      const links = contactLinks(person);
       if (links.length > 0) {
-        return `<ul class="social">${links.map((item: string) => `<li><a href="${item}" aria-label="${iconFactory.label(item)}">${iconFactory.icon(item)}</a><div class="print">${removeProtocol(item)}</div></li>`).join("\n")}</ul>`;
+        return `<ul class="social">${links.map((link) => `<li><a href="${link.href}" aria-label="${link.label}">${link.icon}</a><div class="print">${link.text}</div></li>`).join("\n")}</ul>`;
       }
     };
 

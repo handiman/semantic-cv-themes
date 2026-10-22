@@ -1,10 +1,11 @@
 import { Theme, html } from "../theme.js";
-import { locationText, normalizeArray } from "../utils.js";
+import { locationText } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { IconFactory, icon } from "../icons.js";
+import { icon } from "../icons.js";
+import { contactLinks } from "../contact.js";
 
 export class LenaTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -88,28 +89,14 @@ const renderHeader = (header: any, person: Person) => {
 };
 
 const renderContact = (person: any, options: ThemeOptions) => {
-  const { email, telephone, url, sameAs } = person;
   const location = locationText(person.workLocation);
   const { headings } = options;
-  const links = normalizeArray(
-    sameAs,
-    url,
-    email ? `mailto:${email}` : undefined,
-    telephone ? `tel:${telephone}` : undefined
-  );
-  const iconFactory = new IconFactory(person);
-  const linkText = (url: string) => {
-    if (url.indexOf("mailto:") > -1 || url.indexOf("tel:") > -1) {
-      return url.substring(url.indexOf(":") + 1);
-    }
-
-    return url.substring(url.indexOf("://") + 3).replace("www.", "");
-  };
+  const links = contactLinks(person);
   return links.length || location
     ? `
       <section>
         <h2>${headings.contact}</h2>
-        <ul>${location ? `<li><a>${icon("location")}<span>${location}</span></a></li>` : ""}${links.map((link: string) => `<li><a href="${link}" title="${link}">${iconFactory.icon(link)}<span>${linkText(link)}</span></a></li>`).join("")}</ul>
+        <ul>${location ? `<li><a>${icon("location")}<span>${location}</span></a></li>` : ""}${links.map((link) => `<li><a href="${link.href}" title="${link.href}">${link.icon}<span>${link.text}</span></a></li>`).join("")}</ul>
       </section>
         `
     : "";

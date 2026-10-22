@@ -2,8 +2,9 @@ import { Theme, html } from "../theme.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { IconFactory, icon } from "../icons.js";
-import { linkText, locationText, normalizeArray } from "../utils.js";
+import { icon } from "../icons.js";
+import { locationText } from "../utils.js";
+import { contactLinks } from "../contact.js";
 
 export class BoilingDieselTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -64,14 +65,8 @@ export class BoilingDieselTheme extends Theme {
       })
       .on("header .description", {
         element(div: any) {
-          const { description, email, telephone, url, sameAs, workLocation } = person;
-          const iconFactory = new IconFactory(person);
-          const links = normalizeArray(
-            email ? `mailto:${email}` : undefined,
-            telephone ? `tel:${telephone}` : undefined,
-            url,
-            sameAs
-          );
+          const { description, workLocation } = person;
+          const links = contactLinks(person);
           const location = locationText(workLocation);
           if (!description && !links.length && !location) {
             div.remove();
@@ -87,7 +82,7 @@ export class BoilingDieselTheme extends Theme {
               `
                 <ul>
                   ${location ? `<li><a>${icon("location")}<span>${location}</span></a></li>` : ""}
-                  ${links.map((link: string) => `<li><a href="${link}">${iconFactory.icon(link)}<span>${linkText(link)}</span></a></li>`).join("\n")}
+                  ${links.map((link) => `<li><a href="${link.href}">${link.icon}<span>${link.text}</span></a></li>`).join("\n")}
                 </ul>
               `,
               html

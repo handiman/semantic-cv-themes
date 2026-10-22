@@ -2,8 +2,8 @@ import { Theme, html } from "../theme.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { linkText, locationText, normalizeArray } from "../utils.js";
-import { IconFactory } from "../icons.js";
+import { locationText } from "../utils.js";
+import { contactLinks } from "../contact.js";
 
 export class GnapTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -39,12 +39,7 @@ export class GnapTheme extends Theme {
     const location = locationText(person.workLocation);
     // The menu and footer show icon-only links and are hidden in print, so
     // print gets the addresses as text in the header.
-    const printContacts = normalizeArray(
-      person.email ? `mailto:${person.email}` : undefined,
-      telephone ? `tel:${telephone}` : undefined,
-      person.url,
-      person.sameAs
-    );
+    const printContacts = contactLinks(person);
 
     const renderSummary = () => {
       if (description) {
@@ -66,7 +61,7 @@ export class GnapTheme extends Theme {
             <h1>${name ?? ""}</h1>
             ${jobTitle ? `<p class="job-title">${jobTitle}</p>` : ""}
             ${location ? `<div class="location">${location}</div>` : ""}
-            ${printContacts.length ? `<ul class="print contact">${printContacts.map((link: string) => `<li>${linkText(link)}</li>`).join("")}</ul>` : ""}
+            ${printContacts.length ? `<ul class="print contact">${printContacts.map((link) => `<li>${link.text}</li>`).join("")}</ul>` : ""}
           `,
           html
         );
@@ -131,19 +126,8 @@ export class GnapTheme extends Theme {
 }
 
 const social = (person: Person) => {
-  const iconFactory = new IconFactory(person);
-  const { sameAs, url, email, telephone } = person;
-  let links = [...(sameAs ?? [])];
-  if (url) {
-    links.push(url);
-  }
-  if (email) {
-    links.push(`mailto:${email}`);
-  }
-  if (telephone) {
-    links.push(`tel:${telephone}`);
-  }
+  const links = contactLinks(person);
   if (links.length > 0) {
-    return `<ul class="social">${links.map((url) => `<li><a href="${url}" aria-label="${iconFactory.label(url)}">${iconFactory.icon(url)}</a></li>`).join("\n")}</ul>`;
+    return `<ul class="social">${links.map((link) => `<li><a href="${link.href}" aria-label="${link.label}">${link.icon}</a></li>`).join("\n")}</ul>`;
   }
 };
