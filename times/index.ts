@@ -38,10 +38,6 @@ export class TimesTheme extends Theme {
     return `<p>Skills: ${keywords.join(", ")}</p>`;
   }
 
-  renderJS(_person: Person) {
-    return Promise.resolve("");
-  }
-
   renderHTML(person: Person): Promise<string> {
     const {
       transformer,
@@ -84,7 +80,7 @@ export class TimesTheme extends Theme {
     };
 
     const renderHeader = () => {
-      // No date in the masthead: the same Person must render the same page on any day (#75).
+      // The date line is added in the browser by times.js, so the HTML is the same on any day (#75).
       const social = renderSocial();
       return `
         <header>
