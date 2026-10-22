@@ -1,9 +1,9 @@
-import { Theme, html } from "../theme.js";
+import { Theme, Slots } from "../theme.js";
+import { contactLinks } from "../contact.js";
 import { locationText } from "../utils.js";
-import Person, { projects, certifications, work, education } from "../person.js";
+import Person from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { contactLinks } from "../contact.js";
 
 export class MinimalTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -21,73 +21,43 @@ export class MinimalTheme extends Theme {
     ]
   };
 
-  async renderHTML(person: Person): Promise<string> {
-    const {
-      transformer,
-      renderWorksFor,
-      renderAlumniOf,
-      renderProjects,
-      renderKnowsLanguage,
-      renderKnowsAbout,
-      renderSkills,
-      renderLifeEvents,
-      renderCertifications
-    } = this;
-    const { image, name, jobTitle, description, knowsAbout, skills, knowsLanguage, lifeEvent } =
-      person;
-    const certs = certifications(person);
-    const urls = contactLinks(person);
-
-    transformer.on("header", {
-      element(header: any) {
-        if (image) {
-          header.append(`<picture><img src="${image}" alt="${name ?? ""}" /></picture>`, html);
-        }
-        header.append(
-          `
-            <div>
-              <h1>${name}</h1>
-              ${jobTitle ? `<div>${jobTitle}</div>` : ""}
-              ${locationText(person.workLocation) ? `<div>${locationText(person.workLocation)}</div>` : ""}
-              ${description ? `<div>${description}</div>` : ""}
-              ${urls.length > 0 ? `<ul>${urls.map((link) => `<li><a href="${link.href}" aria-label="${link.label}">${link.icon}<div class="print">${link.text}</div></a></li>`).join("\n")}</ul>` : ""}
-            </div>              
-        `,
-          html
-        );
-      }
-    });
-
-    transformer.on("aside", {
-      element(aside: any) {
-        aside.append(renderKnowsAbout(knowsAbout), html);
-        aside.append(renderSkills(skills), html);
-        aside.append(renderCertifications(certs), html);
-        aside.append(renderKnowsLanguage(knowsLanguage), html);
-      }
-    });
-
-    transformer.on("main", {
-      element(main: any) {
-        main.append(
-          `
-            ${renderWorksFor(work(person))}
-            ${renderProjects(projects(person))}
-            ${renderAlumniOf(education(person))}
-          `,
-          html
-        );
-
-        main.append(renderLifeEvents(lifeEvent), html);
-      }
-    });
-
-    return await transformer.transform(`
-      <div class="page">      
-        <header></header>
-        <aside></aside>
-        <main></main>
+  protected layout(): string {
+    return `
+      <div class="page">
+        <header><slot name="identity"></slot></header>
+        <aside>
+          <slot name="knowsAbout"></slot>
+          <slot name="skills"></slot>
+          <slot name="certifications"></slot>
+          <slot name="knowsLanguage"></slot>
+        </aside>
+        <main>
+          <slot name="worksFor"></slot>
+          <slot name="projects"></slot>
+          <slot name="alumniOf"></slot>
+          <slot name="lifeEvent"></slot>
+        </main>
       </div>
-    `);
+    `;
+  }
+
+  protected slots(person: Person): Slots {
+    return { identity: () => renderIdentity(person) };
   }
 }
+
+const renderIdentity = (person: Person) => {
+  const { image, name, jobTitle, description } = person;
+  const location = locationText(person.workLocation);
+  const links = contactLinks(person);
+  return `
+    ${image ? `<picture><img src="${image}" alt="${name ?? ""}" /></picture>` : ""}
+    <div>
+      <h1>${name}</h1>
+      ${jobTitle ? `<div>${jobTitle}</div>` : ""}
+      ${location ? `<div>${location}</div>` : ""}
+      ${description ? `<div>${description}</div>` : ""}
+      ${links.length > 0 ? `<ul>${links.map((link) => `<li><a href="${link.href}" aria-label="${link.label}">${link.icon}<div class="print">${link.text}</div></a></li>`).join("\n")}</ul>` : ""}
+    </div>
+  `;
+};

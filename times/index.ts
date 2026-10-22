@@ -1,6 +1,6 @@
-import { Theme, html } from "../theme.js";
+import { Theme, Slots } from "../theme.js";
 import { locationText } from "../utils.js";
-import Person, { projects, certifications, work, education } from "../person.js";
+import Person, { certifications } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
 import { contactLinks } from "../contact.js";
@@ -24,20 +24,25 @@ export class TimesTheme extends Theme {
     return `<p>${this.options.headings.skills}: ${keywords.join(", ")}</p>`;
   }
 
-  renderHTML(person: Person): Promise<string> {
-    const {
-      transformer,
-      options,
-      renderKnowsLanguage,
-      renderKnowsAbout,
-      renderSkills,
-      renderCertifications,
-      renderWorksFor,
-      renderAlumniOf,
-      renderProjects,
-      renderLifeEvents
-    } = this;
-    const { name, jobTitle, description, knowsLanguage, knowsAbout, skills, lifeEvent } = person;
+  protected layout(): string {
+    return `
+      <main>
+        <div>
+          <slot name="header"></slot>
+          <slot name="basics"></slot>
+          <slot name="worksFor"></slot>
+          <slot name="projects"></slot>
+          <slot name="alumniOf"></slot>
+          <slot name="lifeEvent"></slot>
+        </div>
+      </main>
+    `;
+  }
+
+  protected slots(person: Person): Slots {
+    const { options, renderKnowsLanguage, renderKnowsAbout, renderSkills, renderCertifications } =
+      this;
+    const { name, jobTitle, description, knowsLanguage, knowsAbout, skills } = person;
     const { headings } = options;
 
     const renderSocial = () => {
@@ -83,17 +88,6 @@ export class TimesTheme extends Theme {
       `;
     };
 
-    transformer.on("main div", {
-      element(el: any) {
-        el.append(renderHeader(), html);
-        el.append(renderBasics(), html);
-        el.append(renderWorksFor(work(person)), html);
-        el.append(renderProjects(projects(person)), html);
-        el.append(renderAlumniOf(education(person)), html);
-        el.append(renderLifeEvents(lifeEvent), html);
-      }
-    });
-
-    return transformer.transform(`<main><div></div></main>`);
+    return { header: renderHeader, basics: renderBasics };
   }
 }

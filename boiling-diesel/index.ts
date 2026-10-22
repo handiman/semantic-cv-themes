@@ -1,5 +1,5 @@
-import { Theme, html } from "../theme.js";
-import Person, { projects, certifications, work, education } from "../person.js";
+import { Theme, Slots } from "../theme.js";
+import Person, { certifications } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
 import { icon } from "../icons.js";
@@ -22,109 +22,65 @@ export class BoilingDieselTheme extends Theme {
     ]
   };
 
-  async renderHTML(person: Person): Promise<string> {
-    const {
-      transformer,
-      renderProjects,
-      renderWorksFor,
-      renderAlumniOf,
-      renderLifeEvents,
-      renderKnowsAbout,
-      renderSkills,
-      renderKnowsLanguage,
-      renderCertifications
-    } = this;
-    const { knowsAbout, skills, knowsLanguage, lifeEvent } = person;
-
-    transformer
-      .on("header img", {
-        element(photo: any) {
-          const { image, name } = person;
-          if (image) {
-            photo.replace(`<img src="${image}" alt="${name ?? ""}" />`, html);
-          } else {
-            photo.remove();
-          }
-        }
-      })
-      .on("header h1", {
-        element(h1: any) {
-          const { name } = person;
-          h1.replace(`<h1>${name ?? ""}</h1>`, html);
-        }
-      })
-      .on("header .job-title", {
-        element(p: any) {
-          const { jobTitle } = person;
-          if (jobTitle) {
-            p.replace(`<p class="job-title">${jobTitle}</p>`, html);
-          } else {
-            p.remove();
-          }
-        }
-      })
-      .on("header .description", {
-        element(div: any) {
-          const { description, workLocation } = person;
-          const links = contactLinks(person);
-          const location = locationText(workLocation);
-          if (!description && !links.length && !location) {
-            div.remove();
-            return;
-          }
-          if (description) {
-            // Already HTML-escaped by semantic-cv-core; insert as HTML so it
-            // isn't escaped twice.
-            div.append(description, html);
-          }
-          if (links.length || location) {
-            div.append(
-              `
-                <ul>
-                  ${location ? `<li><a>${icon("location")}<span>${location}</span></a></li>` : ""}
-                  ${links.map((link) => `<li><a href="${link.href}">${link.icon}<span>${link.text}</span></a></li>`).join("\n")}
-                </ul>
-              `,
-              html
-            );
-          }
-        }
-      });
-
-    const basics = [
-      renderKnowsAbout(knowsAbout),
-      renderSkills(skills),
-      renderKnowsLanguage(knowsLanguage),
-      renderCertifications(certifications(person))
-    ].join("");
-
-    transformer.on("main", {
-      element(main: any) {
-        if (basics.trim()) {
-          main.append(`<div><div class="grid">${basics}</div></div>`, html);
-        }
-        main.append(renderWorksFor(work(person)), html);
-        main.append(renderProjects(projects(person)), html);
-        main.append(renderAlumniOf(education(person)), html);
-        main.append(renderLifeEvents(lifeEvent ?? []), html);
-      }
-    });
-
-    return await transformer.transform(`
+  protected layout(person: Person): string {
+    const { name, jobTitle } = person;
+    return `
       <div class="page">
           <header>
               <div>
-                  <img />
+                  <slot name="photo"></slot>
                   <div>
-                      <h1></h1>
-                      <p class="job-title"></p>
-                      <div class="description"></div>
+                      <h1>${name ?? ""}</h1>
+                      ${jobTitle ? `<p class="job-title">${jobTitle}</p>` : ""}
+                      <slot name="description"></slot>
                   </div>
               </div>
           </header>
           <main>
+              <slot name="basics"></slot>
+              <slot name="worksFor"></slot>
+              <slot name="projects"></slot>
+              <slot name="alumniOf"></slot>
+              <slot name="lifeEvent"></slot>
           </main>
       </div>
-    `);
+    `;
+  }
+
+  protected slots(person: Person): Slots {
+    const { renderKnowsAbout, renderSkills, renderKnowsLanguage, renderCertifications } = this;
+    const { image, name, description, workLocation, knowsAbout, skills, knowsLanguage } = person;
+    return {
+      photo: () => (image ? `<img src="${image}" alt="${name ?? ""}" />` : ""),
+      description: () => {
+        const links = contactLinks(person);
+        const location = locationText(workLocation);
+        if (!description && !links.length && !location) {
+          return "";
+        }
+        return `
+          <div class="description">
+            ${description ?? ""}
+            ${
+              links.length || location
+                ? `<ul>
+                  ${location ? `<li><a>${icon("location")}<span>${location}</span></a></li>` : ""}
+                  ${links.map((link) => `<li><a href="${link.href}">${link.icon}<span>${link.text}</span></a></li>`).join("\n")}
+                </ul>`
+                : ""
+            }
+          </div>
+        `;
+      },
+      basics: () => {
+        const basics = [
+          renderKnowsAbout(knowsAbout),
+          renderSkills(skills),
+          renderKnowsLanguage(knowsLanguage),
+          renderCertifications(certifications(person))
+        ].join("");
+        return basics.trim() ? `<div><div class="grid">${basics}</div></div>` : "";
+      }
+    };
   }
 }

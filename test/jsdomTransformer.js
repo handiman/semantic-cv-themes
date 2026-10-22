@@ -36,6 +36,7 @@ const wrap = (el) => ({
     el.remove();
   },
   remove: () => el.remove(),
+  getAttribute: (name) => el.getAttribute(name),
   setAttribute: (name, value) => el.setAttribute(name, value)
 });
 

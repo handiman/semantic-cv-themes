@@ -1,4 +1,4 @@
-import { Person, period } from "./person.js";
+import { Person, certifications, education, period, projects, work } from "./person.js";
 import { HTMLTransformer } from "./htmlTransformer.js";
 import { ThemeMetadata } from "./themeMetadata.js";
 import { defaultOptions, ThemeOptions } from "./themeOptions.js";
@@ -63,13 +63,73 @@ export abstract class Theme {
   }
 
   /**
-   * Render the main HTML fragment for the CV.
-   * Must be implemented by all concrete themes.
+   * The page skeleton of the theme, with a `<slot name="…"></slot>` wherever a
+   * part of the CV goes. `renderHTML` replaces each slot with that part, or
+   * removes it when the Person has nothing for it, so no slot reaches the
+   * browser. Unlike Web Components, the slots are filled here, on the server.
+   *
+   * Slot names are those of `sectionSlots` (the sections of the base class)
+   * and those the theme adds in `slots`. A theme that builds its page another
+   * way overrides `renderHTML` instead and leaves this undefined.
+   */
+  protected layout(_person: Person): string | undefined {
+    return undefined;
+  }
+
+  /**
+   * The theme's own slots, for the parts it renders in its own markup (for
+   * example the header or the contact details). A slot here replaces a
+   * section slot of the same name.
+   */
+  protected slots(_person: Person): Slots {
+    return {};
+  }
+
+  /** The sections every theme can place in its layout, rendered by the base class. */
+  protected sectionSlots(person: Person): Slots {
+    return {
+      worksFor: () => this.renderWorksFor(work(person)),
+      projects: () => this.renderProjects(projects(person)),
+      alumniOf: () => this.renderAlumniOf(education(person)),
+      lifeEvent: () => this.renderLifeEvents(person.lifeEvent),
+      certifications: () => this.renderCertifications(certifications(person)),
+      knowsAbout: () => this.renderKnowsAbout(person.knowsAbout),
+      skills: () => this.renderSkills(person.skills),
+      knowsLanguage: () => this.renderKnowsLanguage(person.knowsLanguage)
+    };
+  }
+
+  /**
+   * Render the main HTML fragment for the CV: the `layout` with every slot
+   * filled or removed. A theme without a layout overrides this.
    *
    * @param person Normalized JSON‑LD Person object.
    * @returns Promise resolving to an HTML string.
    */
-  abstract renderHTML(person: Person): Promise<string>;
+  async renderHTML(person: Person): Promise<string> {
+    const layout = this.layout(person);
+    if (layout === undefined) {
+      throw new Error(`Theme "${this.meta.id}" has neither a layout nor its own renderHTML`);
+    }
+    const slots: Slots = { ...this.sectionSlots(person), ...this.slots(person) };
+    const themeId = this.meta.id;
+    this.transformer.on("slot", {
+      element(slot: any) {
+        const name = slot.getAttribute("name") ?? "";
+        const render = slots[name];
+        if (!render) {
+          throw new Error(`Theme "${themeId}" has a slot named "${name}", which nothing renders`);
+        }
+        const content = render();
+        if (content.trim()) {
+          slot.replace(content, html);
+        } else {
+          slot.remove();
+        }
+      }
+    });
+    return this.transformer.transform(layout);
+  }
 
   /**
    * Render the theme's CSS.
@@ -213,6 +273,9 @@ export abstract class Theme {
 }
 
 export default Theme;
+
+/** The parts of a layout, by slot name. Each renders its markup, or "" when it has nothing. */
+export type Slots = Record<string, () => string>;
 
 /** Options for inserting a string as HTML with the transformer: `el.append(markup, html)`. */
 export const html = { html: true } as const;
