@@ -133,7 +133,7 @@ export abstract class Theme {
       ? `
         <section id="worksFor">
           <h2>${headings.worksFor}</h2>
-          ${worksFor.map((role) => renderRole(role, this.renderKeywords)).join("")}
+          ${worksFor.map((role) => renderRole(role, this.renderKeywords, this.options.labels.present)).join("")}
         </section>
       `
       : "";
@@ -145,7 +145,7 @@ export abstract class Theme {
       ? `
         <section id="alumniOf">
           <h2>${headings.alumniOf}</h2>
-          ${alumniOf.map((role) => renderRole(role, this.renderKeywords)).join("")}
+          ${alumniOf.map((role) => renderRole(role, this.renderKeywords, this.options.labels.present)).join("")}
         </section>
       `
       : "";
@@ -157,7 +157,7 @@ export abstract class Theme {
       ? `
         <section id="project">
           <h2>${headings.projects}</h2>
-          ${proj.map((role) => renderRole(role, this.renderKeywords)).join("")}
+          ${proj.map((role) => renderRole(role, this.renderKeywords, this.options.labels.present)).join("")}
         </section>
       `
       : "";
@@ -236,7 +236,11 @@ ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
 ${themeCss}    
 `;
 
-const renderRole = (role: any, renderKeywords: (keywords: Array<string>) => string) => {
+const renderRole = (
+  role: any,
+  renderKeywords: (keywords: Array<string>) => string,
+  present: string
+) => {
   const { roleName, startDate, endDate, description, worksFor, alumniOf } = role;
   const { name } = worksFor ?? alumniOf;
   const location = locationText((worksFor ?? alumniOf).location);
@@ -247,7 +251,7 @@ const renderRole = (role: any, renderKeywords: (keywords: Array<string>) => stri
     startDate || endDate
       ? `
           ${startDate ? `<time datetime="${startDate}">${period(startDate)}</time>` : ""}
-          &ndash; ${endDate ? ` <time datetime="${endDate}">${period(endDate)}</time>` : "present"}
+          &ndash; ${endDate ? ` <time datetime="${endDate}">${period(endDate)}</time>` : present}
         `
       : undefined;
   return role

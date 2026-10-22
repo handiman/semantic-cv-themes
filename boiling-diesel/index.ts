@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory, icon } from "../icons.js";
 import { linkText, locationText, normalizeArray } from "../utils.js";
 
@@ -27,9 +28,10 @@ export class BoilingDieselTheme extends Theme {
   constructor(
     private transformer: HTMLTransformer,
     loadAsset: (_: string) => Promise<string>,
+    options?: ThemeOptions,
     metadata?: ThemeMetadata
   ) {
-    super(loadAsset, metadata ?? meta);
+    super(loadAsset, metadata ?? meta, options);
   }
 
   static get meta(): ThemeMetadata {

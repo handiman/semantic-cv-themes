@@ -116,3 +116,8 @@ you:
 - **Merging into `master` needs asking, every time.** So does anything that ships to users. The CLI repo publishes to
   npm from its own `master`, so a merge here only reaches users once the CLI repo bumps the pointer.
 - **Never rebase or force-push an already-pushed branch.** Ask first if rebasing still seems right for some reason.
+- **PRs are squash-merged on GitHub**, so `master` gets one short commit per reviewed PR, with the PR title as its
+  message. Write the PR title as a `type(Scope): Subject` commit message. Avoid stacking a PR on another one's branch:
+  after the first is squash-merged, the second still carries its original commits and conflicts with `master`. Put
+  changes that touch the same lines in one PR, or wait for the first to be merged. If a stacked PR can't be avoided,
+  merge `master` into its branch right after the first one is merged (no rebase).

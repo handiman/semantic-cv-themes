@@ -26,9 +26,10 @@ const html = { html: true };
 export class LenaTheme extends Theme {
   constructor(
     private transformer: HTMLTransformer,
-    loadAsset: (_: string) => Promise<string>
+    loadAsset: (_: string) => Promise<string>,
+    options?: ThemeOptions
   ) {
-    super(loadAsset, meta);
+    super(loadAsset, meta, options);
   }
 
   static get meta(): ThemeMetadata {

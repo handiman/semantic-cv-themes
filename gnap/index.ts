@@ -3,6 +3,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { ThemeOptions } from "../themeOptions.js";
 import { linkText, locationText, normalizeArray } from "../utils.js";
 import { IconFactory } from "../icons.js";
 
@@ -25,9 +26,10 @@ const html = { html: true };
 export class GnapTheme extends Theme {
   constructor(
     private transformer: HTMLTransformer,
-    loadAsset: (assetName: string) => Promise<string>
+    loadAsset: (assetName: string) => Promise<string>,
+    options?: ThemeOptions
   ) {
-    super(loadAsset, meta);
+    super(loadAsset, meta, options);
   }
 
   static get meta(): ThemeMetadata {

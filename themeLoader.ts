@@ -1,6 +1,7 @@
 import { Theme } from "./theme.js";
 import { HTMLTransformer } from "./htmlTransformer.js";
 import { ThemeRegistry } from "./themeRegistry.js";
+import { resolveOptions, ThemeOptionsInput } from "./themeOptions.js";
 
 /**
  * Factory responsible for instantiating concrete theme classes.
@@ -28,11 +29,13 @@ export class ThemeLoader {
    * @param themeId Identifier of the theme to load. Must correspond to a
    *                registered theme in the ThemeRegistry. Falls back to
    *                the "minimal" theme if the ID is unknown.
+   * @param options Headings and labels for the theme to use. Anything left
+   *                out keeps its English default.
    * @returns A concrete Theme instance ready for rendering.
    */
-  loadTheme(themeId: string): Theme {
+  loadTheme(themeId: string, options?: ThemeOptionsInput): Theme {
     const { type } = ThemeRegistry[themeId] ?? ThemeRegistry["minimal"];
-    return new type(this.transformer, this.loadAsset);
+    return new type(this.transformer, this.loadAsset, resolveOptions(options));
   }
 }
 

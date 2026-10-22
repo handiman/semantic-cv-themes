@@ -4,6 +4,7 @@ import { locationText, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory, icon } from "../icons.js";
 
 const meta = {
@@ -25,9 +26,10 @@ const html = { html: true };
 export class AliceTheme extends Theme {
   constructor(
     private transformer: HTMLTransformer,
-    loadAsset: (_: string) => Promise<string>
+    loadAsset: (_: string) => Promise<string>,
+    options?: ThemeOptions
   ) {
-    super(loadAsset, meta);
+    super(loadAsset, meta, options);
   }
 
   static get meta(): ThemeMetadata {

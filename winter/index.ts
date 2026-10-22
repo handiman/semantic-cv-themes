@@ -4,6 +4,7 @@ import Person, { projects, certifications, work, education } from "../person.js"
 import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory, icon } from "../icons.js";
 
 const meta = {
@@ -24,9 +25,10 @@ const html = { html: true };
 export class WinterTheme extends Theme {
   constructor(
     private transformer: HTMLTransformer,
-    loadAsset: (assetName: string) => Promise<string>
+    loadAsset: (assetName: string) => Promise<string>,
+    options?: ThemeOptions
   ) {
-    super(loadAsset, meta);
+    super(loadAsset, meta, options);
   }
 
   static get meta(): ThemeMetadata {

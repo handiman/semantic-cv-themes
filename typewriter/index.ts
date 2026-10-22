@@ -4,6 +4,7 @@ import Person, { projects, certifications, work, education } from "../person.js"
 import { ThemeTags } from "../themeTags.js";
 import { linkText, locationText, normalizeArray } from "../utils.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { ThemeOptions } from "../themeOptions.js";
 
 const meta = {
   id: "typewriter",
@@ -25,9 +26,10 @@ const html = { html: true };
 export class TypewriterTheme extends Theme {
   constructor(
     private transformer: HTMLTransformer,
-    loadAsset: (assetName: string) => Promise<string>
+    loadAsset: (assetName: string) => Promise<string>,
+    options?: ThemeOptions
   ) {
-    super(loadAsset, meta);
+    super(loadAsset, meta, options);
   }
 
   static get meta(): ThemeMetadata {
@@ -35,7 +37,7 @@ export class TypewriterTheme extends Theme {
   }
 
   protected renderKeywords(keywords: Array<string>): string {
-    return `<p>Skills: ${keywords.join(", ")}</p>`;
+    return `<p>${this.options.headings.skills}: ${keywords.join(", ")}</p>`;
   }
 
   renderJS(_person: Person): Promise<string> {
