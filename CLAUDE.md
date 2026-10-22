@@ -79,6 +79,7 @@ falls back to `minimal` for an unknown id. Themes don't register themselves.
 - `npm run build:themeRegistry` – regenerate the theme registry
 - `npm run build` – clean, regenerate the registry, `tsc`
 - `npm test` – build, then all `*.test.js`
+- `npm run test:update-snapshots` – rewrite the HTML snapshots in `test/snapshots` after an intended change
 
 Run `npm test` before considering work done. CI (`.github/workflows/ci.yml`) runs it on every push.
 
@@ -89,6 +90,11 @@ Run `npm test` before considering work done. CI (`.github/workflows/ci.yml`) run
   a shared behavior goes in the base class with a test there, not copied into each theme.
 - The tests use a small `jsdom`-based `HTMLTransformer` (see `contact.test.js`), not `html-rewriter-wasm`. It runs hooks
   one selector at a time, which is enough to check what text ends up in the page.
+- `snapshot.test.js` renders every theme with the full and the name-only Person from `test/persons.js` and compares
+  the page with `test/snapshots/<id>.<person>.html`, in a canonical form that ignores the indentation of template
+  strings. A refactor must leave the snapshots unchanged. When a change is meant to alter a theme's markup, run
+  `npm run test:update-snapshots` and commit the snapshots with the change, so the diff shows what changed. A new
+  theme needs its two snapshots committed too.
 - Never wait on the network. No test fetches fonts or icons.
 
 ## Working in the CLI repo's submodule
