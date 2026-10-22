@@ -23,11 +23,12 @@ npm test
 
 ## Adding a theme
 
-1. **Create a folder named after the theme's id**, in lower-case kebab-case, for example `my-theme/`. The folder name gives the class name: `my-theme` must export `MyThemeTheme`. The registry (`themeRegistry.generated.ts`) is generated from the folders, so you don't edit it by hand.
-2. **Add `my-theme/index.ts`** with a class that extends `Theme`, with a `static readonly meta` (`id`, `title`, `description`, `tags`) and a `layout(person)`: the page skeleton, with a `<slot name="worksFor"></slot>` and so on wherever a part of the CV goes. The base class fills each slot or removes it when there is nothing for it. Parts in your own markup (the header, contact details) go in `slots(person)`. No constructor is needed. If you want full control instead, override `renderHTML(person)`, like `gnap/` does. `minimal/` is the simplest one to start from. 
-3. **Add `my-theme/my-theme.css`.** It's loaded after a small shared reset.
-4. **Optionally add `my-theme/my-theme.js`** for behavior. It runs as a module, and the page includes a `<semantic-cv-theme-my-theme>` element that your script can define. See `matilda/`.
-5. **Check that it prints well**, since many people print their CV or save it as a PDF.
+1. **Create it from the template:** `npm run new-theme -- my-theme`. The id is lower-case kebab-case and names the folder and the class (`my-theme` → `MyThemeTheme`). You get `my-theme/index.ts` and `my-theme/my-theme.css`, and the new theme already passes all tests.
+2. **Make it yours.** In `index.ts`, set the description and tags in `meta`, and shape the `layout(person)`: the page skeleton, with a `<slot name="worksFor"></slot>` and so on wherever a part of the CV goes. The base class fills each slot, or removes it when there is nothing for it. Parts in your own markup (the header, contact details) go in `slots(person)`. If you want full control instead, override `renderHTML(person)`, like `gnap/` does.
+3. **Style it** in `my-theme.css`. It's loaded after a small shared reset. Set the shared CSS variables (`--text-color`, `--space-1`, …) in its `:root`; CLAUDE.md lists them.
+4. **Optionally add `my-theme/my-theme.js`** for behavior. It runs as a module, and the page includes a `<semantic-cv-theme-my-theme>` element that your script can define. See `matilda/` and `times/`.
+5. **Look at it:** `npm run preview`, then open `dist/preview/index.html`. It shows every theme with a full CV and with only a name. Check the print preview too, since many people print their CV or save it as a PDF.
+6. **Add its snapshots:** `npm run test:update-snapshots`, then `npm test`.
 
 ### Treat the Person as already escaped
 
