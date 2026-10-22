@@ -27,9 +27,6 @@ h2 {
 h2 {
   border-bottom: 1px solid var(--border-color);
 }
-h3 {
-  padding-top: var(space);
-}
 
 picture {
   width: 300px;

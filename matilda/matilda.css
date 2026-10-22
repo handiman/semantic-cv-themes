@@ -233,7 +233,6 @@ main > header {
   }
   .scv-footer {
     display:block !important;
-    background-color: var(text-color-muted);
     opacity: 1 !important;
     padding: var(--space-1) !important;
     margin: 0;

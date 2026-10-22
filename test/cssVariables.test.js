@@ -8,6 +8,15 @@ import { loadTheme } from "./jsdomTransformer.js";
 // of it) must be defined somewhere in that CSS, unless the var() gives a fallback.
 for (const themeId of Object.keys(ThemeRegistry)) {
   describe(`${themeId} CSS variables`, () => {
+    it("names a variable in every var()", async () => {
+      // var(space) instead of var(--space) is invalid, so the browser drops the whole declaration.
+      const css = (await loadTheme(themeId).renderCSS({})).replace(/\/\*[\s\S]*?\*\//g, "");
+      const broken = [...css.matchAll(/var\(\s*([^)\s,]*)/g)]
+        .map((m) => m[1])
+        .filter((name) => !name.startsWith("--"));
+      assert.deepStrictEqual(broken, []);
+    });
+
     it("uses no variable that isn't defined", async () => {
       const css = (await loadTheme(themeId).renderCSS({})).replace(/\/\*[\s\S]*?\*\//g, "");
       const defined = new Set([...css.matchAll(/(--[A-Za-z0-9-]+)\s*:/g)].map((m) => m[1]));
