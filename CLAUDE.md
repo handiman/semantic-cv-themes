@@ -60,6 +60,18 @@ skeleton live in `semantic-cv-core`, not here.
 - Import paths end in `.js` (ESM, `module: node20`). Tests import the compiled output through `#themes/*`.
 - Prettier is authoritative: double quotes, no trailing commas, width 100.
 
+## Languages
+
+Headings and labels come from `ThemeOptions` ([themeOptions.ts](themeOptions.ts)). `themeOptionsFor(language, custom)`
+puts the CV's own headings and labels (`custom`) over those of its language tag (`"sv"`, `"sv-SE"`: Swedish), over
+English for any other language and for none. The CLI and the worker pass
+`themeOptionsFor(languageOf(person), themeOptionsOf(person))` to `ThemeLoader.loadTheme`. Both helpers are in
+semantic-cv-core: `languageOf` reads `{ "@language": … }` from the CV's `@context`, and `themeOptionsOf` reads
+`headings` and `labels` from its theme object and HTML-escapes them; the worker passes the custom ones only for
+`BETA_USERS`. Keep the heading and label keys in step with `headingKeys` / `labelKeys` in core. To add a language, add its translations
+there; a test checks that every supported language has every heading and label. A theme never hard-codes visible
+text that should follow the language.
+
 ## CSS variables
 
 Every theme uses the same CSS variable names for the same roles. The base CSS in [theme.ts](theme.ts) gives each a

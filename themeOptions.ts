@@ -56,3 +56,45 @@ export const resolveOptions = (input?: ThemeOptionsInput): ThemeOptions => ({
 
 const strings = (values: Record<string, unknown> | undefined) =>
   Object.fromEntries(Object.entries(values ?? {}).filter(([, value]) => typeof value === "string"));
+
+/**
+ * Headings and labels per language, by primary language subtag. English is the default and
+ * needs nothing here. Add a language by adding its translations.
+ */
+const translations: Record<string, ThemeOptionsInput> = {
+  sv: {
+    headings: {
+      contact: "Kontaktuppgifter",
+      description: "Sammanfattning",
+      knowsLanguage: "Språk",
+      knowsAbout: "Kärnkompetenser",
+      skills: "Färdigheter",
+      certifications: "Certifieringar",
+      worksFor: "Arbetslivserfarenhet",
+      alumniOf: "Utbildning",
+      projects: "Projekt",
+      lifeEvent: "Händelser"
+    },
+    labels: {
+      present: "pågående"
+    }
+  }
+};
+
+/** The languages the themes have headings for: English and those in `translations`. */
+export const supportedLanguages = ["en", ...Object.keys(translations)];
+
+/**
+ * Theme options for a CV: its own headings and labels (`custom`, from its theme object, already
+ * HTML-escaped by semantic-cv-core's themeOptionsOf) over those of its language, over English.
+ * The language is a tag ("sv", "sv-SE", "en-GB"); only the primary subtag counts, and a language
+ * the themes have no headings for, or none at all, gives English.
+ */
+export const themeOptionsFor = (language?: string, custom?: ThemeOptionsInput): ThemeOptions => {
+  const primary = (language ?? "").split("-")[0].toLowerCase();
+  const base = resolveOptions(translations[primary]);
+  return {
+    headings: { ...base.headings, ...strings(custom?.headings) },
+    labels: { ...base.labels, ...strings(custom?.labels) }
+  };
+};
