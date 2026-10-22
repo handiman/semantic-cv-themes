@@ -82,3 +82,14 @@ for (const themeId of Object.keys(ThemeRegistry)) {
     }
   });
 }
+
+for (const themeId of Object.keys(ThemeRegistry)) {
+  it(`${themeId} gives no two elements the same id`, async () => {
+    const html = await loadTheme(themeId).renderHTML(structuredClone(fullPerson));
+    const ids = [...html.matchAll(/\sid="([^"]+)"/g)].map((m) => m[1]);
+    assert.deepStrictEqual(
+      ids.filter((id, i) => ids.indexOf(id) !== i),
+      []
+    );
+  });
+}
