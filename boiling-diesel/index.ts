@@ -1,46 +1,25 @@
-import { Theme } from "../theme.js";
-import { HTMLTransformer } from "../htmlTransformer.js";
+import { Theme, html } from "../theme.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory, icon } from "../icons.js";
 import { linkText, locationText, normalizeArray } from "../utils.js";
 
-const meta = {
-  id: "boiling-diesel",
-  title: "Boiling Diesel",
-  description:
-    "A bold, high‑contrast dark theme built for technical résumés that want a strong, confident presence.",
-  tags: [
-    ThemeTags.twoCol,
-    ThemeTags.resume,
-    ThemeTags.darkMode,
-    ThemeTags.highContrast,
-    ThemeTags.technical,
-    ThemeTags.bold
-  ]
-};
-
-const html = { html: true };
-
 export class BoilingDieselTheme extends Theme {
-  constructor(
-    private transformer: HTMLTransformer,
-    loadAsset: (_: string) => Promise<string>,
-    options?: ThemeOptions,
-    metadata?: ThemeMetadata
-  ) {
-    super(loadAsset, metadata ?? meta, options);
-  }
-
-  static get meta(): ThemeMetadata {
-    return meta;
-  }
-
-  renderJS(_person: any) {
-    return Promise.resolve("");
-  }
+  static readonly meta: ThemeMetadata = {
+    id: "boiling-diesel",
+    title: "Boiling Diesel",
+    description:
+      "A bold, high‑contrast dark theme built for technical résumés that want a strong, confident presence.",
+    tags: [
+      ThemeTags.twoCol,
+      ThemeTags.resume,
+      ThemeTags.darkMode,
+      ThemeTags.highContrast,
+      ThemeTags.technical,
+      ThemeTags.bold
+    ]
+  };
 
   async renderHTML(person: Person): Promise<string> {
     const {

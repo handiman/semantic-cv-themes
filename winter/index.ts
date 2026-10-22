@@ -1,43 +1,23 @@
-import { Theme } from "../theme.js";
-import { HTMLTransformer } from "../htmlTransformer.js";
+import { Theme, html } from "../theme.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory, icon } from "../icons.js";
 
-const meta = {
-  id: "winter",
-  title: "Winter",
-  description: "A crisp, cool, spacious layout with bright whites and clean structure.",
-  tags: [
-    ThemeTags.twoCol,
-    ThemeTags.headshot,
-    ThemeTags.lightMode,
-    ThemeTags.cool,
-    ThemeTags.resume
-  ]
-};
-
-const html = { html: true };
-
 export class WinterTheme extends Theme {
-  constructor(
-    private transformer: HTMLTransformer,
-    loadAsset: (assetName: string) => Promise<string>,
-    options?: ThemeOptions
-  ) {
-    super(loadAsset, meta, options);
-  }
-
-  static get meta(): ThemeMetadata {
-    return meta;
-  }
-
-  renderJS(_: Person): Promise<string> {
-    return Promise.resolve("");
-  }
+  static readonly meta: ThemeMetadata = {
+    id: "winter",
+    title: "Winter",
+    description: "A crisp, cool, spacious layout with bright whites and clean structure.",
+    tags: [
+      ThemeTags.twoCol,
+      ThemeTags.headshot,
+      ThemeTags.lightMode,
+      ThemeTags.cool,
+      ThemeTags.resume
+    ]
+  };
 
   renderHTML(person: Person): Promise<string> {
     const {

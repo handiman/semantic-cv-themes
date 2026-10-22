@@ -1,40 +1,25 @@
-import { Theme } from "../theme.js";
-import { HTMLTransformer } from "../htmlTransformer.js";
+import { Theme, html } from "../theme.js";
 import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory } from "../icons.js";
 
-const meta = {
-  id: "minimal",
-  title: "Minimal",
-  description:
-    "A neutral, understated single‑column layout designed to be readable, reliable, and universally suitable.",
-  tags: [
-    ThemeTags.singleCol,
-    ThemeTags.lightMode,
-    ThemeTags.minimal,
-    ThemeTags.neutral,
-    ThemeTags.resume,
-    ThemeTags.default
-  ]
-};
-const html = { html: true };
-
 export class MinimalTheme extends Theme {
-  constructor(
-    private transformer: HTMLTransformer,
-    loadAsset: (assetName: string) => Promise<string>,
-    options?: ThemeOptions
-  ) {
-    super(loadAsset, meta, options);
-  }
-
-  static get meta(): ThemeMetadata {
-    return meta;
-  }
+  static readonly meta: ThemeMetadata = {
+    id: "minimal",
+    title: "Minimal",
+    description:
+      "A neutral, understated single‑column layout designed to be readable, reliable, and universally suitable.",
+    tags: [
+      ThemeTags.singleCol,
+      ThemeTags.lightMode,
+      ThemeTags.minimal,
+      ThemeTags.neutral,
+      ThemeTags.resume,
+      ThemeTags.default
+    ]
+  };
 
   async renderHTML(person: Person): Promise<string> {
     const {
@@ -122,9 +107,5 @@ export class MinimalTheme extends Theme {
         <main></main>
       </div>
     `);
-  }
-
-  renderJS(_person: Person): Promise<string> {
-    return Promise.resolve("");
   }
 }

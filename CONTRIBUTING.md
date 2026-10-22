@@ -24,7 +24,7 @@ npm test
 ## Adding a theme
 
 1. **Create a folder named after the theme's id**, in lower-case kebab-case, for example `my-theme/`. The folder name gives the class name: `my-theme` must export `MyThemeTheme`. The registry (`themeRegistry.generated.ts`) is generated from the folders, so you don't edit it by hand.
-2. **Add `my-theme/index.ts`** with a class that extends `Theme`, with a `meta` (`id`, `title`, `description`, `tags`) and a `renderHTML(person)`. `minimal/` is the simplest one to start from. Use the base class's section renderers (`renderWorksFor`, `renderSkills` and so on) where they fit.
+2. **Add `my-theme/index.ts`** with a class that extends `Theme`, with a `static readonly meta` (`id`, `title`, `description`, `tags`) and a `renderHTML(person)`. No constructor is needed. `minimal/` is the simplest one to start from. Use the base class's section renderers (`renderWorksFor`, `renderSkills` and so on) where they fit.
 3. **Add `my-theme/my-theme.css`.** It's loaded after a small shared reset.
 4. **Optionally add `my-theme/my-theme.js`** for behavior. It runs as a module, and the page includes a `<semantic-cv-theme-my-theme>` element that your script can define. See `matilda/`.
 5. **Check that it prints well**, since many people print their CV or save it as a PDF.

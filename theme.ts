@@ -1,4 +1,5 @@
 import { Person, period } from "./person.js";
+import { HTMLTransformer } from "./htmlTransformer.js";
 import { ThemeMetadata } from "./themeMetadata.js";
 import { defaultOptions, ThemeOptions } from "./themeOptions.js";
 import { arrayOf, locationText } from "./utils.js";
@@ -22,18 +23,26 @@ import { arrayOf, locationText } from "./utils.js";
  */
 export abstract class Theme {
   /**
-   * Create a new theme instance.
+   * Id, title, description and tags of the theme. Every theme declares its own as
+   * `static readonly meta`; the base class reads it from there.
+   */
+  declare static readonly meta: ThemeMetadata;
+
+  /**
+   * Create a new theme instance. Themes don't declare a constructor of their own;
+   * `ThemeLoader` calls this one.
    *
+   * @param transformer HTML rewriting implementation of the runtime (CLI or Worker).
    * @param loadAsset Function that loads a theme asset (CSS/JS) by name.
    *                  Implemented differently in CLI and Worker runtimes.
    * @param options Theme options such as headings. Custom values require a subscription. (or forking the repo and building your own implementation for the creative ones out there)
-   * @param meta Theme metadata such as id, title, description and tags.
    */
   constructor(
+    protected transformer: HTMLTransformer,
     private loadAsset: (assetName: string) => Promise<string>,
-    private meta: ThemeMetadata,
     protected options: ThemeOptions = defaultOptions
   ) {
+    // Bound, so a theme can take them out of `this` and call them from a transformer hook.
     this.renderHTML = this.renderHTML.bind(this);
     this.renderCSS = this.renderCSS.bind(this);
     this.renderJS = this.renderJS.bind(this);
@@ -46,6 +55,11 @@ export abstract class Theme {
     this.renderKnowsAbout = this.renderKnowsAbout.bind(this);
     this.renderSkills = this.renderSkills.bind(this);
     this.renderKeywords = this.renderKeywords.bind(this);
+  }
+
+  /** The `meta` of the concrete theme class. */
+  private get meta(): ThemeMetadata {
+    return (this.constructor as typeof Theme).meta;
   }
 
   /**
@@ -70,7 +84,9 @@ export abstract class Theme {
 
   /**
    * Render the theme's JavaScript module.
-   * By default, loads `{id}.js` via the provided asset loader.
+   * By default, loads `{id}.js` via the provided asset loader. Both runtimes
+   * give an empty string when the theme has no such file, so a theme without
+   * a script doesn't need to override this.
    *
    * @param person Normalized JSON‑LD Person object.
    * @returns Promise resolving to a JavaScript string.
@@ -197,6 +213,9 @@ export abstract class Theme {
 }
 
 export default Theme;
+
+/** Options for inserting a string as HTML with the transformer: `el.append(markup, html)`. */
+export const html = { html: true } as const;
 
 const withResetCSS = (themeCss: string) => `
 :root {

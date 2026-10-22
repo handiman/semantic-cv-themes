@@ -23,9 +23,13 @@ skeleton live in `semantic-cv-core`, not here.
   when it is empty.
 - One directory per theme, named in kebab-case after the theme id: `<id>/index.ts` and `<id>/<id>.css`. The class is
   the title-cased id plus `Theme` (`holden-wreck` → `HoldenWreckTheme`). That naming is what generates the registry.
-- A theme extends `Theme` ([theme.ts](theme.ts)), declares a `meta` constant (`id`, `title`, `description`, `tags`),
-  exposes it as `static get meta()`, and implements `renderHTML(person)`. `renderCSS` / `renderJS` default to loading
-  `<id>.css` / `<id>.js` through `loadAsset`.
+- A theme extends `Theme` ([theme.ts](theme.ts)), declares `static readonly meta: ThemeMetadata` (`id`, `title`,
+  `description`, `tags`) and implements `renderHTML(person)`. Nothing else is required: no constructor (the base class
+  takes the transformer, `loadAsset` and the options, and reads `meta` from the class), and no `renderCSS` /
+  `renderJS`, which default to loading `<id>.css` / `<id>.js` through `loadAsset` (an empty string when the file
+  doesn't exist). Insert markup with the `html` options exported from `theme.ts`: `el.append(markup, html)`.
+- A theme that only differs from another in its CSS extends that theme's class and declares its own `meta`, like
+  Holden Wreck does with Boiling Diesel. `renderCSS` then loads the variant's own `<id>.css`.
 - Tags come from `ThemeTags` ([themeTags.ts](themeTags.ts)); don't invent free-form strings.
 - Shared building blocks live in [person.ts](person.ts) (`work`, `education`, `projects`, `certifications`),
   [utils.ts](utils.ts) (`normalizeArray`, `linkText`, `locationText`) and [icons.ts](icons.ts). Use them

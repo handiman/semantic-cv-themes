@@ -1,40 +1,25 @@
-import { Theme } from "../theme.js";
-import { HTMLTransformer } from "../htmlTransformer.js";
+import { Theme, html } from "../theme.js";
 import { locationText, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory, icon } from "../icons.js";
 
-const meta = {
-  id: "alice",
-  title: "Alice",
-  description:
-    "A bright, balanced two‑column theme with crisp typography, gentle contrast, and a confident, approachable rhythm.",
-  tags: [
-    ThemeTags.twoCol,
-    ThemeTags.neutral,
-    ThemeTags.lightMode,
-    ThemeTags.typographyForward,
-    ThemeTags.minimal,
-    ThemeTags.resume
-  ]
-};
-const html = { html: true };
-
 export class AliceTheme extends Theme {
-  constructor(
-    private transformer: HTMLTransformer,
-    loadAsset: (_: string) => Promise<string>,
-    options?: ThemeOptions
-  ) {
-    super(loadAsset, meta, options);
-  }
-
-  static get meta(): ThemeMetadata {
-    return meta;
-  }
+  static readonly meta: ThemeMetadata = {
+    id: "alice",
+    title: "Alice",
+    description:
+      "A bright, balanced two‑column theme with crisp typography, gentle contrast, and a confident, approachable rhythm.",
+    tags: [
+      ThemeTags.twoCol,
+      ThemeTags.neutral,
+      ThemeTags.lightMode,
+      ThemeTags.typographyForward,
+      ThemeTags.minimal,
+      ThemeTags.resume
+    ]
+  };
 
   async renderHTML(person: Person): Promise<string> {
     const {
@@ -196,10 +181,6 @@ export class AliceTheme extends Theme {
           </div>
         </div>
     `);
-  }
-
-  renderJS(_person: Person): Promise<string> {
-    return Promise.resolve("");
   }
 }
 

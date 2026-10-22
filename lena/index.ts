@@ -1,5 +1,4 @@
-import { Theme } from "../theme.js";
-import { HTMLTransformer } from "../htmlTransformer.js";
+import { Theme, html } from "../theme.js";
 import { locationText, normalizeArray } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
@@ -7,34 +6,21 @@ import { ThemeOptions } from "../themeOptions.js";
 import { ThemeMetadata } from "../themeMetadata.js";
 import { IconFactory, icon } from "../icons.js";
 
-const meta = {
-  id: "lena",
-  title: "Lena",
-  description:
-    "A modern two‑column theme with clean typography, subtle accents, and a calm, well‑organized visual flow.",
-  tags: [
-    ThemeTags.twoCol,
-    ThemeTags.headshot,
-    ThemeTags.lightMode,
-    ThemeTags.calm,
-    ThemeTags.typographyForward,
-    ThemeTags.photo
-  ]
-};
-const html = { html: true };
-
 export class LenaTheme extends Theme {
-  constructor(
-    private transformer: HTMLTransformer,
-    loadAsset: (_: string) => Promise<string>,
-    options?: ThemeOptions
-  ) {
-    super(loadAsset, meta, options);
-  }
-
-  static get meta(): ThemeMetadata {
-    return meta;
-  }
+  static readonly meta: ThemeMetadata = {
+    id: "lena",
+    title: "Lena",
+    description:
+      "A modern two‑column theme with clean typography, subtle accents, and a calm, well‑organized visual flow.",
+    tags: [
+      ThemeTags.twoCol,
+      ThemeTags.headshot,
+      ThemeTags.lightMode,
+      ThemeTags.calm,
+      ThemeTags.typographyForward,
+      ThemeTags.photo
+    ]
+  };
 
   async renderHTML(person: Person): Promise<string> {
     const {
@@ -83,9 +69,6 @@ export class LenaTheme extends Theme {
         <main></main>
       </div>
     `);
-  }
-  renderJS(_person: Person): Promise<string> {
-    return Promise.resolve("");
   }
 }
 
