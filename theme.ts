@@ -244,7 +244,7 @@ export abstract class Theme {
     const { headings } = this.options;
     return proj && proj.length
       ? `
-        <section id="project">
+        <section id="projects">
           <h2>${headings.projects}</h2>
           ${proj.map((role) => renderRole(role, this.renderKeywords, this.options.labels.present)).join("")}
         </section>
