@@ -4,6 +4,7 @@ import { HTMLTransformer } from "../htmlTransformer.js";
 import { Person } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { ThemeOptions } from "../themeOptions.js";
 
 const meta = {
   id: "holden-wreck",
@@ -22,9 +23,13 @@ const meta = {
 
 export class HoldenWreckTheme extends Theme {
   private base: BoilingDieselTheme;
-  constructor(transformer: HTMLTransformer, loadAsset: (_: string) => Promise<string>) {
-    super(loadAsset, meta);
-    this.base = new BoilingDieselTheme(transformer, loadAsset, meta);
+  constructor(
+    transformer: HTMLTransformer,
+    loadAsset: (_: string) => Promise<string>,
+    options?: ThemeOptions
+  ) {
+    super(loadAsset, meta, options);
+    this.base = new BoilingDieselTheme(transformer, loadAsset, options, meta);
   }
 
   static get meta(): ThemeMetadata {

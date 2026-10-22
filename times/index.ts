@@ -4,6 +4,7 @@ import { locationText, normalizeArray, removeProtocol } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { ThemeOptions } from "../themeOptions.js";
 import { IconFactory } from "../icons.js";
 
 const meta = {
@@ -25,9 +26,10 @@ const html = { html: true };
 export class TimesTheme extends Theme {
   constructor(
     private transformer: HTMLTransformer,
-    loadAsset: (assetName: string) => Promise<string>
+    loadAsset: (assetName: string) => Promise<string>,
+    options?: ThemeOptions
   ) {
-    super(loadAsset, meta);
+    super(loadAsset, meta, options);
   }
 
   static get meta(): ThemeMetadata {
@@ -35,7 +37,7 @@ export class TimesTheme extends Theme {
   }
 
   protected renderKeywords(keywords: Array<string>): string {
-    return `<p>Skills: ${keywords.join(", ")}</p>`;
+    return `<p>${this.options.headings.skills}: ${keywords.join(", ")}</p>`;
   }
 
   renderJS(_person: Person) {
