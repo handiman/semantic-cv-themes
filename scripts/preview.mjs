@@ -14,7 +14,9 @@ const out = path.join(root, "dist", "preview");
 const load = (file) => import(pathToFileURL(path.join(root, file)).href);
 
 const { ThemeRegistry } = await load("dist/themeRegistry.js");
-const { loadTheme } = await load("test/jsdomTransformer.js");
+const { JsdomTransformer, loadAsset } = await load("test/jsdomTransformer.js");
+const { ThemeLoader } = await load("dist/themeLoader.js");
+const { themeOptionsFor } = await load("dist/themeOptions.js");
 const { fullPerson, nameOnlyPerson } = await load("test/persons.js");
 
 // The test Person's photo points to example.com, which doesn't exist. The preview shows a drawn
@@ -28,18 +30,22 @@ const photo =
 
 const persons = [
   { key: "full", label: "Full CV", person: { ...fullPerson, image: photo } },
-  { key: "name-only", label: "Only a name", person: nameOnlyPerson }
+  { key: "name-only", label: "Only a name", person: nameOnlyPerson },
+  { key: "sv", label: "In Swedish", person: { ...fullPerson, image: photo }, language: "sv" }
 ];
 
 // The Persons in test/persons.js are already escaped, like the Person core hands a theme. The
 // theme's own title and description come from this repository.
-const page = async (themeId, person) => {
-  const theme = loadTheme(themeId);
+const page = async (themeId, person, language) => {
+  const theme = new ThemeLoader(new JsdomTransformer(), loadAsset).loadTheme(
+    themeId,
+    themeOptionsFor(language)
+  );
   const html = await theme.renderHTML(structuredClone(person));
   const css = await theme.renderCSS(person);
   const js = await theme.renderJS(person);
   return `<!DOCTYPE html>
-<html>
+<html${language ? ` lang="${language}"` : ""}>
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -62,9 +68,9 @@ fs.mkdirSync(out, { recursive: true });
 const rows = [];
 for (const [themeId, entry] of Object.entries(ThemeRegistry)) {
   const links = [];
-  for (const { key, label, person } of persons) {
+  for (const { key, label, person, language } of persons) {
     const file = `${themeId}.${key}.html`;
-    fs.writeFileSync(path.join(out, file), await page(themeId, person));
+    fs.writeFileSync(path.join(out, file), await page(themeId, person, language));
     links.push(`<a href="${file}">${label}</a>`);
   }
   rows.push(`
@@ -95,7 +101,7 @@ fs.writeFileSync(
 </head>
 <body>
   <h1>Semantic-CV themes</h1>
-  <p>Every theme with a full CV and with only a name. Open a page to see it full size, and use the browser's print preview to check the printed CV.</p>
+  <p>Every theme with a full CV, with only a name, and in Swedish. Open a page to see it full size, and use the browser's print preview to check the printed CV.</p>
   ${rows.join("\n")}
 </body>
 </html>
