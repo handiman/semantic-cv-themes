@@ -120,6 +120,28 @@ describe("Theme section renderers", () => {
 describe("Theme base CSS", () => {
   const css = () => new TestTheme().renderCSS({});
 
+  it("gives a default to every shared CSS variable", async () => {
+    const root = (await css()).match(/:root\s*\{([^}]*)\}/)[1];
+    for (const name of [
+      "--text-color",
+      "--text-color-muted",
+      "--background-color",
+      "--heading-color",
+      "--accent-color",
+      "--link-color",
+      "--border-color",
+      "--font-family-base",
+      "--font-size-base",
+      "--space-0",
+      "--space-1",
+      "--space-2",
+      "--space-3",
+      "--border-radius-base"
+    ]) {
+      assert.match(root, new RegExp(`${name}\\s*:`), name);
+    }
+  });
+
   it("preserves description line breaks", async () => {
     assert.match(await css(), /\.scv-description \{ white-space: pre-line; \}/);
   });

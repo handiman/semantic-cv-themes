@@ -58,6 +58,21 @@ skeleton live in `semantic-cv-core`, not here.
 - Import paths end in `.js` (ESM, `module: node20`). Tests import the compiled output through `#themes/*`.
 - Prettier is authoritative: double quotes, no trailing commas, width 100.
 
+## CSS variables
+
+Every theme uses the same CSS variable names for the same roles. The base CSS in [theme.ts](theme.ts) gives each a
+default; a theme sets the values in its own `:root` and uses these names in its rules:
+
+- Color: `--text-color`, `--text-color-muted`, `--background-color`, `--heading-color`, `--accent-color`,
+  `--link-color`, `--border-color`
+- Type: `--font-family-base`, `--font-size-base`
+- Spacing: `--space-0`, `--space-1`, `--space-2`, `--space-3`, smallest to largest; the theme picks the values
+- Shape: `--border-radius-base`
+
+Don't add a synonym for one of these (`--bg-color`, `--text-primary`, `--spacing-1`, …). A theme may define private
+variables for what isn't a shared role, such as its palette (`--almond-cream`) or layout sizes (`--image-size`), and
+set a shared one from them: `--background-color: var(--parchment)`.
+
 ## Stack
 
 - TypeScript, strict, compiled with `tsc` to `dist/`. Tests are plain JavaScript on `node:test`, run against `dist/`.
