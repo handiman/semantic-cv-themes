@@ -1,6 +1,6 @@
-import { Theme, html } from "../theme.js";
+import { Theme, Slots } from "../theme.js";
 import { locationText } from "../utils.js";
-import Person, { projects, certifications, work, education } from "../person.js";
+import Person from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
 import { icon } from "../icons.js";
@@ -22,166 +22,52 @@ export class AliceTheme extends Theme {
     ]
   };
 
-  async renderHTML(person: Person): Promise<string> {
-    const {
-      renderLifeEvents,
-      renderWorksFor,
-      renderAlumniOf,
-      renderProjects,
-      renderCertifications,
-      renderKnowsLanguage,
-      renderKnowsAbout,
-      renderSkills
-    } = this;
-    const { name, jobTitle, description, image, lifeEvent, knowsAbout, knowsLanguage, skills } =
-      person;
-    const { transformer, options } = this;
-    const { headings } = options;
-    const certs = certifications(person);
-    const proj = projects(person);
-    const worksFor = work(person);
-    const alumniOf = education(person);
-
-    transformer.on("picture", {
-      element(img: any) {
-        if (image) {
-          img.append(`<img src="${image}" alt="${name ?? ""}" />`, html);
-        } else {
-          img.remove();
-        }
-      }
-    });
-
-    transformer.on("#contact", {
-      element(contact: any) {
-        contact.replace(renderContactDetails(person), html);
-      }
-    });
-
-    transformer.on("#description", {
-      element(el: any) {
-        if (description) {
-          el.replace(
-            `
-            <section id="description">
-              ${headings.description ? `<h2>${headings.description}</h2>` : ""}
-              ${description}
-            </section>
-            `,
-            html
-          );
-        } else {
-          el.remove();
-        }
-      }
-    });
-
-    transformer.on("#project", {
-      element(section: any) {
-        if (proj && proj.length) {
-          section.replace(renderProjects(proj), html);
-        } else {
-          section.remove();
-        }
-      }
-    });
-
-    transformer.on("#worksFor", {
-      element(section: any) {
-        if (worksFor && worksFor.length) {
-          section.replace(renderWorksFor(worksFor), html);
-        } else {
-          section.remove();
-        }
-      }
-    });
-
-    transformer.on("#alumniOf", {
-      element(section: any) {
-        if (alumniOf && alumniOf.length) {
-          section.replace(renderAlumniOf(alumniOf), html);
-        } else {
-          section.remove();
-        }
-      }
-    });
-
-    transformer.on("#lifeEvent", {
-      element(section: any) {
-        if (lifeEvent && lifeEvent.length) {
-          section.replace(renderLifeEvents(lifeEvent), html);
-        } else {
-          section.remove();
-        }
-      }
-    });
-
-    transformer.on("#certifications", {
-      element(section: any) {
-        if (certs && certs.length) {
-          section.replace(renderCertifications(certs), html);
-        } else {
-          section.remove();
-        }
-      }
-    });
-
-    transformer.on("#knowsLanguage", {
-      element(section: any) {
-        if (knowsLanguage && knowsLanguage.length) {
-          section.replace(renderKnowsLanguage(knowsLanguage), html);
-        } else {
-          section.remove();
-        }
-      }
-    });
-
-    transformer.on("#knowsAbout", {
-      element(section: any) {
-        if (knowsAbout && knowsAbout.length) {
-          section.replace(renderKnowsAbout(knowsAbout), html);
-        } else {
-          section.remove();
-        }
-      }
-    });
-
-    transformer.on("#skills", {
-      element(section: any) {
-        if (skills && skills.length) {
-          section.replace(renderSkills(skills), html);
-        } else {
-          section.remove();
-        }
-      }
-    });
-
-    return await transformer.transform(`
+  protected layout(person: Person): string {
+    const { name, jobTitle } = person;
+    return `
         <div class="page">
           <div class="aside">
             <header>
-                <picture></picture>
+                <slot name="photo"></slot>
                 <h1>${name ?? ""}${jobTitle ? `<small>${jobTitle}</small>` : ""}</h1>
-                <div id="contact"></div>
+                <slot name="contact"></slot>
             </header>
             <aside>
-                <section id="description"></section>
-                <section id="knowsAbout"></section>
-                <section id="skills"></section>
-                <section id="knowsLanguage"></section>
-                <section id="certifications"></section>
+                <slot name="description"></slot>
+                <slot name="knowsAbout"></slot>
+                <slot name="skills"></slot>
+                <slot name="knowsLanguage"></slot>
+                <slot name="certifications"></slot>
             </aside>
           </div>
           <div class="main">
             <main>
-                <section id="worksFor"></section>
-                <section id="alumniOf"></section>
-                <section id="project"></section>
-                <section id="lifeEvent"></section>
+                <slot name="worksFor"></slot>
+                <slot name="alumniOf"></slot>
+                <slot name="projects"></slot>
+                <slot name="lifeEvent"></slot>
             </main>
           </div>
         </div>
-    `);
+    `;
+  }
+
+  protected slots(person: Person): Slots {
+    const { name, image, description } = person;
+    const { headings } = this.options;
+    return {
+      photo: () => (image ? `<picture><img src="${image}" alt="${name ?? ""}" /></picture>` : ""),
+      contact: () => renderContactDetails(person),
+      description: () =>
+        description
+          ? `
+            <section id="description">
+              ${headings.description ? `<h2>${headings.description}</h2>` : ""}
+              ${description}
+            </section>
+            `
+          : ""
+    };
   }
 }
 

@@ -1,6 +1,6 @@
-import { Theme, html } from "../theme.js";
+import { Theme, Slots } from "../theme.js";
 import { locationText } from "../utils.js";
-import Person, { projects, certifications, work, education } from "../person.js";
+import Person from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
 import { ThemeMetadata } from "../themeMetadata.js";
@@ -23,69 +23,45 @@ export class LenaTheme extends Theme {
     ]
   };
 
-  async renderHTML(person: Person): Promise<string> {
-    const {
-      transformer,
-      options,
-      renderProjects,
-      renderWorksFor,
-      renderAlumniOf,
-      renderLifeEvents,
-      renderCertifications,
-      renderKnowsLanguage,
-      renderKnowsAbout,
-      renderSkills
-    } = this;
-    const { lifeEvent, knowsLanguage, knowsAbout, skills } = person;
-
-    transformer.on("header", {
-      element(header: any) {
-        renderHeader(header, person);
-      }
-    });
-
-    transformer.on("main", {
-      element(main: any) {
-        main.append(renderWorksFor(work(person)), html);
-        main.append(renderProjects(projects(person)), html);
-        main.append(renderAlumniOf(education(person)), html);
-        main.append(renderLifeEvents(lifeEvent), html);
-      }
-    });
-
-    transformer.on("aside", {
-      element(aside: any) {
-        aside.append(renderContact(person, options), html);
-        aside.append(renderKnowsAbout(knowsAbout), html);
-        aside.append(renderSkills(skills), html);
-        aside.append(renderKnowsLanguage(knowsLanguage), html);
-        aside.append(renderCertifications(certifications(person)), html);
-      }
-    });
-
-    return await transformer.transform(`
+  protected layout(): string {
+    return `
       <div class="page">
-        <header></header>
-        <aside></aside>
-        <main></main>
+        <header><slot name="identity"></slot></header>
+        <aside>
+          <slot name="contact"></slot>
+          <slot name="knowsAbout"></slot>
+          <slot name="skills"></slot>
+          <slot name="knowsLanguage"></slot>
+          <slot name="certifications"></slot>
+        </aside>
+        <main>
+          <slot name="worksFor"></slot>
+          <slot name="projects"></slot>
+          <slot name="alumniOf"></slot>
+          <slot name="lifeEvent"></slot>
+        </main>
       </div>
-    `);
+    `;
+  }
+
+  protected slots(person: Person): Slots {
+    return {
+      identity: () => renderHeader(person),
+      contact: () => renderContact(person, this.options)
+    };
   }
 }
 
-const renderHeader = (header: any, person: Person) => {
+const renderHeader = (person: Person) => {
   const { image, name, jobTitle, description } = person;
-  header.append(
-    `
+  return `
         <div class="summary">
             ${name ? `<h1>${name}</h1>` : ""}
             ${jobTitle ? `<p class="job-title">${jobTitle}</p>` : ""}
             ${description ? `<p>${description}</p>` : ""}
         </div>
         ${image ? `<div class="photo"><img src="${image}" alt="${name ?? ""}" /></div>` : ""}
-    `,
-    html
-  );
+    `;
 };
 
 const renderContact = (person: any, options: ThemeOptions) => {
