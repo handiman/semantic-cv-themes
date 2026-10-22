@@ -82,8 +82,12 @@ export class GnapTheme extends Theme {
     const socialLinks = social(person);
 
     // Only sections with content go into the page (#76), and the footer links only to those.
-    const section = (id: string, content: string) =>
-      content.trim() ? `<section id="${id}"><div class="container">${content}</div></section>` : "";
+    // The wrapper of a section gets an id for the footer links, unless the section inside already has
+    // that id (the base class's projects section is id="projects").
+    const section = (id: string | undefined, content: string) =>
+      content.trim()
+        ? `<section${id ? ` id="${id}"` : ""}><div class="container">${content}</div></section>`
+        : "";
     const footerLinks = [
       basics.trim() ? `<li><a href="#basics">${headings.description}</a></li>` : "",
       skills && skills.length ? `<li><a href="#skills">${headings.skills}</a></li>` : "",
@@ -113,7 +117,7 @@ export class GnapTheme extends Theme {
             </header>
             ${section("basics", basics)}
             ${section("work", works)}
-            ${section("projects", renderProjects(projects(person)))}
+            ${section(undefined, renderProjects(projects(person)))}
             ${section("education", renderAlumniOf(education(person)))}
             ${section("certificates", renderCertifications(certifications(person)))}
             ${section("events", events)}
