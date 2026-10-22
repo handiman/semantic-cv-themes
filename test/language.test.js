@@ -51,6 +51,37 @@ describe("themeOptionsFor", () => {
   });
 });
 
+describe("themeOptionsFor with the CV's own headings and labels", () => {
+  it("puts them over the headings of the CV's language", () => {
+    const options = themeOptionsFor("sv", {
+      headings: { worksFor: "Uppdrag" },
+      labels: { present: "nu" }
+    });
+    assert.strictEqual(options.headings.worksFor, "Uppdrag");
+    assert.strictEqual(options.labels.present, "nu");
+    assert.strictEqual(options.headings.alumniOf, "Utbildning");
+  });
+
+  it("puts them over English when the CV has no language the themes know", () => {
+    for (const language of [undefined, "de"]) {
+      const options = themeOptionsFor(language, { headings: { worksFor: "Assignments" } });
+      assert.strictEqual(options.headings.worksFor, "Assignments");
+      assert.strictEqual(options.headings.alumniOf, "Education");
+    }
+  });
+
+  it("ignores a value that isn't text", () => {
+    const options = themeOptionsFor("sv", { headings: { worksFor: 42, skills: undefined } });
+    assert.strictEqual(options.headings.worksFor, "Arbetslivserfarenhet");
+    assert.strictEqual(options.headings.skills, "Färdigheter");
+  });
+
+  it("is the language's options when the CV sets none", () => {
+    assert.deepStrictEqual(themeOptionsFor("sv", undefined), themeOptionsFor("sv"));
+    assert.deepStrictEqual(themeOptionsFor("sv", {}), themeOptionsFor("sv"));
+  });
+});
+
 for (const themeId of Object.keys(ThemeRegistry)) {
   it(`${themeId} in Swedish has Swedish headings and no English ones`, async () => {
     const theme = new ThemeLoader(new JsdomTransformer(), loadAsset).loadTheme(

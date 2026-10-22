@@ -85,11 +85,16 @@ const translations: Record<string, ThemeOptionsInput> = {
 export const supportedLanguages = ["en", ...Object.keys(translations)];
 
 /**
- * Theme options in the language of a CV, given as a language tag ("sv", "sv-SE", "en-GB").
- * Only the primary subtag counts. A language the themes have no headings for, or no language at
- * all, gives English.
+ * Theme options for a CV: its own headings and labels (`custom`, from its theme object, already
+ * HTML-escaped by semantic-cv-core's themeOptionsOf) over those of its language, over English.
+ * The language is a tag ("sv", "sv-SE", "en-GB"); only the primary subtag counts, and a language
+ * the themes have no headings for, or none at all, gives English.
  */
-export const themeOptionsFor = (language?: string): ThemeOptions => {
+export const themeOptionsFor = (language?: string, custom?: ThemeOptionsInput): ThemeOptions => {
   const primary = (language ?? "").split("-")[0].toLowerCase();
-  return resolveOptions(translations[primary]);
+  const base = resolveOptions(translations[primary]);
+  return {
+    headings: { ...base.headings, ...strings(custom?.headings) },
+    labels: { ...base.labels, ...strings(custom?.labels) }
+  };
 };
