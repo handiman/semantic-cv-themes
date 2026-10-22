@@ -1,5 +1,5 @@
-import { Theme, html } from "../theme.js";
-import Person, { projects, certifications, work, education } from "../person.js";
+import { Theme, Slots } from "../theme.js";
+import Person, { certifications } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { locationText } from "../utils.js";
 import { ThemeMetadata } from "../themeMetadata.js";
@@ -25,21 +25,26 @@ export class TypewriterTheme extends Theme {
     return `<p>${this.options.headings.skills}: ${keywords.join(", ")}</p>`;
   }
 
-  renderHTML(person: Person): Promise<string> {
-    const {
-      transformer,
-      options,
-      renderWorksFor,
-      renderAlumniOf,
-      renderProjects,
-      renderLifeEvents,
-      renderKnowsLanguage,
-      renderKnowsAbout,
-      renderSkills,
-      renderCertifications
-    } = this;
+  protected layout(): string {
+    return `
+      <main>
+        <article class="paper">
+          <slot name="header"></slot>
+          <slot name="basics"></slot>
+          <slot name="worksFor"></slot>
+          <slot name="projects"></slot>
+          <slot name="alumniOf"></slot>
+          <slot name="lifeEvent"></slot>
+        </article>
+      </main>
+    `;
+  }
+
+  protected slots(person: Person): Slots {
+    const { options, renderKnowsLanguage, renderKnowsAbout, renderSkills, renderCertifications } =
+      this;
     const { headings } = options;
-    const { name, jobTitle, description, knowsAbout, skills, knowsLanguage, lifeEvent } = person;
+    const { name, jobTitle, description, knowsAbout, skills, knowsLanguage } = person;
     const location = locationText(person.workLocation);
     const contacts = contactLinks(person);
 
@@ -58,33 +63,22 @@ export class TypewriterTheme extends Theme {
       renderCertifications(certifications(person))
     ].join("");
 
-    transformer.on("article", {
-      element(article: any) {
-        article.append(
-          `
-            <header>
-              <h1>${name ?? ""}</h1>
-              ${jobTitle ? `<div>${jobTitle}</div>` : ""}
-              ${
-                location || contacts.length
-                  ? `<ul class="contact">
-                      ${location ? `<li>${location}</li>` : ""}
-                      ${contacts.map((link) => `<li><a href="${link.href}">${link.text}</a></li>`).join("")}
-                    </ul>`
-                  : ""
-              }
-            </header>
-            ${basics.trim() ? `<section id="basics">${basics}</section>` : ""}
-            ${renderWorksFor(work(person))}
-            ${renderProjects(projects(person))}
-            ${renderAlumniOf(education(person))}
-            ${renderLifeEvents(lifeEvent)}
-          `,
-          html
-        );
-      }
-    });
-
-    return transformer.transform(`<main><article class="paper"></article></main>`);
+    return {
+      header: () => `
+        <header>
+          <h1>${name ?? ""}</h1>
+          ${jobTitle ? `<div>${jobTitle}</div>` : ""}
+          ${
+            location || contacts.length
+              ? `<ul class="contact">
+                  ${location ? `<li>${location}</li>` : ""}
+                  ${contacts.map((link) => `<li><a href="${link.href}">${link.text}</a></li>`).join("")}
+                </ul>`
+              : ""
+          }
+        </header>
+      `,
+      basics: () => (basics.trim() ? `<section id="basics">${basics}</section>` : "")
+    };
   }
 }

@@ -1,5 +1,5 @@
-import { Theme, html } from "../theme.js";
-import Person, { projects, certifications, work, education } from "../person.js";
+import { Theme, Slots } from "../theme.js";
+import Person, { certifications } from "../person.js";
 import { locationText } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
@@ -20,32 +20,37 @@ export class WinterTheme extends Theme {
     ]
   };
 
-  renderHTML(person: Person): Promise<string> {
-    const {
-      transformer,
-      options,
-      renderKnowsLanguage,
-      renderKnowsAbout,
-      renderSkills,
-      renderCertifications,
-      renderWorksFor,
-      renderAlumniOf,
-      renderProjects,
-      renderLifeEvents
-    } = this;
+  protected layout(): string {
+    return `
+      <header>
+        <div><slot name="identity"></slot></div>
+      </header>
+      <div>
+        <main>
+          <slot name="basics"></slot>
+          <slot name="worksFor"></slot>
+          <slot name="projects"></slot>
+          <slot name="alumniOf"></slot>
+          <slot name="lifeEvent"></slot>
+          <slot name="footer"></slot>
+        </main>
+      </div>
+    `;
+  }
+
+  protected slots(person: Person): Slots {
+    const { options, renderKnowsLanguage, renderKnowsAbout, renderSkills, renderCertifications } =
+      this;
     const {
       name,
       jobTitle,
       description,
       image,
-      sameAs,
-      url,
       email,
       telephone,
       knowsAbout,
       skills,
-      knowsLanguage,
-      lifeEvent
+      knowsLanguage
     } = person;
 
     const renderBasics = () => {
@@ -108,30 +113,6 @@ export class WinterTheme extends Theme {
       `;
     };
 
-    transformer.on("header div", {
-      element(header: any) {
-        header.append(renderHeader(), html);
-      }
-    });
-
-    transformer.on("main", {
-      element(main: any) {
-        main.append(renderBasics(), html);
-        main.append(renderWorksFor(work(person)), html);
-        main.append(renderProjects(projects(person)), html);
-        main.append(renderAlumniOf(education(person)), html);
-        main.append(renderLifeEvents(lifeEvent), html);
-        main.append(renderFooter(), html);
-      }
-    });
-
-    return transformer.transform(`
-      <header>
-        <div></div>
-      </header>
-      <div>
-        <main></main>
-      </div>
-    `);
+    return { identity: renderHeader, basics: renderBasics, footer: renderFooter };
   }
 }

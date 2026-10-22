@@ -24,10 +24,18 @@ skeleton live in `semantic-cv-core`, not here.
 - One directory per theme, named in kebab-case after the theme id: `<id>/index.ts` and `<id>/<id>.css`. The class is
   the title-cased id plus `Theme` (`holden-wreck` → `HoldenWreckTheme`). That naming is what generates the registry.
 - A theme extends `Theme` ([theme.ts](theme.ts)), declares `static readonly meta: ThemeMetadata` (`id`, `title`,
-  `description`, `tags`) and implements `renderHTML(person)`. Nothing else is required: no constructor (the base class
-  takes the transformer, `loadAsset` and the options, and reads `meta` from the class), and no `renderCSS` /
-  `renderJS`, which default to loading `<id>.css` / `<id>.js` through `loadAsset` (an empty string when the file
-  doesn't exist). Insert markup with the `html` options exported from `theme.ts`: `el.append(markup, html)`.
+  `description`, `tags`) and a `layout(person)`. Nothing else is required: no constructor (the base class takes the
+  transformer, `loadAsset` and the options, and reads `meta` from the class), and no `renderCSS` / `renderJS`, which
+  default to loading `<id>.css` / `<id>.js` through `loadAsset` (an empty string when the file doesn't exist).
+- **Layouts use `<slot name="…"></slot>`** for every part of the CV. The base class's `renderHTML` replaces each slot
+  with its part, or removes it when the Person has nothing for it, so no slot reaches the browser (unlike Web
+  Components, this happens on the server). The section slots are `worksFor`, `projects`, `alumniOf`, `lifeEvent`,
+  `certifications`, `knowsAbout`, `skills` and `knowsLanguage`. A theme adds its own (header, contact details,
+  summary, …) in `slots(person)`, in its own markup; one there with a section's name replaces that section. A slot
+  name nothing renders is an error. Put a slot directly where its part goes: a wrapper around slots stays in the page
+  when they are all empty, so group parts in a slot of the theme's own instead.
+- A theme that builds its page another way (Gnap) overrides `renderHTML` and uses the transformer itself. Insert
+  markup with the `html` options exported from `theme.ts`: `el.append(markup, html)`.
 - A theme that only differs from another in its CSS extends that theme's class and declares its own `meta`, like
   Holden Wreck does with Boiling Diesel. `renderCSS` then loads the variant's own `<id>.css`.
 - Tags come from `ThemeTags` ([themeTags.ts](themeTags.ts)); don't invent free-form strings.
@@ -69,13 +77,15 @@ skeleton live in `semantic-cv-core`, not here.
 
 ## Adding a theme
 
-1. Create `<id>/index.ts` and `<id>/<id>.css`, following an existing theme (`minimal` is the smallest).
+1. Create `<id>/index.ts` and `<id>/<id>.css`, following an existing theme (`minimal` is the smallest): `meta`, a
+   `layout` with slots, and `slots` for anything the theme renders in its own markup.
 2. Run `npm run build:themeRegistry` (also part of `npm run build`). It regenerates
    [themeRegistry.generated.ts](themeRegistry.generated.ts) from the directories — **don't edit that file by hand**
    and commit the regenerated version. Directories named `node_modules`, `dist`, `scripts`, `test` or starting with `.`
    are ignored, so a theme can't use those names.
 3. Add tags that describe it truthfully and a one-sentence description (they show up in the theme gallery).
-4. Check it with a full Person and with an almost empty one (only `name`), on screen and in print preview.
+4. Check it with a full Person and with an almost empty one (only `name`), on screen and in print preview, and run
+   `npm run test:update-snapshots` to add its two snapshots.
 
 The registry in [themeRegistry.ts](themeRegistry.ts) is the single source of truth: `ThemeLoader` instantiates by id and
 falls back to `minimal` for an unknown id. Themes don't register themselves.
