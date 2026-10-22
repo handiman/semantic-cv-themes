@@ -67,6 +67,15 @@ export class WinterTheme extends Theme {
 
     const renderBasics = () => {
       const { headings } = options;
+      const grid = [
+        renderKnowsAbout(knowsAbout),
+        renderSkills(skills),
+        renderKnowsLanguage(knowsLanguage),
+        renderCertifications(certifications(person))
+      ].join("");
+      if (!description && !grid.trim()) {
+        return "";
+      }
       return `
     <section>
       ${
@@ -75,12 +84,7 @@ export class WinterTheme extends Theme {
       <p>${description}</p>`
           : ""
       }
-      <div class="grid">
-        ${renderKnowsAbout(knowsAbout)}
-        ${renderSkills(skills)}
-        ${renderKnowsLanguage(knowsLanguage)}
-        ${renderCertifications(certifications(person))}
-      </div>
+      ${grid.trim() ? `<div class="grid">${grid}</div>` : ""}
     </section>
   `;
     };
@@ -105,17 +109,24 @@ export class WinterTheme extends Theme {
 
     const renderHeader = () => {
       return `
-        <div class="image">
-            ${image ? `<img src="${image}" alt="${name ?? ""}" />` : ""}
-        </div>
+        ${
+          image
+            ? `<div class="image"><img src="${image}" alt="${name ?? ""}" /></div>`
+            : // Without a photo the frame is drawn empty, as a silhouette.
+              `<div class="image" aria-hidden="true"></div>`
+        }
         <div class="title">
             <h1>${name ?? ""}</h1>
             ${jobTitle ? `<div>${jobTitle}</div>` : ""}
             ${locationText(person.workLocation) ? `<div>${locationText(person.workLocation)}</div>` : ""}
-            <ul>
+            ${
+              email || telephone
+                ? `<ul>
             ${email ? `<li><a href="mailto:${email}" aria-label="Email">${icon("envelope")}<div class="print">${email}</div></a></li>` : ""}
             ${telephone ? `<li><a href="tel:${telephone}" aria-label="Phone">${icon("phone")}<div class="print">${telephone}</div></a></li>` : ""}
-            </ul>
+            </ul>`
+                : ""
+            }
         </div>
       `;
     };

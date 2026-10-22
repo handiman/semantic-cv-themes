@@ -147,7 +147,7 @@ const renderHeader = (person: any): string => {
     ? `
       <header>
         <div><h1>${name ?? ""}</h1></div>
-        <div>${jobTitle ?? ""}</div>
+        ${jobTitle ? `<div>${jobTitle}</div>` : ""}
       </header>
     `
     : "";

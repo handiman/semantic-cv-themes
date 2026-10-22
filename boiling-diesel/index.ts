@@ -74,17 +74,16 @@ export class BoilingDieselTheme extends Theme {
       .on("header .job-title", {
         element(p: any) {
           const { jobTitle } = person;
-          p.replace(`<p class="job-title">${jobTitle ?? ""}</p>`, html);
+          if (jobTitle) {
+            p.replace(`<p class="job-title">${jobTitle}</p>`, html);
+          } else {
+            p.remove();
+          }
         }
       })
       .on("header .description", {
         element(div: any) {
           const { description, email, telephone, url, sameAs, workLocation } = person;
-          if (description) {
-            // Already HTML-escaped by semantic-cv-core; insert as HTML so it
-            // isn't escaped twice.
-            div.append(description, html);
-          }
           const iconFactory = new IconFactory(person);
           const links = normalizeArray(
             email ? `mailto:${email}` : undefined,
@@ -93,6 +92,15 @@ export class BoilingDieselTheme extends Theme {
             sameAs
           );
           const location = locationText(workLocation);
+          if (!description && !links.length && !location) {
+            div.remove();
+            return;
+          }
+          if (description) {
+            // Already HTML-escaped by semantic-cv-core; insert as HTML so it
+            // isn't escaped twice.
+            div.append(description, html);
+          }
           if (links.length || location) {
             div.append(
               `
@@ -107,21 +115,18 @@ export class BoilingDieselTheme extends Theme {
         }
       });
 
+    const basics = [
+      renderKnowsAbout(knowsAbout),
+      renderSkills(skills),
+      renderKnowsLanguage(knowsLanguage),
+      renderCertifications(certifications(person))
+    ].join("");
+
     transformer.on("main", {
       element(main: any) {
-        main.append(
-          `
-            <div>
-              <div class="grid">
-                ${renderKnowsAbout(knowsAbout)}
-                ${renderSkills(skills)}
-                ${renderKnowsLanguage(knowsLanguage)}
-                ${renderCertifications(certifications(person))}
-              </div>
-            </div>
-          `,
-          html
-        );
+        if (basics.trim()) {
+          main.append(`<div><div class="grid">${basics}</div></div>`, html);
+        }
         main.append(renderWorksFor(work(person)), html);
         main.append(renderProjects(projects(person)), html);
         main.append(renderAlumniOf(education(person)), html);

@@ -12,9 +12,9 @@ for (const themeId of ["boiling-diesel", "holden-wreck"]) {
       assert.strictEqual(document.querySelectorAll("header h2").length, 0);
     });
 
-    it("leaves the paragraph empty when there is no job title", async () => {
+    it("leaves out the paragraph when there is no job title", async () => {
       const document = await renderDocument(themeId, { name: "Yoda" });
-      assert.strictEqual(document.querySelector("header .job-title").textContent, "");
+      assert.strictEqual(document.querySelector("header .job-title"), null);
     });
   });
 }

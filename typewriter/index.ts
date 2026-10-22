@@ -65,13 +65,28 @@ export class TypewriterTheme extends Theme {
       person.sameAs
     );
 
+    const basics = [
+      description
+        ? `
+          <div>
+            <h2>${headings.description}</h2>
+            <p>${description}</p>
+          </div>
+          `
+        : "",
+      renderKnowsAbout(knowsAbout),
+      renderSkills(skills),
+      renderKnowsLanguage(knowsLanguage),
+      renderCertifications(certifications(person))
+    ].join("");
+
     transformer.on("article", {
       element(article: any) {
         article.append(
           `
             <header>
               <h1>${name ?? ""}</h1>
-              <div>${jobTitle ?? ""}</div>
+              ${jobTitle ? `<div>${jobTitle}</div>` : ""}
               ${
                 location || contacts.length
                   ? `<ul class="contact">
@@ -81,22 +96,7 @@ export class TypewriterTheme extends Theme {
                   : ""
               }
             </header>
-            <section id="basics">
-                ${
-                  description
-                    ? `
-                    <div>
-                      <h2>${headings.description}</h2>
-                      <p>${description}</p>
-                    </div>
-                    `
-                    : ""
-                }
-                ${renderKnowsAbout(knowsAbout)}
-                ${renderSkills(skills)}
-                ${renderKnowsLanguage(knowsLanguage)}
-                ${renderCertifications(certifications(person))}
-            </section>
+            ${basics.trim() ? `<section id="basics">${basics}</section>` : ""}
             ${renderWorksFor(work(person))}
             ${renderProjects(projects(person))}
             ${renderAlumniOf(education(person))}
