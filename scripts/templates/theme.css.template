@@ -1,0 +1,82 @@
+/* __TITLE__. The base CSS (a reset and the shared variables) comes before this file. */
+
+:root {
+  --text-color: #222;
+  --text-color-muted: #666;
+  --background-color: #fff;
+  --heading-color: #222;
+  --accent-color: #2a6f97;
+  --link-color: var(--accent-color);
+  --border-color: #ddd;
+  --space-0: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 2rem;
+  --space-3: 3rem;
+}
+
+body {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: var(--space-2) var(--space-1);
+  line-height: 1.5;
+}
+
+header {
+  margin-bottom: var(--space-2);
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-0) var(--space-1);
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+}
+
+.contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+}
+
+h2 {
+  margin-top: var(--space-2);
+  padding-bottom: 0.25rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--heading-color);
+}
+
+article {
+  margin-top: var(--space-1);
+}
+
+.caption {
+  color: var(--text-color-muted);
+}
+
+.caption li {
+  display: inline;
+}
+
+.caption li + li::before {
+  content: " · ";
+}
+
+section > ul li {
+  display: inline;
+}
+
+section > ul li + li::before {
+  content: ", ";
+}
+
+@media print {
+  body {
+    max-width: none;
+    padding: 0 1.5cm;
+  }
+
+  @page {
+    margin: 1.5cm 0;
+  }
+}
