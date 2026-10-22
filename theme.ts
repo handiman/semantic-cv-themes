@@ -132,14 +132,27 @@ export abstract class Theme {
   }
 
   /**
-   * Render the theme's CSS.
-   * By default, loads `{id}.css` via the provided asset loader.
+   * Render the theme's CSS: the base CSS, then `{id}.css` of every theme class
+   * from the furthest ancestor to this one. A variant that extends another
+   * theme therefore gets that theme's CSS first, and its own `{id}.css` only
+   * needs what differs, typically the values of the CSS variables.
    *
    * @param person Normalized JSON‑LD Person object.
    * @returns Promise resolving to a CSS string.
    */
   async renderCSS(_person: Person) {
-    return withResetCSS(await this.loadAsset(`${this.meta.id}.css`));
+    const ids: Array<string> = [];
+    for (
+      let type = this.constructor as typeof Theme;
+      type && type !== Theme;
+      type = Object.getPrototypeOf(type)
+    ) {
+      if (Object.prototype.hasOwnProperty.call(type, "meta")) {
+        ids.unshift(type.meta.id);
+      }
+    }
+    const css = await Promise.all(ids.map((id) => this.loadAsset(`${id}.css`)));
+    return withResetCSS(css.join("\n"));
   }
 
   /**

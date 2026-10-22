@@ -36,8 +36,10 @@ skeleton live in `semantic-cv-core`, not here.
   when they are all empty, so group parts in a slot of the theme's own instead.
 - A theme that builds its page another way (Gnap) overrides `renderHTML` and uses the transformer itself. Insert
   markup with the `html` options exported from `theme.ts`: `el.append(markup, html)`.
-- A theme that only differs from another in its CSS extends that theme's class and declares its own `meta`, like
-  Holden Wreck does with Boiling Diesel. `renderCSS` then loads the variant's own `<id>.css`.
+- **A variant** that only differs from another theme in its CSS extends that theme's class and declares its own
+  `meta`, like Holden Wreck does with Boiling Diesel. `renderCSS` loads the CSS of every theme class from the furthest
+  ancestor down, so the variant's own `<id>.css` only holds what differs, usually the values of the CSS variables.
+  Its `<id>.js` is not inherited, since the enhancement element is named after the variant's id.
 - Tags come from `ThemeTags` ([themeTags.ts](themeTags.ts)); don't invent free-form strings.
 - Shared building blocks live in [person.ts](person.ts) (`work`, `education`, `projects`, `certifications`),
   [contact.ts](contact.ts) (`contactLinks`), [utils.ts](utils.ts) (`normalizeArray`, `linkText`, `locationText`) and
