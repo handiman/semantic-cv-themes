@@ -27,19 +27,15 @@
   --almond-silk: #d5bdaf;
 
   --canvas: #f8f6f3;
-  --background: var(--parchment);
-  --background-alt: var(--bone);
-  --background-card: var(--linen);
-  --background-accent: var(--almond-cream);
+  --background-color: var(--parchment);
 
-  --text-primary: #2f2c2a;
-  --text-secondary: #4a4745;
+  --text-color: #2f2c2a;
+  --text-color-muted: #4a4745;
   --link-color: #8a6f63;
   --link-decoration-color: var(--almond-silk);
   --heading-color: #6a5f58;
 
-  --accent-primary: var(--almond-silk);
-  --accent-secondary: var(--almond-cream);
+  --accent-color: var(--almond-silk);
   --space-0: 15px;
   --space-1: 30px;
   --space-2: 60px;
@@ -69,7 +65,7 @@ p {
 .page {
   width: 100%;
   max-width: var(--max-width);
-  background: var(--background);
+  background: var(--background-color);
 }
 
 a,
@@ -86,7 +82,7 @@ a:hover {
 }
 
 aside a {
-  color: var(--text-primary) !important;
+  color: var(--text-color) !important;
 }
 aside a .icon {
   margin-right: var(--space-0);
@@ -145,9 +141,9 @@ aside h2 {
   padding-block: calc(var(--space-0) / 2);
   padding-inline: var(--space-2);
   margin: 0;
-  background: var(--background-accent);
-  border-left: 4px solid var(--accent-primary);
-  border-block: 2px solid var(--accent-primary);
+  background: var(--almond-cream);
+  border-left: 4px solid var(--accent-color);
+  border-block: 2px solid var(--accent-color);
 }
 
 .caption {
@@ -184,7 +180,7 @@ article ul li:last-child {
 /* HEADER */
 header {
   background: var(--linen);
-  border-top: 2px solid var(--accent-secondary);
+  border-top: 2px solid var(--almond-cream);
   width: 100%;
   grid-area: header;
   display: grid;
@@ -235,7 +231,7 @@ aside ul {
   margin-block: var(--space-1) var(--space-2);
 }
 aside {
-  border-top: 2px solid var(--accent-primary);
+  border-top: 2px solid var(--accent-color);
 }
 /* ------------------------------------------ */
 
@@ -288,7 +284,7 @@ main {
     font-weight: 400;
     line-height: 1.25;
     background-color: transparent;
-    color: var(--text-secondary);
+    color: var(--text-color-muted);
     margin: var(--space-1) 0 var(--space-0);
     padding-inline: var(--space-1);
     padding-bottom: calc(var(--space-0) / 2);
@@ -363,7 +359,7 @@ main {
     margin-bottom: var(--space-1) !important;
   }
   html, body {
-    background: var(--background) !important;
+    background: var(--background-color) !important;
   }
 }
 

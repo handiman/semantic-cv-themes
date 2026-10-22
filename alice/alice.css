@@ -4,7 +4,7 @@
   --text-color: #3a3a3a;
   --background-color: #fafafa;
 
-  --space-1: var(--spacing-base);
+  --space-1: 1rem;
   --space-2: calc(var(--space-1) * 2);
   --h1-size: 1.8rem;
   --h2-size: 1.4rem;

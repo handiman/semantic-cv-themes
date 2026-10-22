@@ -282,22 +282,30 @@ export const html = { html: true } as const;
 
 const withResetCSS = (themeCss: string) => `
 :root {
+  /* The CSS variables every theme uses for these roles (see CLAUDE.md). A theme sets
+     the values in its own :root; these are the defaults. */
   --text-color: #222;
+  --text-color-muted: #666;
   --background-color: #fff;
+  --heading-color: var(--text-color);
   --accent-color: #007aff;
   --link-color: #007aff;
+  --border-color: #ddd;
 
   --font-size-base: 16px;
   --font-family-base: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
 
-  --spacing-base: 1rem;
+  --space-0: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 2rem;
+  --space-3: 3rem;
   --border-radius-base: 4px;
 }  
 html, body, *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html, body { font-size: var(--font-size-base); font-family: var(--font-family-base); color: var(--text-color); background-color: var(--background-color); }
 a, a:link, a:visited, a:active, a:hover { color: var(--accent-color); text-decoration: none; } a:hover { text-decoration: underline; }
 ul, ol, li, li:before, li:after { list-style: none; margin: 0; padding: 0; }
-.scv-footer { color: var(--text-primary); text-align:center; font-size: .9rem; opacity: .5; } 
+.scv-footer { color: var(--text-color); text-align:center; font-size: .9rem; opacity: .5; } 
 .scv-description { white-space: pre-line; }
 .icon { width: 1em; height: 1em; vertical-align: -0.125em; flex: none; }
 .scv-keywords { display: flex; flex-wrap: wrap; gap: .25rem .5rem; margin-top: .5rem; font-size: .85em; }
