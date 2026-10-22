@@ -38,10 +38,6 @@ export class TimesTheme extends Theme {
     return `<p>Skills: ${keywords.join(", ")}</p>`;
   }
 
-  renderJS(_person: Person) {
-    return Promise.resolve("");
-  }
-
   renderHTML(person: Person): Promise<string> {
     const {
       transformer,
@@ -84,7 +80,8 @@ export class TimesTheme extends Theme {
     };
 
     const renderHeader = () => {
-      const now = new Date();
+      // The date line is added in the browser by times.js, so the HTML is the same on any day (#75).
+      const social = renderSocial();
       return `
         <header>
             <h1>
@@ -92,10 +89,7 @@ export class TimesTheme extends Theme {
                 <small>${jobTitle ?? ""}</small>
                 ${locationText(person.workLocation) ? `<small>${locationText(person.workLocation)}</small>` : ""}
             </h1>
-            <div class="grid">
-                <div>${now.toLocaleDateString()}</div>
-                <div>${renderSocial() ?? ""}</div>
-            </div>
+            ${social ? `<div class="grid"><div>${social}</div></div>` : ""}
             <div class="hr"></div>
         </header>
       `;
