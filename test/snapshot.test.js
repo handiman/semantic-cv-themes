@@ -1,4 +1,4 @@
-import { after, before, describe, it, mock } from "node:test";
+import { describe, it } from "node:test";
 import assert from "node:assert";
 import fs from "node:fs";
 import path from "node:path";
@@ -97,15 +97,6 @@ describe("canonical form", () => {
 });
 
 describe("HTML snapshots", () => {
-  // Times prints today's date in the local format (#75). Until that is fixed, the date is pinned
-  // here so the snapshot doesn't change from day to day or between machines.
-  before(() => {
-    mock.method(Date.prototype, "toLocaleDateString", () => "2026-01-01");
-  });
-  after(() => {
-    mock.restoreAll();
-  });
-
   for (const themeId of Object.keys(ThemeRegistry)) {
     for (const [personName, person] of Object.entries(persons)) {
       it(`${themeId} with the ${personName} Person matches its snapshot`, async () => {

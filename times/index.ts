@@ -84,7 +84,8 @@ export class TimesTheme extends Theme {
     };
 
     const renderHeader = () => {
-      const now = new Date();
+      // No date in the masthead: the same Person must render the same page on any day (#75).
+      const social = renderSocial();
       return `
         <header>
             <h1>
@@ -92,10 +93,7 @@ export class TimesTheme extends Theme {
                 <small>${jobTitle ?? ""}</small>
                 ${locationText(person.workLocation) ? `<small>${locationText(person.workLocation)}</small>` : ""}
             </h1>
-            <div class="grid">
-                <div>${now.toLocaleDateString()}</div>
-                <div>${renderSocial() ?? ""}</div>
-            </div>
+            ${social ? `<div class="grid"><div>${social}</div></div>` : ""}
             <div class="hr"></div>
         </header>
       `;
