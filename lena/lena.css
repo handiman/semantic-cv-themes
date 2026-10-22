@@ -48,7 +48,7 @@
 
 html,
 body {
-  color: var(--text-color-primary);
+  color: var(--text-color);
   background: var(--canvas);
   font-family: "Noto Sans", sans-serif;
   font-optical-sizing: auto;
