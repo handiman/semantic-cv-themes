@@ -94,14 +94,16 @@ set a shared one from them: `--background-color: var(--parchment)`.
 
 ## Adding a theme
 
-1. Create `<id>/index.ts` and `<id>/<id>.css`, following an existing theme (`minimal` is the smallest): `meta`, a
-   `layout` with slots, and `slots` for anything the theme renders in its own markup.
+1. Run `npm run new-theme -- <id>`. It creates `<id>/index.ts` and `<id>/<id>.css` from
+   [scripts/templates](scripts/templates): `meta`, a `layout` with slots, `slots` for the theme's own markup, and a
+   `:root` with the shared variables. The new theme passes every test as it is; make it your own from there.
 2. Run `npm run build:themeRegistry` (also part of `npm run build`). It regenerates
    [themeRegistry.generated.ts](themeRegistry.generated.ts) from the directories — **don't edit that file by hand**
    and commit the regenerated version. Directories named `node_modules`, `dist`, `scripts`, `test` or starting with `.`
    are ignored, so a theme can't use those names.
 3. Add tags that describe it truthfully and a one-sentence description (they show up in the theme gallery).
-4. Check it with a full Person and with an almost empty one (only `name`), on screen and in print preview, and run
+4. Check it with `npm run preview`, which renders every theme with a full Person and with only a name into
+   `dist/preview/index.html`; look at it on screen and in the browser's print preview. Then run
    `npm run test:update-snapshots` to add its two snapshots.
 
 The registry in [themeRegistry.ts](themeRegistry.ts) is the single source of truth: `ThemeLoader` instantiates by id and
@@ -114,6 +116,8 @@ falls back to `minimal` for an unknown id. Themes don't register themselves.
 - `npm run build` – clean, regenerate the registry, `tsc`
 - `npm test` – build, then all `*.test.js`
 - `npm run test:update-snapshots` – rewrite the HTML snapshots in `test/snapshots` after an intended change
+- `npm run new-theme -- <id>` – create a theme from the templates in `scripts/templates`
+- `npm run preview` – build, then render every theme into `dist/preview` (open `index.html`)
 
 Run `npm test` before considering work done. CI (`.github/workflows/ci.yml`) runs it on every push.
 
