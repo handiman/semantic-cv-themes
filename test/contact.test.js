@@ -73,3 +73,32 @@ describe("Contact details", () => {
     assert.doesNotMatch(print, /display:\s*""/);
   });
 });
+
+describe("Contact link order", () => {
+  // Every theme shows the links in the order of contactLinks: email, phone, website, profiles.
+  const order = [
+    "mailto:ada@example.com",
+    "tel:+44 20 7946 0000",
+    "https://www.ada.example",
+    "https://github.com/ada",
+    "https://www.linkedin.com/in/ada-lovelace-analytical-engine-programmer/"
+  ];
+
+  for (const themeId of Object.keys(ThemeRegistry)) {
+    it(`${themeId} lists email, phone, website and profiles in that order`, async () => {
+      const document = await renderDocument(themeId, person);
+      // A theme may show the links more than once (Gnap: menu and footer); each list keeps the order.
+      const lists = [...document.querySelectorAll("ul")]
+        .map((ul) => [...ul.querySelectorAll("a[href]")].map((a) => a.getAttribute("href")))
+        .filter((hrefs) => hrefs.some((href) => order.includes(href)));
+      assert.ok(lists.length, `${themeId} has no contact links`);
+      for (const hrefs of lists) {
+        const known = hrefs.filter((href) => order.includes(href));
+        assert.deepStrictEqual(
+          known,
+          order.filter((href) => known.includes(href))
+        );
+      }
+    });
+  }
+});

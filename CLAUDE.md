@@ -32,8 +32,11 @@ skeleton live in `semantic-cv-core`, not here.
   Holden Wreck does with Boiling Diesel. `renderCSS` then loads the variant's own `<id>.css`.
 - Tags come from `ThemeTags` ([themeTags.ts](themeTags.ts)); don't invent free-form strings.
 - Shared building blocks live in [person.ts](person.ts) (`work`, `education`, `projects`, `certifications`),
-  [utils.ts](utils.ts) (`normalizeArray`, `linkText`, `locationText`) and [icons.ts](icons.ts). Use them
-  rather than re-deriving the same filters in a theme.
+  [contact.ts](contact.ts) (`contactLinks`), [utils.ts](utils.ts) (`normalizeArray`, `linkText`, `locationText`) and
+  [icons.ts](icons.ts). Use them rather than re-deriving the same filters in a theme.
+- **Contact links come from `contactLinks(person)`**, which gives them in one order for every theme (email, phone,
+  website, then `sameAs`) with their text, label and icon. A theme renders them in its own markup, but doesn't
+  collect or reorder them itself.
 - **Icons are inline SVG** ([icons.ts](icons.ts)), never an icon font or anything loaded from the network, so a
   printed page has no private-use characters in its text. `IconFactory.icon(url)` picks the icon of a contact link;
   a link that shows nothing but the icon gets `aria-label="${iconFactory.label(url)}"`. To give another site an icon,

@@ -1,8 +1,9 @@
 import { Theme, html } from "../theme.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
-import { linkText, locationText, normalizeArray } from "../utils.js";
+import { locationText } from "../utils.js";
 import { ThemeMetadata } from "../themeMetadata.js";
+import { contactLinks } from "../contact.js";
 
 export class TypewriterTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -40,12 +41,7 @@ export class TypewriterTheme extends Theme {
     const { headings } = options;
     const { name, jobTitle, description, knowsAbout, skills, knowsLanguage, lifeEvent } = person;
     const location = locationText(person.workLocation);
-    const contacts = normalizeArray(
-      person.email ? `mailto:${person.email}` : undefined,
-      person.telephone ? `tel:${person.telephone}` : undefined,
-      person.url,
-      person.sameAs
-    );
+    const contacts = contactLinks(person);
 
     const basics = [
       description
@@ -73,7 +69,7 @@ export class TypewriterTheme extends Theme {
                 location || contacts.length
                   ? `<ul class="contact">
                       ${location ? `<li>${location}</li>` : ""}
-                      ${contacts.map((link: string) => `<li><a href="${link}">${linkText(link)}</a></li>`).join("")}
+                      ${contacts.map((link) => `<li><a href="${link.href}">${link.text}</a></li>`).join("")}
                     </ul>`
                   : ""
               }

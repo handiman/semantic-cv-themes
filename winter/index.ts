@@ -1,9 +1,10 @@
 import { Theme, html } from "../theme.js";
 import Person, { projects, certifications, work, education } from "../person.js";
-import { locationText, normalizeArray, removeProtocol } from "../utils.js";
+import { locationText } from "../utils.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { IconFactory, icon } from "../icons.js";
+import { icon } from "../icons.js";
+import { contactLinks } from "../contact.js";
 
 export class WinterTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -73,15 +74,9 @@ export class WinterTheme extends Theme {
 
     const renderFooter = () => {
       const renderSocial = () => {
-        const iconFactory = new IconFactory(person);
-        const links = normalizeArray(
-          sameAs,
-          url,
-          email ? `mailto:${email}` : undefined,
-          telephone ? `tel:${telephone}` : undefined
-        );
+        const links = contactLinks(person);
         if (links && links.length) {
-          return `<ul>${links.map((link: any) => `<li><a href="${link}" aria-label="${iconFactory.label(link)}">${iconFactory.icon(link)}</a><div class="print">${removeProtocol(link)}</div></li>`).join("\n")}</ul>`;
+          return `<ul>${links.map((link) => `<li><a href="${link.href}" aria-label="${link.label}">${link.icon}</a><div class="print">${link.text}</div></li>`).join("\n")}</ul>`;
         }
       };
 

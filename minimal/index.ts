@@ -1,9 +1,9 @@
 import { Theme, html } from "../theme.js";
-import { locationText, normalizeArray, removeProtocol } from "../utils.js";
+import { locationText } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { IconFactory } from "../icons.js";
+import { contactLinks } from "../contact.js";
 
 export class MinimalTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -33,28 +33,10 @@ export class MinimalTheme extends Theme {
       renderLifeEvents,
       renderCertifications
     } = this;
-    const iconFactory = new IconFactory(person);
-    const {
-      image,
-      name,
-      jobTitle,
-      description,
-      url,
-      sameAs,
-      email,
-      telephone,
-      knowsAbout,
-      skills,
-      knowsLanguage,
-      lifeEvent
-    } = person;
+    const { image, name, jobTitle, description, knowsAbout, skills, knowsLanguage, lifeEvent } =
+      person;
     const certs = certifications(person);
-    const urls = normalizeArray(
-      sameAs,
-      url,
-      email ? `mailto:${email}` : undefined,
-      telephone ? `tel:${telephone}` : undefined
-    );
+    const urls = contactLinks(person);
 
     transformer.on("header", {
       element(header: any) {
@@ -68,7 +50,7 @@ export class MinimalTheme extends Theme {
               ${jobTitle ? `<div>${jobTitle}</div>` : ""}
               ${locationText(person.workLocation) ? `<div>${locationText(person.workLocation)}</div>` : ""}
               ${description ? `<div>${description}</div>` : ""}
-              ${urls.length > 0 ? `<ul>${urls.map((link: string) => `<li><a href="${link}" aria-label="${iconFactory.label(link)}">${iconFactory.icon(link)}<div class="print">${removeProtocol(link)}</div></a></li>`).join("\n")}</ul>` : ""}
+              ${urls.length > 0 ? `<ul>${urls.map((link) => `<li><a href="${link.href}" aria-label="${link.label}">${link.icon}<div class="print">${link.text}</div></a></li>`).join("\n")}</ul>` : ""}
             </div>              
         `,
           html

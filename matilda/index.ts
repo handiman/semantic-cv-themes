@@ -1,10 +1,11 @@
 import { Theme, html } from "../theme.js";
-import { locationText, normalizeArray } from "../utils.js";
+import { locationText } from "../utils.js";
 import Person, { projects, certifications, work, education } from "../person.js";
 import { ThemeTags } from "../themeTags.js";
 import { ThemeOptions } from "../themeOptions.js";
 import { ThemeMetadata } from "../themeMetadata.js";
-import { IconFactory, icon } from "../icons.js";
+import { icon } from "../icons.js";
+import { contactLinks } from "../contact.js";
 
 export class MatildaTheme extends Theme {
   static readonly meta: ThemeMetadata = {
@@ -36,39 +37,15 @@ export class MatildaTheme extends Theme {
       renderCertifications
     } = this;
     const { headings } = options;
-    const {
-      name,
-      image,
-      url,
-      email,
-      telephone,
-      sameAs,
-      knowsLanguage,
-      knowsAbout,
-      skills,
-      lifeEvent
-    } = person;
-    const iconFactory = new IconFactory(person);
+    const { name, image, knowsLanguage, knowsAbout, skills, lifeEvent } = person;
     const contactDetails = () => {
-      const linkText = (url: string) => {
-        if (url.indexOf("mailto:") > -1 || url.indexOf("tel:") > -1) {
-          return url.substring(url.indexOf(":") + 1);
-        }
-
-        return url.substring(url.indexOf("://") + 3).replace("www.", "");
-      };
-      const links = normalizeArray(
-        sameAs,
-        url,
-        email ? `mailto:${email}` : undefined,
-        telephone ? `tel:${telephone}` : undefined
-      );
+      const links = contactLinks(person);
       const location = locationText(person.workLocation);
       return links.length || location
         ? `
           <section>
             <h2>${headings.contact}</h2>
-            <ul>${location ? `<li><a><span>${location}</span>${icon("location")}</a></li>` : ""}${links.map((link: string) => `<li><a href="${link}" title="${link}"><span>${linkText(link)}</span>${iconFactory.icon(link)}</a></li>`).join("")}</ul>
+            <ul>${location ? `<li><a><span>${location}</span>${icon("location")}</a></li>` : ""}${links.map((link) => `<li><a href="${link.href}" title="${link.href}"><span>${link.text}</span>${link.icon}</a></li>`).join("")}</ul>
           </section>
         `
         : "";
