@@ -2,6 +2,9 @@
 
 <img src="https://assets.semantic.cv/semantikitten-artist.png" alt="Artistic Semantikitten" height="100" align="right" style="margin-left: 20px;" />
 
+[![CI](https://github.com/handiman/semantic-cv-themes/actions/workflows/ci.yml/badge.svg)](https://github.com/handiman/semantic-cv-themes/actions/workflows/ci.yml)
+[![License](https://img.shields.io/github/license/handiman/semantic-cv-themes)](LICENSE)
+
 This repository contains the public collection of **free themes** used by:
 
 - the Semantic‑CV CLI
