@@ -138,29 +138,31 @@ header img {
 }
 
 @media (min-width: 600px) {
+  /* The description stays in flow, so a long contact list makes the header taller instead of
+     overlapping main. The band is pinned to the photo's centre line, and the name sits just
+     above that line. */
   header .description {
-    position: absolute;
     margin-top: var(--space-2);
-    padding-right: var(--space-3);
   }
   header {
-    padding-block: calc(var(--space-3) * 2);
-    height: 50%;
+    padding-top: calc(var(--space-3) * 2);
   }
-  header::before {
-    height: 50%;
-  }
+  header::before,
   header::after {
-    height: 50%;
+    height: calc(var(--space-3) * 2 + var(--half-header-height));
   }
   header > div {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
     text-align: left;
+  }
+  header img {
+    flex: none;
   }
   header > div > div {
     padding-inline: var(--space-3);
     padding-top: 0;
+    margin-top: calc(var(--image-size) / 2 - 3rem);
   }
   header h1 {
     color: #fafafa;
@@ -186,27 +188,10 @@ header img {
   .page {
     border-bottom: none;
   }
-  /* Keep the description in flow so a long contact list can't overlap
-     main. The band is pinned to the photo's centre line instead of 50% of
-     the (now taller) header, and the name sits just above that line. */
-  header {
-    height: auto;
-  }
+  /* Print has no padding above the photo, so the band is shorter than on screen. */
   header::before,
   header::after {
     height: var(--half-header-height);
-  }
-  header > div {
-    align-items: flex-start;
-  }
-  header img {
-    flex: none;
-  }
-  header > div > div {
-    margin-top: calc(var(--image-size) / 2 - 3rem);
-  }
-  header .description {
-    position: static;
   }
   header {
     padding-inline: calc(var(--space-2)) !important;
