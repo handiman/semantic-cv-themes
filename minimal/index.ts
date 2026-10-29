@@ -12,11 +12,11 @@ export class MinimalTheme extends Theme {
     description:
       "A neutral, understated layout with a narrow sidebar for skills and a main column for experience. Plain, readable and suitable for most CVs.",
     tags: [
-      ThemeTags.singleCol,
+      ThemeTags.twoCol,
+      ThemeTags.photo,
       ThemeTags.lightMode,
       ThemeTags.minimal,
       ThemeTags.neutral,
-      ThemeTags.resume,
       ThemeTags.default
     ]
   };

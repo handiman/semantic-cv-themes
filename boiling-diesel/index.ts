@@ -13,12 +13,13 @@ export class BoilingDieselTheme extends Theme {
     description:
       "A white page under a dark header band, with a large round photo breaking the edge and olive‑brown headings. Sturdy and straightforward, with skills set in a two‑by‑two grid.",
     tags: [
-      ThemeTags.twoCol,
-      ThemeTags.resume,
-      ThemeTags.darkMode,
-      ThemeTags.highContrast,
-      ThemeTags.technical,
-      ThemeTags.bold
+      ThemeTags.singleCol,
+      ThemeTags.accentHeader,
+      ThemeTags.photo,
+      ThemeTags.lightMode,
+      ThemeTags.warm,
+      ThemeTags.bold,
+      ThemeTags.technical
     ]
   };
 

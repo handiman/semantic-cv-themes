@@ -12,14 +12,7 @@ export class AliceTheme extends Theme {
     title: "Alice",
     description:
       "A split two‑column layout: a light sidebar with coral accents beside a dark charcoal main column. Clean sans‑serif type and a strong contrast between the halves.",
-    tags: [
-      ThemeTags.twoCol,
-      ThemeTags.neutral,
-      ThemeTags.lightMode,
-      ThemeTags.typographyForward,
-      ThemeTags.minimal,
-      ThemeTags.resume
-    ]
+    tags: [ThemeTags.twoCol, ThemeTags.photo, ThemeTags.accented, ThemeTags.highContrast]
   };
 
   protected layout(person: Person): string {

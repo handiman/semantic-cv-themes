@@ -15,11 +15,12 @@ export class LenaTheme extends Theme {
       "A warm, paper‑toned two‑column layout with small‑caps headings, shaded section bands and a framed portrait overlapping the header. Classic and calm.",
     tags: [
       ThemeTags.twoCol,
-      ThemeTags.headshot,
+      ThemeTags.photo,
       ThemeTags.lightMode,
+      ThemeTags.warm,
       ThemeTags.calm,
       ThemeTags.typographyForward,
-      ThemeTags.photo
+      ThemeTags.colorBlocks
     ]
   };
 

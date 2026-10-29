@@ -11,14 +11,7 @@ export class TypewriterTheme extends Theme {
     title: "Typewriter",
     description:
       "A retro résumé set on lined paper in a typewriter face. Plain, single‑column and a little quirky.",
-    tags: [
-      ThemeTags.singleCol,
-      ThemeTags.lightMode,
-      ThemeTags.monoChrome,
-      ThemeTags.resume,
-      ThemeTags.humorous,
-      ThemeTags.retro
-    ]
+    tags: [ThemeTags.singleCol, ThemeTags.lightMode, ThemeTags.retro, ThemeTags.playful]
   };
 
   protected renderKeywords(keywords: Array<string>): string {

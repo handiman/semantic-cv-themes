@@ -13,12 +13,12 @@ export class HoldenWreckTheme extends BoilingDieselTheme {
     description:
       "Boiling Diesel's layout in earthier colours: an olive header band, a round photo with a grey ring and dark slate headings on a white page.",
     tags: [
-      ThemeTags.twoCol,
-      ThemeTags.resume,
+      ThemeTags.singleCol,
+      ThemeTags.accentHeader,
+      ThemeTags.photo,
       ThemeTags.lightMode,
-      ThemeTags.minimal,
-      ThemeTags.editorial,
-      ThemeTags.calm
+      ThemeTags.warm,
+      ThemeTags.muted
     ]
   };
 }

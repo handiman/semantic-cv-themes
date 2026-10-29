@@ -13,9 +13,11 @@ export class GnapTheme extends Theme {
       'A full‑screen dark hero ("Hi, I\'m …") followed by a white page with oversized, light headings and an icon rail for contact links. Black and white with green links — Smurf‑inspired.',
     tags: [
       ThemeTags.heroFullscreen,
-      ThemeTags.darkMode,
+      ThemeTags.singleCol,
       ThemeTags.monoChrome,
+      ThemeTags.highContrast,
       ThemeTags.accented,
+      ThemeTags.typographyForward,
       ThemeTags.playful,
       ThemeTags.bold
     ]

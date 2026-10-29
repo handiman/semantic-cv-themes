@@ -13,11 +13,12 @@ export class WinterTheme extends Theme {
     description:
       "A crisp, cool layout with a pale blue header, a shield‑shaped photo frame and plenty of white space.",
     tags: [
-      ThemeTags.twoCol,
-      ThemeTags.headshot,
+      ThemeTags.singleCol,
+      ThemeTags.accentHeader,
+      ThemeTags.photo,
       ThemeTags.lightMode,
       ThemeTags.cool,
-      ThemeTags.resume
+      ThemeTags.calm
     ]
   };
 
