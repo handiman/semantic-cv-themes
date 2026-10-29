@@ -10,7 +10,7 @@ export class TypewriterTheme extends Theme {
     id: "typewriter",
     title: "Typewriter",
     description:
-      "A retro, monochrome résumé styled like a typewritten page. Charmingly imperfect and intentionally quirky.",
+      "A retro résumé set on lined paper in a typewriter face. Plain, single‑column and a little quirky.",
     tags: [
       ThemeTags.singleCol,
       ThemeTags.lightMode,

@@ -12,7 +12,7 @@ export class MatildaTheme extends Theme {
     id: "matilda",
     title: "Matilda",
     description:
-      "A soft, pastel‑toned two‑column theme with gentle typography and a friendly, editorial touch.",
+      "A white sheet on a blush‑pink background, with a pink‑framed photo, a right‑aligned sidebar and light uppercase headings over thin rules. Soft and friendly.",
     tags: [
       ThemeTags.twoCol,
       ThemeTags.headshot,
