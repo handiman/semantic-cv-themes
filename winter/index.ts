@@ -12,11 +12,12 @@ export class WinterTheme extends Theme {
     title: "Winter",
     description: "A crisp, cool, spacious layout with bright whites and clean structure.",
     tags: [
-      ThemeTags.twoCol,
-      ThemeTags.headshot,
+      ThemeTags.singleCol,
+      ThemeTags.accentHeader,
+      ThemeTags.photo,
       ThemeTags.lightMode,
       ThemeTags.cool,
-      ThemeTags.resume
+      ThemeTags.calm
     ]
   };
 

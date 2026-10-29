@@ -12,8 +12,9 @@ export class TimesTheme extends Theme {
     description:
       "A playful newspaper‑inspired résumé with an editorial layout and a subtle sense of humor.",
     tags: [
-      ThemeTags.twoCol,
+      ThemeTags.singleCol,
       ThemeTags.lightMode,
+      ThemeTags.monoChrome,
       ThemeTags.editorial,
       ThemeTags.typographyForward,
       ThemeTags.playful

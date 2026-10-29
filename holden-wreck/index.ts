@@ -13,12 +13,12 @@ export class HoldenWreckTheme extends BoilingDieselTheme {
     description:
       "A clean, approachable two‑column résumé with a light, balanced layout and clear structure.",
     tags: [
-      ThemeTags.twoCol,
-      ThemeTags.resume,
+      ThemeTags.singleCol,
+      ThemeTags.accentHeader,
+      ThemeTags.photo,
       ThemeTags.lightMode,
-      ThemeTags.minimal,
-      ThemeTags.editorial,
-      ThemeTags.calm
+      ThemeTags.warm,
+      ThemeTags.muted
     ]
   };
 }

@@ -12,14 +12,7 @@ export class AliceTheme extends Theme {
     title: "Alice",
     description:
       "A bright, balanced two‑column theme with crisp typography, gentle contrast, and a confident, approachable rhythm.",
-    tags: [
-      ThemeTags.twoCol,
-      ThemeTags.neutral,
-      ThemeTags.lightMode,
-      ThemeTags.typographyForward,
-      ThemeTags.minimal,
-      ThemeTags.resume
-    ]
+    tags: [ThemeTags.twoCol, ThemeTags.photo, ThemeTags.accented, ThemeTags.highContrast]
   };
 
   protected layout(person: Person): string {

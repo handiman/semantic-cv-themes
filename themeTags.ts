@@ -1,83 +1,48 @@
+// Tags describe what a theme looks like, so they can be checked against its preview. Every theme
+// prints well and renders a résumé, so there are no tags for that. Add a tag when a theme needs it.
 export const ThemeTags = {
-  // 1. Layout Tags - Describe the structural shape of the theme.
+  // 1. Layout - the shape of the page.
+  /** The CV runs in one column; a small grid for skills and languages still counts. */
   singleCol: "single-column",
+  /** A sidebar or second column runs next to the main column. */
   twoCol: "two-column",
-  threeCol: "three-column",
-  sidebar: "sidebar",
-  headerHeavy: "header-heavy",
-  compact: "compact",
-  wide: "wide",
-  gridBased: "grid-based",
-  timeline: "timeline",
-  cardLayout: "card-layout",
-  photoHeader: "photo-header",
-  headshot: "headshot",
-  noHeadshot: "no-headshot",
-  sectioned: "sectioned",
-  minimal: "minimal",
+  /** The first screen is a hero with the name, before the CV. */
   heroFullscreen: "hero-fullscreen",
+  /** A band of color across the top, behind the name or photo. */
+  accentHeader: "accent-header",
+  /** Shows the Person's photo when there is one. */
+  photo: "photo",
+  minimal: "minimal",
 
-  // 2. Color & Tone Tags - Describe the palette and emotional feel.
+  // 2. Color and tone - the palette and the feel.
   lightMode: "light-mode",
   darkMode: "dark-mode",
   highContrast: "high-contrast",
-  lowContrast: "low-contrast",
   monoChrome: "monochrome",
   accented: "accented",
   warm: "warm",
   cool: "cool",
   neutral: "neutral",
   pastel: "pastel",
-  bold: "bold",
   muted: "muted",
-  editorial: "editorial",
-  industrial: "industrial",
-  playful: "playful",
+  bold: "bold",
   calm: "calm",
-  energetic: "energetic",
-
-  //3. Use‑Case Tags - Describe what the theme is best suited for.
-  default: "default",
-  resume: "resume",
-  portfolio: "portfolio",
-  developer: "developer",
-  designer: "designer",
-  product: "product",
-  consultant: "consultant",
-  academic: "academic",
-  creative: "creative",
-  corporate: "corporate",
-  technical: "technical",
-  executive: "executive",
-  junior: "junior",
-  senior: "senior",
-  freelancer: "freelancer",
-  caseStudy: "case-study",
-  humorous: "humorous",
+  playful: "playful",
+  editorial: "editorial",
   retro: "retro",
 
-  //4. Feature Tags - Describe functional or stylistic features.
-  skillsFocused: "skills-focused",
-  experienceHeavy: "experience-heavy",
-  certifications: "certifications",
-  icons: "icons",
-  badges: "badges",
-  photo: "photo",
-  noPhoto: "no-photo",
-  printFriendly: "print-friendly",
-  compactSpacing: "compact-spacing",
-  wideSpacing: "wide-spacing",
+  // 3. Style - what stands out.
+  /** The type carries the design: a distinctive face, small caps, oversized headings. */
   typographyForward: "typography-forward",
+  /** Sections sit on shaded blocks of color. */
   colorBlocks: "color-blocks",
-  accentHeader: "accent-header",
-  backgroundImage: "background-image",
-  bordered: "bordered",
-  rounded: "rounded",
-  flat: "flat",
 
-  //5. Miscellaneous
-  funny: "funny",
-  weird: "weird"
+  // 4. Use - who the theme suits.
+  /** The theme used when none is given, or an unknown one. */
+  default: "default",
+  technical: "technical",
+  creative: "creative",
+  corporate: "corporate"
 } as const;
-export type ThemeTag = typeof ThemeTags[keyof typeof ThemeTags];
+export type ThemeTag = (typeof ThemeTags)[keyof typeof ThemeTags];
 export default ThemeTags;

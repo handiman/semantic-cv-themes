@@ -15,11 +15,12 @@ export class LenaTheme extends Theme {
       "A modern two‑column theme with clean typography, subtle accents, and a calm, well‑organized visual flow.",
     tags: [
       ThemeTags.twoCol,
-      ThemeTags.headshot,
+      ThemeTags.photo,
       ThemeTags.lightMode,
+      ThemeTags.warm,
       ThemeTags.calm,
       ThemeTags.typographyForward,
-      ThemeTags.photo
+      ThemeTags.colorBlocks
     ]
   };
 

@@ -13,14 +13,7 @@ export class MatildaTheme extends Theme {
     title: "Matilda",
     description:
       "A soft, pastel‑toned two‑column theme with gentle typography and a friendly, editorial touch.",
-    tags: [
-      ThemeTags.twoCol,
-      ThemeTags.headshot,
-      ThemeTags.lightMode,
-      ThemeTags.pastel,
-      ThemeTags.resume,
-      ThemeTags.technical
-    ]
+    tags: [ThemeTags.twoCol, ThemeTags.photo, ThemeTags.lightMode, ThemeTags.pastel, ThemeTags.calm]
   };
 
   protected layout(): string {

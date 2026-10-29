@@ -13,12 +13,13 @@ export class BoilingDieselTheme extends Theme {
     description:
       "A bold, high‑contrast dark theme built for technical résumés that want a strong, confident presence.",
     tags: [
-      ThemeTags.twoCol,
-      ThemeTags.resume,
-      ThemeTags.darkMode,
-      ThemeTags.highContrast,
-      ThemeTags.technical,
-      ThemeTags.bold
+      ThemeTags.singleCol,
+      ThemeTags.accentHeader,
+      ThemeTags.photo,
+      ThemeTags.lightMode,
+      ThemeTags.warm,
+      ThemeTags.bold,
+      ThemeTags.technical
     ]
   };
 

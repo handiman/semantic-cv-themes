@@ -12,11 +12,11 @@ export class MinimalTheme extends Theme {
     description:
       "A neutral, understated single‑column layout designed to be readable, reliable, and universally suitable.",
     tags: [
-      ThemeTags.singleCol,
+      ThemeTags.twoCol,
+      ThemeTags.photo,
       ThemeTags.lightMode,
       ThemeTags.minimal,
       ThemeTags.neutral,
-      ThemeTags.resume,
       ThemeTags.default
     ]
   };

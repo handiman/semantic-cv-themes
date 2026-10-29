@@ -12,9 +12,11 @@ export class GnapTheme extends Theme {
     description: "Smurf‑inspired black & white theme with splashes of green",
     tags: [
       ThemeTags.heroFullscreen,
-      ThemeTags.darkMode,
+      ThemeTags.singleCol,
       ThemeTags.monoChrome,
+      ThemeTags.highContrast,
       ThemeTags.accented,
+      ThemeTags.typographyForward,
       ThemeTags.playful,
       ThemeTags.bold
     ]
