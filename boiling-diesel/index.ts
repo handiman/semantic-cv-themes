@@ -11,7 +11,7 @@ export class BoilingDieselTheme extends Theme {
     id: "boiling-diesel",
     title: "Boiling Diesel",
     description:
-      "A bold, high‑contrast dark theme built for technical résumés that want a strong, confident presence.",
+      "A white page under a dark header band, with a large round photo breaking the edge and olive‑brown headings. Sturdy and straightforward, with skills set in a two‑by‑two grid.",
     tags: [
       ThemeTags.singleCol,
       ThemeTags.accentHeader,

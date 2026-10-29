@@ -12,7 +12,7 @@ export class LenaTheme extends Theme {
     id: "lena",
     title: "Lena",
     description:
-      "A modern two‑column theme with clean typography, subtle accents, and a calm, well‑organized visual flow.",
+      "A warm, paper‑toned two‑column layout with small‑caps headings, shaded section bands and a framed portrait overlapping the header. Classic and calm.",
     tags: [
       ThemeTags.twoCol,
       ThemeTags.photo,

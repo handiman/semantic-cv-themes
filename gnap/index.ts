@@ -9,7 +9,8 @@ export class GnapTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "gnap",
     title: "GNAP!",
-    description: "Smurf‑inspired black & white theme with splashes of green",
+    description:
+      'A full‑screen dark hero ("Hi, I\'m …") followed by a white page with oversized, light headings and an icon rail for contact links. Black and white with green links — Smurf‑inspired.',
     tags: [
       ThemeTags.heroFullscreen,
       ThemeTags.singleCol,

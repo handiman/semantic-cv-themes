@@ -11,7 +11,7 @@ export class HoldenWreckTheme extends BoilingDieselTheme {
     id: "holden-wreck",
     title: "Holden wreck",
     description:
-      "A clean, approachable two‑column résumé with a light, balanced layout and clear structure.",
+      "Boiling Diesel's layout in earthier colours: an olive header band, a round photo with a grey ring and dark slate headings on a white page.",
     tags: [
       ThemeTags.singleCol,
       ThemeTags.accentHeader,
