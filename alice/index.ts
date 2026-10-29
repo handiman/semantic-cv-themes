@@ -11,7 +11,7 @@ export class AliceTheme extends Theme {
     id: "alice",
     title: "Alice",
     description:
-      "A bright, balanced two‑column theme with crisp typography, gentle contrast, and a confident, approachable rhythm.",
+      "A split two‑column layout: a light sidebar with coral accents beside a dark charcoal main column. Clean sans‑serif type and a strong contrast between the halves.",
     tags: [
       ThemeTags.twoCol,
       ThemeTags.neutral,

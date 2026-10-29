@@ -10,7 +10,7 @@ export class MinimalTheme extends Theme {
     id: "minimal",
     title: "Minimal",
     description:
-      "A neutral, understated single‑column layout designed to be readable, reliable, and universally suitable.",
+      "A neutral, understated layout with a narrow sidebar for skills and a main column for experience. Plain, readable and suitable for most CVs.",
     tags: [
       ThemeTags.singleCol,
       ThemeTags.lightMode,
