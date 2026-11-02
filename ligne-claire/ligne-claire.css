@@ -111,36 +111,15 @@ a:visited {
   background-color: var(--pale-red);
 }
 
-/* The title panel: a flat sky over two outlined hills, and the name lettered large. */
+/* The title panel: a flat sky over three outlined hills of different sizes, and the name lettered
+   large. The hills are an inline SVG (a data: URL) stretched across the bottom of the panel; their
+   outlines keep their width however far the drawing stretches (vector-effect: non-scaling-stroke). */
 
 .strip > header {
-  padding: var(--space-3) var(--space-2) calc(var(--space-3) + 1rem);
-  overflow: hidden;
-  background-color: var(--sky);
-}
-
-.strip > header::before,
-.strip > header::after {
-  content: "";
-  position: absolute;
-  border: var(--outline);
-  border-radius: 50%;
-}
-
-.strip > header::before {
-  right: -8%;
-  bottom: -5.5rem;
-  width: 55%;
-  height: 8rem;
-  background-color: #a8d18d;
-}
-
-.strip > header::after {
-  right: 30%;
-  bottom: -6.5rem;
-  width: 45%;
-  height: 8rem;
-  background-color: #c4e2a6;
+  padding: var(--space-3) var(--space-2) calc(var(--space-3) + 2rem);
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1000 120' preserveAspectRatio='none'%3E%3Cg stroke='%231a1a1a' stroke-width='2.5' vector-effect='non-scaling-stroke'%3E%3Cpath vector-effect='non-scaling-stroke' d='M300 122 C420 20 640 8 780 122 Z' fill='%23d6ecbd'/%3E%3Cpath vector-effect='non-scaling-stroke' d='M-40 122 C60 50 260 40 430 122 Z' fill='%23c4e2a6'/%3E%3Cpath vector-effect='non-scaling-stroke' d='M610 122 C760 64 930 52 1060 122 Z' fill='%23a8d18d'/%3E%3C/g%3E%3C/svg%3E") bottom / 100% 6rem no-repeat,
+    var(--sky);
 }
 
 h1,
@@ -355,9 +334,10 @@ article > .scv-description {
     font-size: 2.2rem;
   }
 
-  .strip > header::before,
-  .strip > header::after {
-    display: none;
+  .strip > header {
+    background-size:
+      100% 4rem,
+      auto;
   }
 }
 
