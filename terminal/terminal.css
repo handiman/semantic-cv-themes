@@ -47,18 +47,22 @@ body {
 }
 
 .title-bar {
-  display: flex;
-  gap: 0.5rem;
   padding: 0.7rem 0.9rem;
   border-bottom: 1px solid var(--border-color);
   background-color: #171c20;
 }
 
-.title-bar span {
+/* The three window buttons: one dot and two shadows of it. */
+.title-bar::before {
+  content: "";
+  display: block;
   width: 0.75rem;
   height: 0.75rem;
   border-radius: 50%;
   background-color: #3a444c;
+  box-shadow:
+    1.25rem 0 #3a444c,
+    2.5rem 0 #3a444c;
 }
 
 .screen {

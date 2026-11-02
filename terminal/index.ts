@@ -31,7 +31,7 @@ export class TerminalTheme extends Theme {
   protected layout(person: Person): string {
     return `
       <div class="window">
-        <div class="title-bar" aria-hidden="true"><span></span><span></span><span></span></div>
+        <div class="title-bar" aria-hidden="true"></div>
         <div class="screen">
           <header>
             <h1>${person.name ?? ""}</h1>
