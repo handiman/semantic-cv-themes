@@ -68,6 +68,7 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: ProofOfWorkTheme.meta.title,
     description: ProofOfWorkTheme.meta.description,
     tags: ProofOfWorkTheme.meta.tags
+  },
   [TerminalTheme.meta.id]: {
     type: TerminalTheme,
     title: TerminalTheme.meta.title,
