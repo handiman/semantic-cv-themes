@@ -11,6 +11,7 @@ import { LenaTheme } from "./lena/index.js";
 import { LetterheadTheme } from "./letterhead/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
+import { NeoBrutalTheme } from "./neo-brutal/index.js";
 import { OnePagerTheme } from "./one-pager/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
 import { QuarterlyTheme } from "./quarterly/index.js";
@@ -93,6 +94,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: MinimalTheme.meta.title,
     description: MinimalTheme.meta.description,
     tags: MinimalTheme.meta.tags
+  },
+  [NeoBrutalTheme.meta.id]: {
+    type: NeoBrutalTheme,
+    title: NeoBrutalTheme.meta.title,
+    description: NeoBrutalTheme.meta.description,
+    tags: NeoBrutalTheme.meta.tags
   },
   [OnePagerTheme.meta.id]: {
     type: OnePagerTheme,
