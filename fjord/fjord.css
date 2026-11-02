@@ -1,0 +1,329 @@
+/* Fjord. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * The header's ::before and ::after are two bands across the top of the page, a dark one over a
+ * lighter one, both cut with clip-paths so their lower edges fall from left to right. A photo sits
+ * on the lower edge of the dark band, and the name is centered under it. Below the header, a grid
+ * with a narrow column (the aside) and a wide one (main); without an aside, main takes it all. */
+
+:root {
+  --petrol: #12414a;
+  --sea: #3f8f8a;
+  --foam: #dcecea;
+  --ochre: #c58a2c;
+
+  --text-color: #26343a;
+  --text-color-muted: #5d6d72;
+  --background-color: #fff;
+  --heading-color: var(--petrol);
+  --accent-color: var(--ochre);
+  --link-color: var(--petrol);
+  --border-color: #d3e2e0;
+  --font-family-base: "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  --space-0: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 1.75rem;
+  --space-3: 3rem;
+  --border-radius-base: 3px;
+
+  --band-height: 13rem;
+  --photo-size: 10rem;
+  --sidebar-width: 36%;
+  --content-width: 64rem;
+}
+
+body {
+  line-height: 1.5;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+/* Header: the bands, the photo on their edge, the name centered. */
+
+header {
+  position: relative;
+  isolation: isolate;
+  padding: calc(var(--band-height) + var(--space-1)) var(--space-1) var(--space-2);
+  text-align: center;
+}
+
+header::before,
+header::after {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  top: 0;
+  right: 0;
+  left: 0;
+  height: var(--band-height);
+}
+
+/* The light band, lower and further down on the right. */
+header::before {
+  background-color: var(--sea);
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 62%);
+}
+
+/* The dark band over it. */
+header::after {
+  background-color: var(--petrol);
+  clip-path: polygon(0 0, 100% 0, 100% 72%, 0 30%);
+}
+
+/* With a photo, the name moves up under it; the photo straddles the bands' lower edge. */
+header:has(.photo) {
+  padding-top: calc(var(--band-height) - var(--photo-size) * 0.6);
+}
+
+.photo {
+  width: var(--photo-size);
+  height: var(--photo-size);
+  margin: 0 auto var(--space-2);
+  padding: 5px;
+  border-radius: 50%;
+  background-color: var(--background-color);
+  box-shadow: 0 0 0 3px var(--ochre);
+}
+
+.photo img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 2.6rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.job-title {
+  margin-top: var(--space-0);
+  color: var(--sea);
+  font-size: 1rem;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+}
+
+/* A short ochre rule under the job title, or under the name when there is none. */
+h1 + .job-title::after,
+h1:last-child::after {
+  content: "";
+  display: block;
+  width: 3.5rem;
+  height: 3px;
+  margin: var(--space-1) auto 0;
+  background-color: var(--ochre);
+}
+
+/* The two columns */
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  gap: var(--space-3);
+  max-width: var(--content-width);
+  margin: 0 auto;
+  padding: var(--space-1) var(--space-2) var(--space-3);
+}
+
+.page:has(> aside) {
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+}
+
+aside {
+  overflow-wrap: anywhere;
+}
+
+aside section + section,
+main section + section {
+  margin-top: var(--space-2);
+}
+
+h2 {
+  margin-bottom: var(--space-0);
+  padding-bottom: 0.3rem;
+  border-bottom: 2px solid var(--foam);
+  color: var(--heading-color);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+aside .scv-description {
+  color: var(--text-color-muted);
+}
+
+aside li {
+  padding: 0.15rem 0;
+}
+
+#contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5em;
+  text-decoration: none;
+}
+
+#contact svg {
+  flex: none;
+  color: var(--sea);
+}
+
+/* Roles */
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+h3 {
+  color: var(--heading-color);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.1em;
+  overflow: hidden;
+  color: var(--text-color-muted);
+  font-size: 0.9rem;
+}
+
+.caption li {
+  position: relative;
+}
+
+.caption li:first-child:not(:has(time)) {
+  color: var(--sea);
+  font-weight: 600;
+}
+
+/* Separators in the gap; one that would start a wrapped line is clipped. */
+.caption li + li::before {
+  content: "/";
+  position: absolute;
+  left: -0.75em;
+  color: var(--ochre);
+}
+
+article > .scv-description {
+  margin-top: 0.25rem;
+}
+
+.scv-keywords li {
+  border-color: var(--border-color);
+  background-color: var(--foam);
+  color: var(--petrol);
+  opacity: 1;
+}
+
+/* The short lists in main as bullets in two columns, the bullets as small slanted ochre bars. */
+main > section:not(:has(article)) > ul {
+  columns: 2;
+  column-gap: var(--space-2);
+}
+
+main > section:not(:has(article)) li {
+  position: relative;
+  padding: 0.1rem 0 0.1rem 1.1rem;
+  break-inside: avoid;
+}
+
+main > section:not(:has(article)) li::before {
+  content: "";
+  position: absolute;
+  top: 0.65em;
+  left: 0.1rem;
+  width: 0.55rem;
+  height: 0.25rem;
+  background-color: var(--ochre);
+  transform: skewY(-20deg);
+}
+
+.scv-footer {
+  padding: var(--space-2) var(--space-1);
+  border-top: 1px solid var(--border-color);
+  text-align: center;
+}
+
+/* One column on narrow screens, the aside first. */
+@media screen and (max-width: 44rem) {
+  :root {
+    --band-height: 9rem;
+    --photo-size: 8rem;
+  }
+
+  h1 {
+    font-size: 1.9rem;
+    letter-spacing: 0.08em;
+  }
+
+  .page,
+  .page:has(> aside) {
+    grid-template-columns: minmax(0, 1fr);
+    gap: var(--space-2);
+    padding-inline: var(--space-1);
+  }
+
+  main > section:not(:has(article)) > ul {
+    columns: 1;
+  }
+}
+
+/* Print: lower bands and a smaller photo, the same columns; the bands print as background. */
+@media print {
+  :root {
+    --font-size-base: 10pt;
+    --band-height: 2.6cm;
+    --photo-size: 2.6cm;
+    --space-1: 0.75rem;
+    --space-2: 1.1rem;
+    --space-3: 1.5rem;
+  }
+
+  header {
+    print-color-adjust: exact;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  .page {
+    max-width: none;
+    padding: var(--space-1) 1.5cm 0;
+  }
+
+  article,
+  h2 {
+    break-inside: avoid;
+  }
+
+  h2 {
+    break-after: avoid;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.2cm 0;
+  }
+
+  @page :first {
+    margin-top: 0;
+  }
+}
