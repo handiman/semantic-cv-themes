@@ -6,14 +6,11 @@ import { contactLinks } from "../contact.js";
 import { locationText } from "../utils.js";
 
 /**
- * The initials of the first and last word of a name, as letters: character references (the name
- * comes HTML-escaped) and words that don't start with a letter don't count.
+ * The initials of the first and last word of a name. Only words that start with a letter count, so
+ * a character reference (the name comes HTML-escaped, "&amp;") is never taken for an initial.
  */
 const initials = (name: string | null | undefined) => {
-  const words = (name ?? "")
-    .replace(/&[^;\s]*;/g, " ")
-    .split(/\s+/)
-    .filter((word) => /^\p{L}/u.test(word));
+  const words = (name ?? "").split(/\s+/).filter((word) => /^\p{L}/u.test(word));
   const letters = words.length > 1 ? [words[0], words[words.length - 1]] : words;
   return letters.map((word) => [...word][0].toUpperCase()).join("");
 };
