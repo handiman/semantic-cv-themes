@@ -5,6 +5,7 @@ import { BentoTheme } from "./bento/index.js";
 import { BlueprintTheme } from "./blueprint/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { BusinessCasualTheme } from "./business-casual/index.js";
+import { FjordTheme } from "./fjord/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
 import { JavaBeanTheme } from "./java-bean/index.js";
@@ -62,6 +63,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: BusinessCasualTheme.meta.title,
     description: BusinessCasualTheme.meta.description,
     tags: BusinessCasualTheme.meta.tags
+  },
+  [FjordTheme.meta.id]: {
+    type: FjordTheme,
+    title: FjordTheme.meta.title,
+    description: FjordTheme.meta.description,
+    tags: FjordTheme.meta.tags
   },
   [GnapTheme.meta.id]: {
     type: GnapTheme,
