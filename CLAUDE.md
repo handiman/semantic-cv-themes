@@ -146,6 +146,9 @@ Run `npm test` before considering work done. CI (`.github/workflows/ci.yml`) run
   `npm run test:update-snapshots` and commit the snapshots with the change, so the diff shows what changed. A new
   theme needs its two snapshots committed too.
 - Never wait on the network. No test fetches fonts or icons.
+- `selfContained.test.js` checks that every theme is self-contained: its HTML points nowhere but to the CV's own
+  links and photo, its CSS has no `@import` and no `url()` but `data:` and `#fragment`, and its JS makes no network
+  call. Styles, scripts, fonts, images and filters belong in the page.
 
 ## Working in the CLI repo's submodule
 
