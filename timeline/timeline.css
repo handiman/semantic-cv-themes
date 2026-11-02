@@ -1,0 +1,222 @@
+/* Timeline. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Every section sits in the content column; the left margin (--gutter) holds only the dates of the
+ * timeline. Each article has a left border (the line) and a dot, and its date, the caption <li> that
+ * holds a <time>, is moved into the margin. */
+
+:root {
+  --text-color: #1f2933;
+  --text-color-muted: #616e7c;
+  --background-color: #fcfcfb;
+  --heading-color: #102a43;
+  --accent-color: #0f766e;
+  --link-color: var(--accent-color);
+  --border-color: #d9e2ec;
+  --space-0: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 2rem;
+  --space-3: 3rem;
+
+  --gutter: 9rem;
+  --line-width: 2px;
+  --dot-size: 0.75rem;
+}
+
+body {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2) var(--space-2) calc(var(--gutter) + var(--space-2));
+  line-height: 1.5;
+}
+
+/* Header */
+
+header {
+  margin-bottom: var(--space-2);
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 2.4rem;
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+}
+
+.job-title {
+  margin-top: 0.25rem;
+  color: var(--accent-color);
+  font-size: 1.15rem;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem var(--space-1);
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+  font-size: 0.9rem;
+}
+
+.contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35em;
+  color: var(--text-color-muted);
+}
+
+/* Sections */
+
+h2 {
+  margin: var(--space-2) 0 var(--space-1);
+  color: var(--heading-color);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+h3 {
+  color: var(--heading-color);
+  font-size: 1.05rem;
+  line-height: 1.3;
+}
+
+#description p {
+  max-width: 40rem;
+}
+
+/* Competencies, skills, languages and certifications: short lists side by side. */
+
+.basics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--space-2);
+}
+
+.basics h2 {
+  margin-bottom: var(--space-0);
+}
+
+.basics li {
+  line-height: 1.6;
+}
+
+/* The timeline */
+
+article {
+  position: relative;
+  min-height: 3rem;
+  padding: 0 0 var(--space-2) var(--space-2);
+  border-left: var(--line-width) solid var(--border-color);
+}
+
+article:last-child {
+  padding-bottom: var(--space-0);
+}
+
+/* The dot, centered on the line, level with the first line of the heading. */
+article::before {
+  content: "";
+  position: absolute;
+  top: 0.35rem;
+  left: calc((var(--dot-size) + var(--line-width)) / -2);
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border: var(--line-width) solid var(--accent-color);
+  border-radius: 50%;
+  background-color: var(--background-color);
+}
+
+.caption {
+  color: var(--text-color-muted);
+  font-size: 0.95rem;
+}
+
+.caption li {
+  display: inline;
+}
+
+/* Separate the caption items that stay in the text: the role and the location. */
+.caption li:not(:has(time)) ~ li:not(:has(time))::before {
+  content: " · ";
+}
+
+/* The date, moved out of the caption into the margin, right-aligned against the line. */
+.caption li:has(time) {
+  position: absolute;
+  top: 0.15rem;
+  right: calc(100% + var(--space-1));
+  width: calc(var(--gutter) - var(--space-1));
+  color: var(--text-color-muted);
+  font-size: 0.85rem;
+  line-height: 1.4;
+  text-align: right;
+}
+
+/* Break a period at the dash, never inside a date. */
+.caption time {
+  white-space: nowrap;
+}
+
+article .scv-description {
+  margin-top: 0.35rem;
+}
+
+.scv-keywords li {
+  border-color: var(--border-color);
+  color: var(--text-color-muted);
+  opacity: 1;
+}
+
+/* Narrow screens: no margin; the date goes back above the heading. */
+@media screen and (max-width: 40rem) {
+  body {
+    padding: var(--space-2) var(--space-1);
+  }
+
+  .basics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  article {
+    padding-left: var(--space-1);
+  }
+
+  /* The date on a line of its own, above the role and the location. */
+  .caption {
+    display: flex;
+    flex-wrap: wrap;
+  }
+
+  .caption li:not(:has(time)) ~ li:not(:has(time))::before {
+    white-space: pre;
+  }
+
+  .caption li:has(time) {
+    position: static;
+    order: -1;
+    flex-basis: 100%;
+    width: auto;
+    text-align: left;
+  }
+}
+
+@media print {
+  :root {
+    --background-color: #fff;
+    --gutter: 7.5rem;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.5cm 0 calc(var(--gutter) + 1.5cm);
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+
+  @page {
+    margin: 1.5cm 0;
+  }
+}

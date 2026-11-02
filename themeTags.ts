@@ -6,6 +6,8 @@ export const ThemeTags = {
   singleCol: "single-column",
   /** A sidebar or second column runs next to the main column. */
   twoCol: "two-column",
+  /** Work, education and the like hang on a line, in date order. */
+  timeline: "timeline",
   /** The first screen is a hero with the name, before the CV. */
   heroFullscreen: "hero-fullscreen",
   /** A band of color across the top, behind the name or photo. */
