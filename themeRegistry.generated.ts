@@ -7,6 +7,7 @@ import { HoldenWreckTheme } from "./holden-wreck/index.js";
 import { LenaTheme } from "./lena/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
+import { TerminalTheme } from "./terminal/index.js";
 import { TimelineTheme } from "./timeline/index.js";
 import { TimesTheme } from "./times/index.js";
 import { TypewriterTheme } from "./typewriter/index.js";
@@ -59,6 +60,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: MinimalTheme.meta.title,
     description: MinimalTheme.meta.description,
     tags: MinimalTheme.meta.tags
+  },
+  [TerminalTheme.meta.id]: {
+    type: TerminalTheme,
+    title: TerminalTheme.meta.title,
+    description: TerminalTheme.meta.description,
+    tags: TerminalTheme.meta.tags
   },
   [TimelineTheme.meta.id]: {
     type: TimelineTheme,
