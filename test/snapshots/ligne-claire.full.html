@@ -3,34 +3,6 @@
     <h1>Ada Lindqvist</h1>
     <p class="job-title">Senior Backend Developer</p>
   </header>
-  <section id="portrait">
-    <svg aria-hidden="true" class="filters" focusable="false">
-      <filter color-interpolation-filters="sRGB" id="ligne-claire-ink">
-        <feGaussianBlur in="SourceGraphic" result="soft" stdDeviation="3"></feGaussianBlur>
-        <feComponentTransfer in="soft" result="flat">
-          <feFuncR tableValues="0.08 0.24 0.4 0.55 0.7 0.84 0.95" type="discrete"></feFuncR>
-          <feFuncG tableValues="0.08 0.24 0.4 0.55 0.7 0.84 0.95" type="discrete"></feFuncG>
-          <feFuncB tableValues="0.08 0.24 0.4 0.55 0.7 0.84 0.95" type="discrete"></feFuncB>
-        </feComponentTransfer>
-        <feColorMatrix in="SourceGraphic" result="grey" type="saturate" values="0"></feColorMatrix>
-        <feGaussianBlur in="grey" result="small" stdDeviation="1.5"></feGaussianBlur>
-        <feGaussianBlur in="grey" result="large" stdDeviation="3.2"></feGaussianBlur>
-        <feComponentTransfer in="small" result="small-inverted">
-          <feFuncR tableValues="1 0" type="table"></feFuncR>
-          <feFuncG tableValues="1 0" type="table"></feFuncG>
-          <feFuncB tableValues="1 0" type="table"></feFuncB>
-        </feComponentTransfer>
-        <feComposite in2="small-inverted" in="large" k1="0" k2="5" k3="5" k4="-5" operator="arithmetic" result="line"></feComposite>
-        <feComponentTransfer in="line" result="ink">
-          <feFuncR tableValues="1 1 1 0 0 0 0 0 0 0" type="discrete"></feFuncR>
-          <feFuncG tableValues="1 1 1 0 0 0 0 0 0 0" type="discrete"></feFuncG>
-          <feFuncB tableValues="1 1 1 0 0 0 0 0 0 0" type="discrete"></feFuncB>
-        </feComponentTransfer>
-        <feBlend in2="ink" in="flat" mode="multiply"></feBlend>
-      </filter>
-    </svg>
-    <img alt="Ada Lindqvist" src="https://example.com/ada.jpg">
-  </section>
   <section id="description">
     <h2>Summary</h2>
     <p class="scv-description balloon">Backend developer who likes small, well-tested services and plain-spoken documentation.</p>
