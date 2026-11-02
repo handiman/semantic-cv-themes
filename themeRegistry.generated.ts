@@ -13,6 +13,7 @@ import { TimelineTheme } from "./timeline/index.js";
 import { TimesTheme } from "./times/index.js";
 import { TypewriterTheme } from "./typewriter/index.js";
 import { WinterTheme } from "./winter/index.js";
+import { ZurichTheme } from "./zurich/index.js";
 const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
   [AliceTheme.meta.id]: {
     type: AliceTheme,
@@ -96,6 +97,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: WinterTheme.meta.title,
     description: WinterTheme.meta.description,
     tags: WinterTheme.meta.tags
+  },
+  [ZurichTheme.meta.id]: {
+    type: ZurichTheme,
+    title: ZurichTheme.meta.title,
+    description: ZurichTheme.meta.description,
+    tags: ZurichTheme.meta.tags
   }    
 };
 export default ThemeRegistry;
