@@ -1,0 +1,131 @@
+/* Standard Issue. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Deliberately plain: black on white, one column, a common sans-serif, and headings that differ from
+ * the text only in weight and a rule. Nothing is positioned, floated or laid out in a grid, so the
+ * reading order on the page is the order of the text. */
+
+:root {
+  --text-color: #000;
+  --text-color-muted: #333;
+  --background-color: #fff;
+  --heading-color: #000;
+  --accent-color: #000;
+  --link-color: #000;
+  --border-color: #000;
+  --font-family-base: Arial, "Helvetica Neue", Helvetica, "Liberation Sans", sans-serif;
+  --font-size-base: 15px;
+  --space-0: 0.25rem;
+  --space-1: 0.75rem;
+  --space-2: 1.25rem;
+  --space-3: 2.5rem;
+  --border-radius-base: 0;
+}
+
+body {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.4;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+header {
+  margin-bottom: var(--space-1);
+}
+
+h1 {
+  font-size: 1.7rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.job-title {
+  font-size: 1.05rem;
+}
+
+/* Contact details on one wrapped line, separated by vertical bars. */
+.contact {
+  margin-top: var(--space-0);
+}
+
+.contact li {
+  display: inline;
+}
+
+.contact li + li::before {
+  content: " | ";
+}
+
+section {
+  margin-top: var(--space-2);
+}
+
+h2 {
+  margin-bottom: var(--space-1);
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Flex, so the whitespace between the items doesn't end up before the commas. */
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.caption li + li::before {
+  content: ", ";
+}
+
+article .scv-description,
+.keywords {
+  margin-top: var(--space-0);
+}
+
+/* Short lists inline, separated by commas. */
+section > ul li {
+  display: inline;
+}
+
+section > ul li + li::before {
+  content: ", ";
+}
+
+.scv-footer {
+  margin-top: var(--space-2);
+}
+
+@media print {
+  :root {
+    --font-size-base: 11pt;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 2cm;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 2cm 0;
+  }
+}
