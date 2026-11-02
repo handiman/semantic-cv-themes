@@ -5,6 +5,7 @@ import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
 import { LenaTheme } from "./lena/index.js";
+import { LetterheadTheme } from "./letterhead/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
@@ -50,6 +51,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: LenaTheme.meta.title,
     description: LenaTheme.meta.description,
     tags: LenaTheme.meta.tags
+  },
+  [LetterheadTheme.meta.id]: {
+    type: LetterheadTheme,
+    title: LetterheadTheme.meta.title,
+    description: LetterheadTheme.meta.description,
+    tags: LetterheadTheme.meta.tags
   },
   [MatildaTheme.meta.id]: {
     type: MatildaTheme,
