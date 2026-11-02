@@ -1,5 +1,6 @@
 import { ThemeRegistryEntry } from "./themeRegistryEntry.js";
 import { AliceTheme } from "./alice/index.js";
+import { AuroraTheme } from "./aurora/index.js";
 import { BlueprintTheme } from "./blueprint/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { BusinessCasualTheme } from "./business-casual/index.js";
@@ -26,6 +27,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: AliceTheme.meta.title,
     description: AliceTheme.meta.description,
     tags: AliceTheme.meta.tags
+  },
+  [AuroraTheme.meta.id]: {
+    type: AuroraTheme,
+    title: AuroraTheme.meta.title,
+    description: AuroraTheme.meta.description,
+    tags: AuroraTheme.meta.tags
   },
   [BlueprintTheme.meta.id]: {
     type: BlueprintTheme,
