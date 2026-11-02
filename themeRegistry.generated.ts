@@ -7,6 +7,7 @@ import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { BusinessCasualTheme } from "./business-casual/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
+import { LeanAngleTheme } from "./lean-angle/index.js";
 import { JavaBeanTheme } from "./java-bean/index.js";
 import { LenaTheme } from "./lena/index.js";
 import { LetterheadTheme } from "./letterhead/index.js";
@@ -71,6 +72,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: HoldenWreckTheme.meta.title,
     description: HoldenWreckTheme.meta.description,
     tags: HoldenWreckTheme.meta.tags
+  },
+  [LeanAngleTheme.meta.id]: {
+    type: LeanAngleTheme,
+    title: LeanAngleTheme.meta.title,
+    description: LeanAngleTheme.meta.description,
+    tags: LeanAngleTheme.meta.tags
   },
   [JavaBeanTheme.meta.id]: {
     type: JavaBeanTheme,
