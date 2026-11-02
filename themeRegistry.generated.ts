@@ -7,6 +7,7 @@ import { HoldenWreckTheme } from "./holden-wreck/index.js";
 import { LenaTheme } from "./lena/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
+import { OnePagerTheme } from "./one-pager/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
 import { TerminalTheme } from "./terminal/index.js";
 import { TimelineTheme } from "./timeline/index.js";
@@ -62,6 +63,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: MinimalTheme.meta.title,
     description: MinimalTheme.meta.description,
     tags: MinimalTheme.meta.tags
+  },
+  [OnePagerTheme.meta.id]: {
+    type: OnePagerTheme,
+    title: OnePagerTheme.meta.title,
+    description: OnePagerTheme.meta.description,
+    tags: OnePagerTheme.meta.tags
   },
   [ProofOfWorkTheme.meta.id]: {
     type: ProofOfWorkTheme,

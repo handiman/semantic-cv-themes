@@ -6,6 +6,8 @@ export const ThemeTags = {
   singleCol: "single-column",
   /** A sidebar or second column runs next to the main column. */
   twoCol: "two-column",
+  /** Small type and tight spacing, to fit a long CV on few pages. */
+  compact: "compact",
   /** Work, education and the like hang on a line, in date order. */
   timeline: "timeline",
   /** The first screen is a hero with the name, before the CV. */
