@@ -7,6 +7,7 @@ import { loadTheme, renderDocument } from "./jsdomTransformer.js";
 const embedded = {
   gnap: ["Open Sans"],
   "ligne-claire": ["Comic Neue"],
+  monogram: ["Cormorant Garamond"],
   lena: ["Noto Sans", "Noto Sans Display"],
   times: ["Pirata One"],
   typewriter: ["Special Elite"]

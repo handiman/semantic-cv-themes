@@ -30,6 +30,14 @@ const fonts = {
   "ligne-claire": [
     { family: "Comic Neue", query: "Comic+Neue:wght@700", weight: "700", subsets: ["latin"] }
   ],
+  monogram: [
+    {
+      family: "Cormorant Garamond",
+      query: "Cormorant+Garamond:wght@600",
+      weight: "600",
+      subsets: ["latin", "latin-ext"]
+    }
+  ],
   lena: [
     {
       family: "Noto Sans",
