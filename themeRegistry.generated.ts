@@ -5,10 +5,12 @@ import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
 import { LenaTheme } from "./lena/index.js";
+import { LetterheadTheme } from "./letterhead/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
 import { QuarterlyTheme } from "./quarterly/index.js";
+import { StandardIssueTheme } from "./standard-issue/index.js";
 import { TerminalTheme } from "./terminal/index.js";
 import { TimelineTheme } from "./timeline/index.js";
 import { TimesTheme } from "./times/index.js";
@@ -52,6 +54,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     description: LenaTheme.meta.description,
     tags: LenaTheme.meta.tags
   },
+  [LetterheadTheme.meta.id]: {
+    type: LetterheadTheme,
+    title: LetterheadTheme.meta.title,
+    description: LetterheadTheme.meta.description,
+    tags: LetterheadTheme.meta.tags
+  },
   [MatildaTheme.meta.id]: {
     type: MatildaTheme,
     title: MatildaTheme.meta.title,
@@ -75,6 +83,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: QuarterlyTheme.meta.title,
     description: QuarterlyTheme.meta.description,
     tags: QuarterlyTheme.meta.tags
+  },  
+  [StandardIssueTheme.meta.id]: {
+    type: StandardIssueTheme,
+    title: StandardIssueTheme.meta.title,
+    description: StandardIssueTheme.meta.description,
+    tags: StandardIssueTheme.meta.tags
   },
   [TerminalTheme.meta.id]: {
     type: TerminalTheme,

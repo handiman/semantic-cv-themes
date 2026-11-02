@@ -1,0 +1,152 @@
+/* Letterhead. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Serif throughout, from the system (Georgia, Cambria, Times). The header is centered over a double
+ * rule; the sections below are left-aligned, with small-capital headings over a hairline. */
+
+:root {
+  --text-color: #1c1c1c;
+  --text-color-muted: #555;
+  --background-color: #fff;
+  --heading-color: #1c1c1c;
+  --accent-color: #1c1c1c;
+  --link-color: #1c1c1c;
+  --border-color: #1c1c1c;
+  --font-family-base:
+    Georgia, Cambria, "Times New Roman", Times, "Liberation Serif", "DejaVu Serif", serif;
+  --font-size-base: 16px;
+  --space-0: 0.3rem;
+  --space-1: 0.8rem;
+  --space-2: 1.6rem;
+  --space-3: 3rem;
+  --border-radius-base: 0;
+}
+
+body {
+  max-width: 46rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.5;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+/* The letterhead */
+
+header {
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-1);
+  border-bottom: 3px double var(--border-color);
+  text-align: center;
+}
+
+h1 {
+  font-size: 2rem;
+  font-variant: small-caps;
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+}
+
+.job-title {
+  margin-top: 0.1rem;
+  color: var(--text-color-muted);
+  font-style: italic;
+}
+
+.contact {
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+  font-size: 0.85rem;
+  /* Spaced, not separated: a separator can end up first on a wrapped line. */
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0 1.25em;
+}
+
+.contact a {
+  color: var(--text-color-muted);
+}
+
+/* Sections */
+
+section {
+  margin-top: var(--space-2);
+}
+
+h2 {
+  margin-bottom: var(--space-1);
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1.05rem;
+  font-variant: small-caps;
+  font-weight: 400;
+  letter-spacing: 0.1em;
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+h3 {
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Role, dates and place in italics, separated by commas. */
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--text-color-muted);
+  font-style: italic;
+}
+
+.caption li + li::before {
+  content: ", ";
+}
+
+article .scv-description {
+  margin-top: var(--space-0);
+}
+
+.keywords {
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+  font-size: 0.9rem;
+}
+
+/* Short lists inline, separated by commas. */
+section > ul li {
+  display: inline;
+}
+
+section > ul li + li::before {
+  content: ", ";
+}
+
+.scv-footer {
+  margin-top: var(--space-2);
+}
+
+@media print {
+  :root {
+    --font-size-base: 11pt;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 2cm;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.8cm 0;
+  }
+}
