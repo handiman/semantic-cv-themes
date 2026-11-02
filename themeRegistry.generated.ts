@@ -7,8 +7,8 @@ import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { BusinessCasualTheme } from "./business-casual/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
-import { LeanAngleTheme } from "./lean-angle/index.js";
 import { JavaBeanTheme } from "./java-bean/index.js";
+import { LeanAngleTheme } from "./lean-angle/index.js";
 import { LenaTheme } from "./lena/index.js";
 import { LetterheadTheme } from "./letterhead/index.js";
 import { LigneClaireTheme } from "./ligne-claire/index.js";
@@ -18,6 +18,7 @@ import { NeoBrutalTheme } from "./neo-brutal/index.js";
 import { OnePagerTheme } from "./one-pager/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
 import { QuarterlyTheme } from "./quarterly/index.js";
+import { RibbonTheme } from "./ribbon/index.js";
 import { StandardIssueTheme } from "./standard-issue/index.js";
 import { TerminalTheme } from "./terminal/index.js";
 import { TimelineTheme } from "./timeline/index.js";
@@ -74,17 +75,17 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     description: HoldenWreckTheme.meta.description,
     tags: HoldenWreckTheme.meta.tags
   },
-  [LeanAngleTheme.meta.id]: {
-    type: LeanAngleTheme,
-    title: LeanAngleTheme.meta.title,
-    description: LeanAngleTheme.meta.description,
-    tags: LeanAngleTheme.meta.tags
-  },
   [JavaBeanTheme.meta.id]: {
     type: JavaBeanTheme,
     title: JavaBeanTheme.meta.title,
     description: JavaBeanTheme.meta.description,
     tags: JavaBeanTheme.meta.tags
+  },
+  [LeanAngleTheme.meta.id]: {
+    type: LeanAngleTheme,
+    title: LeanAngleTheme.meta.title,
+    description: LeanAngleTheme.meta.description,
+    tags: LeanAngleTheme.meta.tags
   },
   [LenaTheme.meta.id]: {
     type: LenaTheme,
@@ -139,6 +140,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: QuarterlyTheme.meta.title,
     description: QuarterlyTheme.meta.description,
     tags: QuarterlyTheme.meta.tags
+  },
+  [RibbonTheme.meta.id]: {
+    type: RibbonTheme,
+    title: RibbonTheme.meta.title,
+    description: RibbonTheme.meta.description,
+    tags: RibbonTheme.meta.tags
   },
   [StandardIssueTheme.meta.id]: {
     type: StandardIssueTheme,
