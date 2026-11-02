@@ -1,0 +1,216 @@
+/* One Pager. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Dense on purpose: 13px type (9pt in print), tight line height and small gaps. The header spans the
+ * page; below it, a grey sidebar and the main column. */
+
+:root {
+  --text-color: #222;
+  --text-color-muted: #616161;
+  --background-color: #fff;
+  --heading-color: #111;
+  --accent-color: #2f5d8a;
+  --link-color: #222;
+  --border-color: #d6d6d6;
+  --font-family-base: "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  --font-size-base: 13px;
+  --space-0: 0.2rem;
+  --space-1: 0.5rem;
+  --space-2: 0.9rem;
+  --space-3: 1.5rem;
+  --border-radius-base: 2px;
+
+  --sidebar-width: 30%;
+  --sidebar-color: #f2f3f4;
+}
+
+body {
+  max-width: 64rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.35;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+.page {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.page:has(> aside) {
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+}
+
+/* Header across the page */
+
+header {
+  grid-column: 1 / -1;
+  padding-bottom: var(--space-2);
+  border-bottom: 2px solid var(--accent-color);
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 1.9rem;
+  font-weight: 700;
+  line-height: 1.1;
+}
+
+.job-title {
+  margin-top: var(--space-0);
+  color: var(--accent-color);
+  font-size: 1.1rem;
+}
+
+/* Sidebar */
+
+aside {
+  padding: var(--space-2) var(--space-2) var(--space-2) var(--space-2);
+  background-color: var(--sidebar-color);
+  overflow-wrap: anywhere;
+}
+
+aside section + section {
+  margin-top: var(--space-2);
+}
+
+aside li {
+  padding: 0.05rem 0;
+}
+
+main {
+  padding: var(--space-2) 0 0 var(--space-2);
+}
+
+.page:not(:has(> aside)) main {
+  padding-left: 0;
+}
+
+/* Headings */
+
+h2 {
+  margin-bottom: var(--space-1);
+  color: var(--accent-color);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+main section + section {
+  margin-top: var(--space-2);
+}
+
+/* Roles: name and dates on one line, the rest tight below. */
+
+article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--space-1);
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+article > *,
+.caption > li {
+  grid-column: 1 / -1;
+}
+
+h3 {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--heading-color);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.caption {
+  display: contents;
+  color: var(--text-color-muted);
+}
+
+.caption > li:has(time) {
+  grid-column: 2;
+  grid-row: 1;
+  text-align: right;
+}
+
+/* The place under the dates, on the role's line, to save a line per role. */
+.caption > li:first-child:not(:has(time)) {
+  grid-column: 1;
+}
+
+.caption > li:has(time) ~ li {
+  grid-column: 2;
+  grid-row: 2;
+  text-align: right;
+}
+
+.caption time {
+  white-space: nowrap;
+}
+
+article > .scv-description {
+  margin-top: 0.1rem;
+}
+
+.scv-keywords {
+  gap: 0.15rem 0.3rem;
+  margin-top: 0.2rem;
+  font-size: 0.85em;
+}
+
+.scv-keywords li {
+  padding: 0 0.35rem;
+  border-color: var(--border-color);
+  color: var(--text-color-muted);
+  opacity: 1;
+}
+
+.scv-footer {
+  margin-top: var(--space-2);
+}
+
+@media screen and (max-width: 40rem) {
+  body {
+    padding: var(--space-2) var(--space-1);
+  }
+
+  .page:has(> aside) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  aside {
+    margin-top: var(--space-2);
+  }
+
+  main {
+    padding-left: 0;
+  }
+}
+
+/* Print: 9pt, narrow margins. */
+@media print {
+  :root {
+    --font-size-base: 9pt;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.2cm;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.2cm 0;
+  }
+}
