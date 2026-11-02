@@ -1,0 +1,226 @@
+/* Zürich. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * One grid for the whole page: a narrow column for headings (--label) and a wide one for content.
+ * Every section is a row of that grid; the header uses it too, so everything lines up. */
+
+:root {
+  --text-color: #111;
+  --text-color-muted: #5c5c5c;
+  --background-color: #fff;
+  --heading-color: #111;
+  --accent-color: #e2001a;
+  --link-color: #111;
+  --border-color: #111;
+  --font-family-base:
+    "Helvetica Neue", Helvetica, Arial, "Nimbus Sans", "Liberation Sans", sans-serif;
+  --space-0: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 2rem;
+  --space-3: 4rem;
+  --border-radius-base: 0;
+
+  --label: 12rem;
+  --column-gap: var(--space-2);
+}
+
+body {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2) var(--space-2);
+  line-height: 1.45;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+/* Header: a red bar in the label column, the name large beside it. */
+
+header {
+  display: grid;
+  grid-template-columns: var(--label) minmax(0, 1fr);
+  column-gap: var(--column-gap);
+  margin-bottom: var(--space-3);
+}
+
+header::before {
+  content: "";
+  grid-row: 1 / span 3;
+  align-self: start;
+  width: 2.5rem;
+  height: 2.5rem;
+  margin-top: 0.55rem;
+  background-color: var(--accent-color);
+}
+
+header > * {
+  grid-column: 2;
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 3.4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+
+.job-title {
+  margin-top: var(--space-0);
+  font-size: 1.4rem;
+  letter-spacing: -0.01em;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.15rem var(--space-1);
+  margin-top: var(--space-1);
+  color: var(--text-color-muted);
+  font-size: 0.9rem;
+}
+
+.contact a {
+  color: var(--text-color-muted);
+}
+
+/* Sections: the heading in the label column, everything else in the content column, with a rule
+   across the top. Not a grid: Chrome moves whole grid sections to the next page when printing. */
+
+section {
+  position: relative;
+  min-height: 4rem;
+  padding: var(--space-1) 0 var(--space-2) calc(var(--label) + var(--column-gap));
+  border-top: 1px solid var(--border-color);
+}
+
+section > h2 {
+  position: absolute;
+  top: var(--space-1);
+  left: 0;
+  width: var(--label);
+  color: var(--heading-color);
+  font-size: 0.95rem;
+  font-weight: 700;
+  line-height: 1.3;
+  overflow-wrap: anywhere;
+}
+
+#description p {
+  font-size: 1.3rem;
+  letter-spacing: -0.01em;
+  line-height: 1.35;
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+h3 {
+  color: var(--heading-color);
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+.caption {
+  color: var(--text-color-muted);
+}
+
+.caption li {
+  display: inline;
+}
+
+.caption li + li::before {
+  content: " — ";
+}
+
+article .scv-description {
+  margin-top: 0.25rem;
+}
+
+/* Keywords as plain text, separated by thin slashes, the first in red. */
+.scv-keywords {
+  gap: 0;
+  font-size: 0.9rem;
+}
+
+.scv-keywords li {
+  padding: 0;
+  border: none;
+  opacity: 1;
+}
+
+.scv-keywords li + li::before {
+  content: " / ";
+  color: var(--text-color-muted);
+  white-space: pre;
+}
+
+/* Short lists inline, separated by commas. */
+section > ul:not(.scv-keywords) li {
+  display: inline;
+}
+
+section > ul:not(.scv-keywords) li + li::before {
+  content: ", ";
+}
+
+/* Narrow screens: headings above their content. */
+@media screen and (max-width: 44rem) {
+  body {
+    padding: var(--space-2) var(--space-1);
+  }
+
+  header {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  section {
+    min-height: 0;
+    padding-left: 0;
+  }
+
+  header::before {
+    grid-row: auto;
+    margin: 0 0 var(--space-1);
+  }
+
+  header > * {
+    grid-column: 1;
+  }
+
+  section > h2 {
+    position: static;
+    width: auto;
+    margin-bottom: var(--space-0);
+  }
+
+  h1 {
+    font-size: 2.4rem;
+  }
+}
+
+@media print {
+  :root {
+    --label: 9rem;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.5cm;
+  }
+
+  header {
+    margin-bottom: var(--space-2);
+  }
+
+  h1 {
+    font-size: 2.8rem;
+  }
+
+  @page {
+    margin: 1.5cm 0;
+  }
+}
