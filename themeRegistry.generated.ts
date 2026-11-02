@@ -2,6 +2,7 @@ import { ThemeRegistryEntry } from "./themeRegistryEntry.js";
 import { AliceTheme } from "./alice/index.js";
 import { BlueprintTheme } from "./blueprint/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
+import { BusinessCasualTheme } from "./business-casual/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
 import { LenaTheme } from "./lena/index.js";
@@ -36,6 +37,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: BoilingDieselTheme.meta.title,
     description: BoilingDieselTheme.meta.description,
     tags: BoilingDieselTheme.meta.tags
+  },
+  [BusinessCasualTheme.meta.id]: {
+    type: BusinessCasualTheme,
+    title: BusinessCasualTheme.meta.title,
+    description: BusinessCasualTheme.meta.description,
+    tags: BusinessCasualTheme.meta.tags
   },
   [GnapTheme.meta.id]: {
     type: GnapTheme,

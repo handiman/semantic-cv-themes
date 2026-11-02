@@ -1,0 +1,230 @@
+/* Business Casual. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Slate grey and a muted blue on white, a system sans-serif and generous spacing. The header pairs a
+ * monogram ring with the name; below it, a quiet side column and the main column. */
+
+:root {
+  --slate: #3d4a5c;
+  --blue: #4a6fa5;
+
+  --text-color: #2e3640;
+  --text-color-muted: #6b7684;
+  --background-color: #fff;
+  --heading-color: var(--slate);
+  --accent-color: var(--blue);
+  --link-color: var(--slate);
+  --border-color: #dfe4ea;
+  --font-family-base: "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  --space-0: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 2rem;
+  --space-3: 3.5rem;
+  --border-radius-base: 3px;
+
+  --monogram-size: 4.5rem;
+  --sidebar-width: 13rem;
+}
+
+body {
+  max-width: 58rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2) var(--space-2);
+  line-height: 1.55;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+/* Header: the monogram and the name side by side. */
+
+header {
+  display: flex;
+  align-items: center;
+  gap: var(--space-2);
+  margin-bottom: var(--space-3);
+}
+
+.monogram {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: var(--monogram-size);
+  height: var(--monogram-size);
+  border: 2px solid var(--blue);
+  border-radius: 50%;
+  color: var(--blue);
+  font-size: 1.5rem;
+  font-weight: 300;
+  letter-spacing: 0.12em;
+  /* Letter spacing adds space after the last letter too; this centers the pair. */
+  text-indent: 0.12em;
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 2.1rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.15;
+}
+
+.job-title {
+  margin-top: 0.2rem;
+  color: var(--accent-color);
+  font-size: 1.1rem;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem var(--space-1);
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+  font-size: 0.9rem;
+}
+
+.contact a {
+  color: var(--text-color-muted);
+}
+
+/* The side column and the main column */
+
+.body {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.body:has(> aside) {
+  grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
+  column-gap: var(--space-3);
+}
+
+h2 {
+  margin-bottom: var(--space-1);
+  color: var(--heading-color);
+  font-size: 0.8rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+section + section {
+  margin-top: var(--space-2);
+}
+
+aside li {
+  padding: 0.1rem 0;
+}
+
+aside section + section {
+  margin-top: var(--space-2);
+}
+
+/* Roles */
+
+article + article {
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+  border-top: 1px solid var(--border-color);
+}
+
+h3 {
+  color: var(--heading-color);
+  font-size: 1.05rem;
+  font-weight: 600;
+}
+
+/* The separators sit in the gap before each item. One that would start a wrapped line falls left
+   of the caption's edge and is clipped. */
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.1em;
+  overflow: hidden;
+  color: var(--text-color-muted);
+  font-size: 0.95rem;
+}
+
+.caption li {
+  position: relative;
+}
+
+.caption li + li::before {
+  content: "·";
+  position: absolute;
+  left: -0.75em;
+}
+
+article > .scv-description {
+  margin-top: 0.3rem;
+}
+
+.scv-keywords li {
+  border-color: var(--border-color);
+  color: var(--text-color-muted);
+  opacity: 1;
+}
+
+.scv-footer {
+  margin-top: var(--space-2);
+}
+
+@media screen and (max-width: 44rem) {
+  body {
+    padding: var(--space-2) var(--space-1);
+  }
+
+  header {
+    align-items: flex-start;
+    gap: var(--space-1);
+    margin-bottom: var(--space-2);
+  }
+
+  .monogram {
+    --monogram-size: 3.25rem;
+    font-size: 1.1rem;
+  }
+
+  h1 {
+    font-size: 1.7rem;
+  }
+
+  .body:has(> aside) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  aside {
+    margin-bottom: var(--space-2);
+  }
+}
+
+@media print {
+  :root {
+    --sidebar-width: 10rem;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.6cm;
+  }
+
+  header {
+    margin-bottom: var(--space-2);
+  }
+
+  .body:has(> aside) {
+    column-gap: var(--space-2);
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.6cm 0;
+  }
+}
