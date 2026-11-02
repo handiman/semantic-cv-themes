@@ -9,6 +9,7 @@ import { LetterheadTheme } from "./letterhead/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
+import { QuarterlyTheme } from "./quarterly/index.js";
 import { StandardIssueTheme } from "./standard-issue/index.js";
 import { TerminalTheme } from "./terminal/index.js";
 import { TimelineTheme } from "./timeline/index.js";
@@ -77,6 +78,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     description: ProofOfWorkTheme.meta.description,
     tags: ProofOfWorkTheme.meta.tags
   },
+  [QuarterlyTheme.meta.id]: {
+    type: QuarterlyTheme,
+    title: QuarterlyTheme.meta.title,
+    description: QuarterlyTheme.meta.description,
+    tags: QuarterlyTheme.meta.tags
+  },  
   [StandardIssueTheme.meta.id]: {
     type: StandardIssueTheme,
     title: StandardIssueTheme.meta.title,
