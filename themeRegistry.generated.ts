@@ -7,8 +7,8 @@ import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { BusinessCasualTheme } from "./business-casual/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
-import { LeanAngleTheme } from "./lean-angle/index.js";
 import { JavaBeanTheme } from "./java-bean/index.js";
+import { LeanAngleTheme } from "./lean-angle/index.js";
 import { LenaTheme } from "./lena/index.js";
 import { LetterheadTheme } from "./letterhead/index.js";
 import { LigneClaireTheme } from "./ligne-claire/index.js";
@@ -74,17 +74,17 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     description: HoldenWreckTheme.meta.description,
     tags: HoldenWreckTheme.meta.tags
   },
-  [LeanAngleTheme.meta.id]: {
-    type: LeanAngleTheme,
-    title: LeanAngleTheme.meta.title,
-    description: LeanAngleTheme.meta.description,
-    tags: LeanAngleTheme.meta.tags
-  },
   [JavaBeanTheme.meta.id]: {
     type: JavaBeanTheme,
     title: JavaBeanTheme.meta.title,
     description: JavaBeanTheme.meta.description,
     tags: JavaBeanTheme.meta.tags
+  },
+  [LeanAngleTheme.meta.id]: {
+    type: LeanAngleTheme,
+    title: LeanAngleTheme.meta.title,
+    description: LeanAngleTheme.meta.description,
+    tags: LeanAngleTheme.meta.tags
   },
   [LenaTheme.meta.id]: {
     type: LenaTheme,
