@@ -1,0 +1,200 @@
+/* Quarterly. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Serif headings (Georgia from the system) over a sans-serif text, navy for headings and rules,
+ * grey for the rest. Roles are rows: the name on the left, the dates on the right in tabular
+ * figures (the caption's <time> item, moved there with display: contents). */
+
+:root {
+  --navy: #1f3a5f;
+
+  --text-color: #2b2f33;
+  --text-color-muted: #646b73;
+  --background-color: #fff;
+  --heading-color: var(--navy);
+  --accent-color: var(--navy);
+  --link-color: var(--navy);
+  --border-color: #c9d1da;
+  --font-family-base: "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", sans-serif;
+  --font-family-serif: Georgia, Cambria, "Times New Roman", "Liberation Serif", serif;
+  --space-0: 0.4rem;
+  --space-1: 0.9rem;
+  --space-2: 1.75rem;
+  --space-3: 3rem;
+  --border-radius-base: 2px;
+
+  --figures-width: 14rem;
+}
+
+body {
+  max-width: 60rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.5;
+}
+
+h1,
+h2,
+h3 {
+  font-family: var(--font-family-serif);
+  color: var(--heading-color);
+}
+
+/* Header: the name over a navy rule, like a report's cover line. */
+
+header {
+  margin-bottom: var(--space-2);
+  padding-bottom: var(--space-1);
+  border-bottom: 3px solid var(--navy);
+}
+
+h1 {
+  font-size: 2.2rem;
+  font-weight: 400;
+  line-height: 1.15;
+}
+
+.job-title {
+  margin-top: 0.2rem;
+  color: var(--text-color-muted);
+  font-size: 1.1rem;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.1rem var(--space-1);
+  margin-top: var(--space-0);
+  font-size: 0.9rem;
+}
+
+/* The report: the main column and the key figures beside it. */
+
+.report {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  column-gap: var(--space-3);
+}
+
+.report:has(> .figures) {
+  grid-template-columns: minmax(0, 1fr) var(--figures-width);
+}
+
+h2 {
+  margin: var(--space-2) 0 var(--space-1);
+  padding-bottom: 0.2rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 1.2rem;
+  font-weight: 400;
+}
+
+main > section:first-child > h2,
+.figures > section:first-child > h2 {
+  margin-top: 0;
+}
+
+/* Roles as rows: name and dates on one line, the rest below. */
+
+article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--space-1);
+}
+
+article + article {
+  margin-top: var(--space-1);
+  padding-top: var(--space-1);
+  border-top: 1px solid #edf0f3;
+}
+
+article > *,
+.caption > li {
+  grid-column: 1 / -1;
+}
+
+h3 {
+  grid-column: 1;
+  grid-row: 1;
+  font-size: 1.08rem;
+  font-weight: 700;
+  line-height: 1.35;
+}
+
+.caption {
+  display: contents;
+  color: var(--text-color-muted);
+}
+
+.caption > li:has(time) {
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--navy);
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+}
+
+.caption time {
+  white-space: nowrap;
+}
+
+article > .scv-description {
+  margin-top: 0.25rem;
+}
+
+.scv-keywords {
+  margin-top: var(--space-0);
+}
+
+.scv-keywords li {
+  border-color: var(--border-color);
+  color: var(--text-color-muted);
+  opacity: 1;
+}
+
+/* Key figures: one item a row over a hairline. */
+
+.figures h2 {
+  font-size: 1rem;
+}
+
+.figures li {
+  padding: 0.25rem 0;
+  border-bottom: 1px solid #edf0f3;
+  font-size: 0.95rem;
+}
+
+@media screen and (max-width: 44rem) {
+  body {
+    padding: var(--space-2) var(--space-1);
+  }
+
+  .report:has(> .figures) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .figures > section:first-child > h2 {
+    margin-top: var(--space-2);
+  }
+}
+
+@media print {
+  :root {
+    --figures-width: 11rem;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.6cm;
+  }
+
+  .report {
+    column-gap: var(--space-2);
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.6cm 0;
+  }
+}
