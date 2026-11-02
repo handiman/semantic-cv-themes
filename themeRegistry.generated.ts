@@ -15,6 +15,7 @@ import { LetterheadTheme } from "./letterhead/index.js";
 import { LigneClaireTheme } from "./ligne-claire/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
+import { MonogramTheme } from "./monogram/index.js";
 import { NeoBrutalTheme } from "./neo-brutal/index.js";
 import { OnePagerTheme } from "./one-pager/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
@@ -122,6 +123,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: MinimalTheme.meta.title,
     description: MinimalTheme.meta.description,
     tags: MinimalTheme.meta.tags
+  },
+  [MonogramTheme.meta.id]: {
+    type: MonogramTheme,
+    title: MonogramTheme.meta.title,
+    description: MonogramTheme.meta.description,
+    tags: MonogramTheme.meta.tags
   },
   [NeoBrutalTheme.meta.id]: {
     type: NeoBrutalTheme,
