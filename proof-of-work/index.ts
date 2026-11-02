@@ -15,6 +15,7 @@ export class ProofOfWorkTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "proof-of-work",
     title: "Proof of Work",
+    added: "2026-11-02",
     description:
       "A CV as a till receipt: a narrow strip of paper in monospace, every job a line item with its dates on the right, skills by the piece and a barcode at the bottom.",
     tags: [

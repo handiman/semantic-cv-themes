@@ -13,6 +13,7 @@ export class LetterheadTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "letterhead",
     title: "Letterhead",
+    added: "2026-11-02",
     description:
       "A law firm's letterhead: the name centered in serif small capitals over a double rule, contact details in one quiet line, and the CV below in one column. Black and grey only.",
     tags: [

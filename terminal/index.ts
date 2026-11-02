@@ -16,6 +16,7 @@ export class TerminalTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "terminal",
     title: "Terminal",
+    added: "2026-11-02",
     description:
       "A CV as a shell session: monospace on a dark terminal window, a prompt before every heading and a blinking cursor at the end. Prints black on white.",
     tags: [

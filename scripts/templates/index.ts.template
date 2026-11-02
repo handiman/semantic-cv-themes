@@ -9,6 +9,9 @@ export class __CLASS__ extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "__ID__",
     title: "__TITLE__",
+    // The date the theme was added; the gallery sorts by it.
+    added: "__ADDED__",
+    // Add `featured: true,` to show the theme in the sample on the landing page.
     // One sentence for the theme gallery.
     description: "A new theme.",
     // Tags that describe the theme truthfully, from ThemeTags.

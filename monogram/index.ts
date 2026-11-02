@@ -24,6 +24,7 @@ export class MonogramTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "monogram",
     title: "Monogram",
+    added: "2026-11-02",
     description:
       "Like engraved stationery: the initials in a thin brass frame over the name in a serif, navy and brass on warm white, and the dates hanging in a margin of their own.",
     tags: [

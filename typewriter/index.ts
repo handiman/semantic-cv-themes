@@ -9,6 +9,7 @@ export class TypewriterTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "typewriter",
     title: "Typewriter",
+    added: "2026-04-15",
     description:
       "A retro résumé set on lined paper in a typewriter face. Plain, single‑column and a little quirky.",
     tags: [ThemeTags.singleCol, ThemeTags.lightMode, ThemeTags.retro, ThemeTags.playful]

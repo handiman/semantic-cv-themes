@@ -24,7 +24,7 @@ skeleton live in `semantic-cv-core`, not here.
 - One directory per theme, named in kebab-case after the theme id: `<id>/index.ts` and `<id>/<id>.css`. The class is
   the title-cased id plus `Theme` (`holden-wreck` → `HoldenWreckTheme`). That naming is what generates the registry.
 - A theme extends `Theme` ([theme.ts](theme.ts)), declares `static readonly meta: ThemeMetadata` (`id`, `title`,
-  `description`, `tags`) and a `layout(person)`. Nothing else is required: no constructor (the base class takes the
+  `added`, `description`, `tags`, and optionally `featured`) and a `layout(person)`. Nothing else is required: no constructor (the base class takes the
   transformer, `loadAsset` and the options, and reads `meta` from the class), and no `renderCSS` / `renderJS`, which
   default to loading `<id>.css` / `<id>.js` through `loadAsset` (an empty string when the file doesn't exist).
 - **Layouts use `<slot name="…"></slot>`** for every part of the CV. The base class's `renderHTML` replaces each slot
@@ -114,6 +114,8 @@ set a shared one from them: `--background-color: var(--parchment)`.
    and commit the regenerated version. Directories named `node_modules`, `dist`, `scripts`, `test` or starting with `.`
    are ignored, so a theme can't use those names.
 3. Add tags that describe it truthfully and a one-sentence description (they show up in the theme gallery).
+   `added` (`YYYY-MM-DD`) is filled in with today's date and the gallery sorts by it; add `featured: true` to show
+   the theme in the sample on the landing page.
 4. Check it with `npm run preview`, which renders every theme with a full Person and with only a name into
    `dist/preview/index.html`; look at it on screen and in the browser's print preview. Then run
    `npm run test:update-snapshots` to add its two snapshots.

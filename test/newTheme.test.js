@@ -1,6 +1,6 @@
 import { describe, it } from "node:test";
 import assert from "node:assert";
-import { className, problemWith, themeFiles, title } from "../scripts/new-theme.mjs";
+import { className, problemWith, themeFiles, title, today } from "../scripts/new-theme.mjs";
 import { ThemeRegistry } from "#themes/themeRegistry.js";
 
 describe("new-theme", () => {
@@ -10,6 +10,14 @@ describe("new-theme", () => {
     // Every existing theme follows the same rule.
     for (const [id, entry] of Object.entries(ThemeRegistry)) {
       assert.strictEqual(entry.type.name, className(id));
+    }
+  });
+
+  it("gives every existing theme a valid added date and a boolean featured flag", () => {
+    for (const [id, entry] of Object.entries(ThemeRegistry)) {
+      assert.match(entry.added, /^\d{4}-\d{2}-\d{2}$/, id);
+      assert.ok(!Number.isNaN(Date.parse(entry.added)), `${id}: ${entry.added} is not a date`);
+      assert.ok([undefined, true, false].includes(entry.featured), id);
     }
   });
 
@@ -34,6 +42,7 @@ describe("new-theme", () => {
     assert.match(index, /export class MyThemeTheme extends Theme/);
     assert.match(index, /id: "my-theme"/);
     assert.match(index, /title: "My theme"/);
+    assert.match(index, new RegExp(`added: "${today()}"`));
     for (const content of Object.values(files)) {
       assert.doesNotMatch(content, /__[A-Z]+__/);
     }

@@ -10,6 +10,8 @@ export class WinterTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "winter",
     title: "Winter",
+    added: "2026-04-15",
+    featured: true,
     description:
       "A crisp, cool layout with a pale blue header, a shield‑shaped photo frame and plenty of white space.",
     tags: [

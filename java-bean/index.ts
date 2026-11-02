@@ -14,6 +14,7 @@ export class JavaBeanTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "java-bean",
     title: "JavaBean",
+    added: "2026-11-02",
     description:
       "A CV as a café menu, for developers who run on Java: cream paper, coffee-brown ink, jobs as menu items with dotted leaders, coffee beans for bullets, and a coffee ring where the cup was put down.",
     tags: [

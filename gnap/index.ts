@@ -9,6 +9,7 @@ export class GnapTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "gnap",
     title: "GNAP!",
+    added: "2026-04-15",
     description:
       'A full‑screen dark hero ("Hi, I\'m …") followed by a white page with oversized, light headings and an icon rail for contact links. Black and white with green links — Smurf‑inspired.',
     tags: [

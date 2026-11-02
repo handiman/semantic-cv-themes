@@ -10,6 +10,12 @@ export interface ThemeRegistryEntry {
   /** Short description used in galleries and previews. */
   description: string;
 
+  /** The date the theme was added, as `YYYY-MM-DD`. */
+  added: string;
+
+  /** Show the theme in the sample on the landing page. */
+  featured?: boolean;
+
   /** Tags describing layout, mood, and features. */
   tags: ThemeTag[];
 }

@@ -10,6 +10,8 @@ export class BoilingDieselTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "boiling-diesel",
     title: "Boiling Diesel",
+    added: "2026-04-15",
+    featured: true,
     description:
       "A white page under a dark header band, with a large round photo breaking the edge and olive‑brown headings. Sturdy and straightforward, with skills set in a two‑by‑two grid.",
     tags: [

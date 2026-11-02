@@ -10,6 +10,8 @@ export class HoldenWreckTheme extends BoilingDieselTheme {
   static readonly meta: ThemeMetadata = {
     id: "holden-wreck",
     title: "Holden wreck",
+    added: "2026-04-15",
+    featured: true,
     description:
       "Boiling Diesel's layout in earthier colours: an olive header band, a round photo with a grey ring and dark slate headings on a white page.",
     tags: [

@@ -11,6 +11,8 @@ export class MatildaTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "matilda",
     title: "Matilda",
+    added: "2026-04-15",
+    featured: true,
     description:
       "A white sheet on a blush‑pink background, with a pink‑framed photo, a right‑aligned sidebar and light uppercase headings over thin rules. Soft and friendly.",
     tags: [ThemeTags.twoCol, ThemeTags.photo, ThemeTags.lightMode, ThemeTags.pastel, ThemeTags.calm]

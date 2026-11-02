@@ -14,6 +14,7 @@ export class StandardIssueTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "standard-issue",
     title: "Standard Issue",
+    added: "2026-11-02",
     description:
       "Plain on purpose: one column, black on white, no icons and no color, like a well-kept word-processor document. Reads the same to an applicant tracking system as to a person.",
     tags: [ThemeTags.singleCol, ThemeTags.lightMode, ThemeTags.neutral, ThemeTags.corporate]

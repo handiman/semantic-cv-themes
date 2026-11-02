@@ -26,6 +26,9 @@ export const title = (id) => {
   return words.charAt(0).toUpperCase() + words.slice(1);
 };
 
+/** Today as `YYYY-MM-DD`, the `added` date of a new theme. */
+export const today = () => new Date().toISOString().slice(0, 10);
+
 /** Why the id can't be used for a new theme, or undefined if it can. */
 export const problemWith = (id, existing = []) => {
   if (!id) {
@@ -50,7 +53,8 @@ export const themeFiles = (id) => {
       .readFileSync(path.join(templates, template), "utf8")
       .replaceAll("__CLASS__", className(id))
       .replaceAll("__ID__", id)
-      .replaceAll("__TITLE__", title(id));
+      .replaceAll("__TITLE__", title(id))
+      .replaceAll("__ADDED__", today());
   return {
     [`${id}/index.ts`]: fill("index.ts.template"),
     [`${id}/${id}.css`]: fill("theme.css.template")

@@ -14,6 +14,7 @@ export class NeoBrutalTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "neo-brutal",
     title: "Neo-Brutal",
+    added: "2026-11-02",
     description:
       "Neo-brutalism: thick black borders, hard offset shadows with no blur, and loud yellow, pink and cyan sticker headings. Straight lines and solid fills, so it prints as it looks.",
     tags: [

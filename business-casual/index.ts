@@ -13,6 +13,7 @@ export class BusinessCasualTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "business-casual",
     title: "Business Casual",
+    added: "2026-11-02",
     description:
       "Sober with one personal touch: your initials in a ring as a monogram. Slate grey and a muted blue, plenty of air, and skills and languages in a quiet side column.",
     tags: [
