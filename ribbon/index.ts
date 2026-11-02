@@ -14,6 +14,7 @@ export class RibbonTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "ribbon",
     title: "Ribbon",
+    added: "2026-11-02",
     description:
       "A white sheet with the name on a wine-red ribbon folded around its edges and every section heading on a small ribbon tab. Calm grey text and plenty of air around it.",
     tags: [

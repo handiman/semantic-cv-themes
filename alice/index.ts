@@ -10,6 +10,8 @@ export class AliceTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "alice",
     title: "Alice",
+    added: "2026-05-06",
+    featured: true,
     description:
       "A split two‑column layout: a light sidebar with coral accents beside a dark charcoal main column. Clean sans‑serif type and a strong contrast between the halves.",
     tags: [ThemeTags.twoCol, ThemeTags.photo, ThemeTags.accented, ThemeTags.highContrast]

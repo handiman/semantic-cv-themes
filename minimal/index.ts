@@ -9,6 +9,7 @@ export class MinimalTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "minimal",
     title: "Minimal",
+    added: "2026-04-15",
     description:
       "A neutral, understated layout with a narrow sidebar for skills and a main column for experience. Plain, readable and suitable for most CVs.",
     tags: [

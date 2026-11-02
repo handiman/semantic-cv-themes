@@ -13,6 +13,7 @@ export class BlueprintTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "blueprint",
     title: "Blueprint",
+    added: "2026-11-02",
     description:
       "A technical drawing: white lines on blueprint blue over a faint grid, with a title block for the name and numbered sections. Prints as blue lines on white.",
     tags: [

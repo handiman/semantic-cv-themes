@@ -15,6 +15,7 @@ export class FjordTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "fjord",
     title: "Fjord",
+    added: "2026-11-02",
     description:
       "Two slanted bands in petrol and sea green across the top, a round photo on their edge and the name in spaced capitals, over a narrow column for profile and contact details and a wide one for experience.",
     tags: [

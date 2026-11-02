@@ -9,6 +9,7 @@ export class TimesTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "times",
     title: "Times",
+    added: "2026-04-15",
     description:
       "A playful newspaper‑inspired résumé with an editorial layout and a subtle sense of humor.",
     tags: [

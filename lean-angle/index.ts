@@ -14,6 +14,7 @@ export class LeanAngleTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "lean-angle",
     title: "Lean Angle",
+    added: "2026-11-02",
     description:
       "Full-width bands with slanted edges: a dark header cut off at an angle and every other section on a tinted band leaning the other way. Prints flat.",
     tags: [

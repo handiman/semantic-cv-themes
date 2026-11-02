@@ -11,6 +11,8 @@ export class LenaTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "lena",
     title: "Lena",
+    added: "2026-04-24",
+    featured: true,
     description:
       "A warm, paper‑toned two‑column layout with small‑caps headings, shaded section bands and a framed portrait overlapping the header. Classic and calm.",
     tags: [

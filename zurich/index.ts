@@ -14,6 +14,7 @@ export class ZurichTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "zurich",
     title: "Zürich",
+    added: "2026-11-02",
     description:
       "Swiss typography: a strict grid, large flush-left sans-serif type, headings in a narrow left column and a single red accent. Sober enough for any employer.",
     tags: [

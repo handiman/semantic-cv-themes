@@ -14,6 +14,7 @@ export class AuroraTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "aurora",
     title: "Aurora",
+    added: "2026-11-02",
     description:
       "Soft blurred fields of violet, teal and rose behind the page, with every section on a translucent glass card in front of them. Prints as flat white cards.",
     tags: [

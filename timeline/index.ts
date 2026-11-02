@@ -14,6 +14,7 @@ export class TimelineTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "timeline",
     title: "Timeline",
+    added: "2026-11-02",
     description:
       "Work, projects and education on a vertical line, with the dates in a left margin and a dot for each entry. Quiet, light and easy to follow.",
     tags: [

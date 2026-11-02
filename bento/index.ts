@@ -13,6 +13,7 @@ export class BentoTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "bento",
     title: "Bento",
+    added: "2026-11-02",
     description:
       "A bento grid: every part of the CV is a rounded card, and the cards come in different sizes packed into one grid, with a dark card for the name and soft tints for the rest.",
     tags: [ThemeTags.lightMode, ThemeTags.neutral, ThemeTags.colorBlocks, ThemeTags.creative]

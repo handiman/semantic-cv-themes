@@ -53,6 +53,8 @@ writeLine(`const ThemeRegistry: Record<string, ThemeRegistryEntry> = {${themes
     type: ${theme.themeName},
     title: ${theme.themeName}.meta.title,
     description: ${theme.themeName}.meta.description,
+    added: ${theme.themeName}.meta.added,
+    featured: ${theme.themeName}.meta.featured,
     tags: ${theme.themeName}.meta.tags
   }`
   )

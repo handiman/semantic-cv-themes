@@ -14,6 +14,7 @@ export class QuarterlyTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "quarterly",
     title: "Quarterly",
+    added: "2026-11-02",
     description:
       "An annual report: navy serif headings, dates right-aligned like figures in a table, and skills, languages and certifications as key figures in a side column.",
     tags: [

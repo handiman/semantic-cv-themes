@@ -14,6 +14,7 @@ export class LigneClaireTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "ligne-claire",
     title: "Ligne Claire",
+    added: "2026-11-02",
     description:
       "A CV as a comic page in the ligne claire style: panels with even black outlines, flat colors, yellow caption boxes, hand lettering and the summary in a speech balloon.",
     tags: [

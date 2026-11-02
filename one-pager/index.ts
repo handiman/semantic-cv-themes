@@ -13,6 +13,7 @@ export class OnePagerTheme extends Theme {
   static readonly meta: ThemeMetadata = {
     id: "one-pager",
     title: "One Pager",
+    added: "2026-11-02",
     description:
       "Fits a long CV on one or two A4 pages: small type, tight spacing, and a light grey sidebar for contact details and skills, so the main column holds only experience.",
     tags: [
