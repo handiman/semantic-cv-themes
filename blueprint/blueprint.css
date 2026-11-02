@@ -1,0 +1,329 @@
+/* Blueprint. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * On screen: white lines on blueprint blue over a grid. In print: blue lines on white paper, without
+ * the grid. Everything is drawn with --text-color and --border-color, so print only swaps colors. */
+
+:root {
+  --blueprint: #1d4f8c;
+  --blueprint-dark: #163f72;
+  --chalk: #f4f8fc;
+
+  --text-color: var(--chalk);
+  --text-color-muted: rgba(244, 248, 252, 0.72);
+  --background-color: var(--blueprint);
+  --heading-color: var(--chalk);
+  --accent-color: var(--chalk);
+  --link-color: var(--chalk);
+  --border-color: rgba(244, 248, 252, 0.85);
+  --grid-major: rgba(244, 248, 252, 0.14);
+  --grid-minor: rgba(244, 248, 252, 0.06);
+  --font-family-base:
+    system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-family-mono:
+    ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --space-0: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 1.75rem;
+  --space-3: 3rem;
+  --border-radius-base: 0;
+
+  --parts-width: 15rem;
+}
+
+html {
+  background-color: var(--background-color);
+  background-image:
+    linear-gradient(var(--grid-major) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-major) 1px, transparent 1px),
+    linear-gradient(var(--grid-minor) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-minor) 1px, transparent 1px);
+  background-size:
+    100px 100px,
+    100px 100px,
+    20px 20px,
+    20px 20px;
+}
+
+body {
+  max-width: 62rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-1);
+  background: transparent;
+  line-height: 1.5;
+}
+
+/* The sheet: a double frame, like the border of a drawing. */
+.sheet {
+  border: 2px solid var(--border-color);
+  box-shadow:
+    inset 0 0 0 6px var(--background-color),
+    inset 0 0 0 7px var(--border-color);
+  padding: calc(var(--space-2) + 7px);
+  background-color: var(--background-color);
+}
+
+/* Lettering: headings, captions and tags in monospace capitals. */
+h1,
+h2,
+.job-title,
+.caption,
+.scv-keywords {
+  font-family: var(--font-family-mono);
+}
+
+h2 {
+  margin: var(--space-2) 0 var(--space-1);
+  color: var(--heading-color);
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+/* The title block */
+
+.title-block {
+  display: grid;
+  grid-template-columns: minmax(16rem, 1fr) minmax(0, 1.5fr);
+  border: 1px solid var(--border-color);
+}
+
+.title {
+  padding: var(--space-1) var(--space-2);
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 2.1rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  line-height: 1.15;
+  text-transform: uppercase;
+}
+
+.job-title {
+  margin-top: 0.35rem;
+  color: var(--text-color-muted);
+  font-size: 0.95rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.contact {
+  padding: var(--space-0) var(--space-2) var(--space-1) var(--space-1);
+  border-left: 1px solid var(--border-color);
+  font-size: 0.85rem;
+}
+
+/* The cell's label, small like the labels of a title block. */
+.contact h2 {
+  margin: 0 0 0.35rem;
+  color: var(--text-color-muted);
+  font-size: 0.65rem;
+}
+
+.contact ul {
+  columns: 2;
+  column-gap: var(--space-2);
+}
+
+.contact li {
+  break-inside: avoid;
+  line-height: 1.6;
+}
+
+.contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+  color: var(--text-color);
+}
+
+/* The drawing: the parts list and the main column, divided by a line. */
+
+.drawing {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.drawing:has(> .parts) {
+  grid-template-columns: var(--parts-width) minmax(0, 1fr);
+}
+
+.parts {
+  padding-right: var(--space-2);
+  border-right: 1px solid var(--border-color);
+}
+
+.drawing:has(> .parts) main {
+  padding-left: var(--space-2);
+}
+
+/* Numbered sections, the number in a box like a detail callout. */
+
+.drawing {
+  counter-reset: detail;
+}
+
+.drawing h2 {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  counter-increment: detail;
+}
+
+.drawing h2::before {
+  content: counter(detail, decimal-leading-zero);
+  flex: none;
+  padding: 0.05rem 0.35rem;
+  border: 1px solid var(--border-color);
+  font-size: 0.75rem;
+  letter-spacing: 0.04em;
+}
+
+/* Parts list: one item a row, on a dotted line. */
+.parts li {
+  padding: 0.2rem 0;
+  border-bottom: 1px dotted var(--grid-major);
+  font-size: 0.95rem;
+}
+
+/* Roles and events, divided by dashed lines like hidden edges. */
+
+article {
+  padding: var(--space-1) 0;
+  border-top: 1px dashed var(--grid-major);
+}
+
+article:first-of-type {
+  padding-top: 0;
+  border-top: none;
+}
+
+h3 {
+  color: var(--heading-color);
+  font-size: 1.1rem;
+  font-weight: 600;
+  line-height: 1.3;
+}
+
+.caption {
+  margin-top: 0.15rem;
+  color: var(--text-color-muted);
+  font-size: 0.8rem;
+  letter-spacing: 0.03em;
+}
+
+.caption li {
+  display: inline;
+}
+
+.caption li + li::before {
+  content: " / ";
+}
+
+article .scv-description {
+  margin-top: 0.4rem;
+}
+
+.scv-keywords li {
+  border-color: var(--border-color);
+  border-radius: 0;
+  opacity: 1;
+}
+
+.scv-footer {
+  margin-top: var(--space-1);
+  color: var(--text-color);
+}
+
+/* Narrow screens: one column, the title block stacked. */
+@media screen and (max-width: 44rem) {
+  body {
+    padding: var(--space-1) 0.5rem;
+  }
+
+  .sheet {
+    padding: calc(var(--space-1) + 7px);
+  }
+
+  .title-block,
+  .drawing:has(> .parts) {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .title {
+    padding: var(--space-1);
+  }
+
+  h1 {
+    font-size: 1.6rem;
+  }
+
+  .contact ul {
+    columns: 1;
+  }
+
+  .contact {
+    border-left: none;
+    border-top: 1px solid var(--border-color);
+    padding: var(--space-0) var(--space-1) var(--space-1);
+  }
+
+  .parts {
+    padding-right: 0;
+    border-right: none;
+  }
+
+  .drawing:has(> .parts) main {
+    padding-left: 0;
+  }
+}
+
+/* Print: blue lines on white paper, no grid. */
+@media print {
+  :root {
+    --text-color: var(--blueprint-dark);
+    --text-color-muted: #3e6496;
+    --background-color: #fff;
+    --heading-color: var(--blueprint-dark);
+    --accent-color: var(--blueprint-dark);
+    --link-color: var(--blueprint-dark);
+    --border-color: var(--blueprint);
+    --grid-major: rgba(29, 79, 140, 0.35);
+    --grid-minor: transparent;
+  }
+
+  html {
+    background-image: none;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.2cm;
+  }
+
+  /* A4 is too narrow for two columns of links. */
+  .title-block {
+    grid-template-columns: minmax(0, 1fr) auto;
+  }
+
+  .contact ul {
+    columns: 1;
+  }
+
+  /* Each page gets the whole frame. */
+  .sheet {
+    padding: calc(var(--space-1) + 7px);
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.2cm 0;
+  }
+}

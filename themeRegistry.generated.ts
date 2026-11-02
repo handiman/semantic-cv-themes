@@ -1,5 +1,6 @@
 import { ThemeRegistryEntry } from "./themeRegistryEntry.js";
 import { AliceTheme } from "./alice/index.js";
+import { BlueprintTheme } from "./blueprint/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
@@ -16,6 +17,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: AliceTheme.meta.title,
     description: AliceTheme.meta.description,
     tags: AliceTheme.meta.tags
+  },
+  [BlueprintTheme.meta.id]: {
+    type: BlueprintTheme,
+    title: BlueprintTheme.meta.title,
+    description: BlueprintTheme.meta.description,
+    tags: BlueprintTheme.meta.tags
   },
   [BoilingDieselTheme.meta.id]: {
     type: BoilingDieselTheme,
