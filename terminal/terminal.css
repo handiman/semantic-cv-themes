@@ -1,0 +1,272 @@
+/* Terminal. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * A dark terminal window with a title bar. Headings get a prompt, lists read like command output,
+ * and a cursor blinks at the end. Print is black on white, without the window. */
+
+:root {
+  --text-color: #d7dde3;
+  --text-color-muted: #8b97a3;
+  --background-color: #0e1215;
+  --heading-color: #f2f5f7;
+  --accent-color: #9ee37d;
+  --link-color: #7cc7f2;
+  --border-color: #2a3238;
+  --font-family-base:
+    ui-monospace, "SFMono-Regular", "Cascadia Mono", "JetBrains Mono", Menlo, Consolas,
+    "Liberation Mono", monospace;
+  --font-size-base: 15px;
+  --space-0: 0.5rem;
+  --space-1: 1rem;
+  --space-2: 1.75rem;
+  --space-3: 3rem;
+  --border-radius-base: 2px;
+
+  --desk: #1b2126;
+}
+
+html {
+  background-color: var(--desk);
+}
+
+body {
+  max-width: 56rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-1);
+  background: transparent;
+  line-height: 1.6;
+}
+
+/* The window */
+
+.window {
+  overflow: hidden;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background-color: var(--background-color);
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
+}
+
+.title-bar {
+  display: flex;
+  gap: 0.5rem;
+  padding: 0.7rem 0.9rem;
+  border-bottom: 1px solid var(--border-color);
+  background-color: #171c20;
+}
+
+.title-bar span {
+  width: 0.75rem;
+  height: 0.75rem;
+  border-radius: 50%;
+  background-color: #3a444c;
+}
+
+.screen {
+  padding: var(--space-2) var(--space-2) var(--space-3);
+}
+
+/* The prompt: drawn, not text, so the headings follow the CV's language. */
+
+h1::before,
+h2::before {
+  content: "$ ";
+  color: var(--accent-color);
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.job-title {
+  color: var(--accent-color);
+}
+
+.contact {
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+}
+
+.contact a {
+  color: var(--link-color);
+}
+
+.contact li::before {
+  content: "→ ";
+  color: var(--border-color);
+}
+
+h2 {
+  margin: var(--space-2) 0 var(--space-0);
+  color: var(--heading-color);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+h3 {
+  color: var(--accent-color);
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Short lists, side by side, like the output of ls. */
+
+.basics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 var(--space-2);
+}
+
+.basics li::before {
+  content: "- ";
+  color: var(--text-color-muted);
+}
+
+/* Roles: the caption reads like a comment. */
+
+article {
+  margin-top: var(--space-1);
+  padding-left: var(--space-1);
+  border-left: 1px solid var(--border-color);
+}
+
+.caption {
+  color: var(--text-color-muted);
+}
+
+.caption::before {
+  content: "# ";
+}
+
+.caption,
+.caption li {
+  display: inline;
+}
+
+.caption li + li::before {
+  content: " · ";
+}
+
+article .scv-description {
+  margin-top: 0.25rem;
+}
+
+/* Tags as [bracketed] flags. */
+.scv-keywords {
+  gap: 0 0.75rem;
+  font-size: 0.9em;
+}
+
+.scv-keywords li {
+  padding: 0;
+  border: none;
+  color: var(--link-color);
+  opacity: 1;
+}
+
+.scv-keywords li::before {
+  content: "[";
+  color: var(--text-color-muted);
+}
+
+.scv-keywords li::after {
+  content: "]";
+  color: var(--text-color-muted);
+}
+
+/* The cursor */
+
+.cursor {
+  margin-top: var(--space-2);
+}
+
+.cursor::before {
+  content: "$ ";
+  color: var(--accent-color);
+}
+
+.cursor::after {
+  content: "";
+  display: inline-block;
+  width: 0.6em;
+  height: 1.1em;
+  vertical-align: text-bottom;
+  background-color: var(--text-color);
+  animation: blink 1.1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cursor::after {
+    animation: none;
+  }
+}
+
+.scv-footer {
+  margin-top: var(--space-1);
+  color: var(--text-color-muted);
+}
+
+@media screen and (max-width: 40rem) {
+  body {
+    padding: var(--space-1) 0.5rem;
+  }
+
+  .screen {
+    padding: var(--space-1) var(--space-1) var(--space-2);
+  }
+
+  .basics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Print: black on white, no window, no cursor. */
+@media print {
+  :root {
+    --text-color: #111;
+    --text-color-muted: #555;
+    --background-color: #fff;
+    --heading-color: #000;
+    --accent-color: #1d6b2f;
+    --link-color: #1a4f7a;
+    --border-color: #bbb;
+    --font-size-base: 12.5px;
+  }
+
+  html {
+    background-color: #fff;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.5cm;
+  }
+
+  .window {
+    border: none;
+    border-radius: 0;
+    box-shadow: none;
+  }
+
+  .title-bar,
+  .cursor,
+  .scv-footer {
+    display: none;
+  }
+
+  .screen {
+    padding: 0;
+  }
+
+  @page {
+    margin: 1.5cm 0;
+  }
+}
