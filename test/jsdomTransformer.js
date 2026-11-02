@@ -22,7 +22,10 @@ export class JsdomTransformer {
         hooks.element(wrap(el));
       }
     }
-    return document.documentElement.outerHTML;
+    const page = document.documentElement.outerHTML;
+    // Every render makes a window; left open, thousands of them fill the heap.
+    dom.window.close();
+    return page;
   }
 }
 

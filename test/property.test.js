@@ -95,9 +95,16 @@ for (const themeId of Object.keys(ThemeRegistry)) {
         const html = await loadTheme(themeId).renderHTML(structuredClone(p));
         assert.strictEqual(await loadTheme(themeId).renderHTML(structuredClone(p)), html);
 
-        const { textContent } = new JSDOM(html).window.document.body;
+        const { window } = new JSDOM(html);
+        const { textContent } = window.document.body;
+        window.close();
         assert.ok(textContent.includes(p.name), p.name);
         assert.doesNotMatch(textContent, /undefined|null|NaN|\[object/);
+
+        // jsdom frees a closed window's memory only once the event loop turns. The renders above
+        // only await microtasks, so without this every window of the file piles up until the heap
+        // runs out (about 110 MB a theme).
+        await new Promise((resolve) => setImmediate(resolve));
       }),
       runs
     );
