@@ -1,0 +1,266 @@
+/* Neo-Brutal. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Boxes with 3px black borders and hard shadows (offset, no blur) on a warm off-white. Section
+ * headings are stickers in one of three loud colors, cycling with the sections. Nothing is blurred
+ * or transparent, so print looks the same. */
+
+:root {
+  --ink: #111;
+  --yellow: #ffd23f;
+  --pink: #ff7aa2;
+  --cyan: #4fd1e8;
+  --paper: #fffaf0;
+
+  --text-color: var(--ink);
+  --text-color-muted: #444;
+  --background-color: #f3eee2;
+  --heading-color: var(--ink);
+  --accent-color: var(--ink);
+  --link-color: var(--ink);
+  --border-color: var(--ink);
+  --font-family-base:
+    "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans", "DejaVu Sans", sans-serif;
+  --space-0: 0.4rem;
+  --space-1: 0.9rem;
+  --space-2: 1.6rem;
+  --space-3: 2.75rem;
+  --border-radius-base: 0;
+
+  --border: 3px solid var(--ink);
+  --shadow: 6px 6px 0 var(--ink);
+  --shadow-small: 3px 3px 0 var(--ink);
+}
+
+body {
+  max-width: 54rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.5;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-thickness: 2px;
+  text-underline-offset: 2px;
+}
+
+/* Boxes */
+
+header,
+main > section,
+.basics > section {
+  border: var(--border);
+  background-color: var(--paper);
+  box-shadow: var(--shadow);
+}
+
+/* Header: a yellow box with the name large and heavy. */
+
+header {
+  margin-bottom: var(--space-3);
+  padding: var(--space-2);
+  background-color: var(--yellow);
+}
+
+h1 {
+  font-size: 3rem;
+  font-weight: 900;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.job-title {
+  display: inline-block;
+  margin-top: var(--space-1);
+  padding: 0.15rem 0.6rem;
+  border: var(--border);
+  background-color: var(--paper);
+  box-shadow: var(--shadow-small);
+  font-size: 1.05rem;
+  font-weight: 700;
+  transform: rotate(-1.5deg);
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.2rem var(--space-1);
+  margin-top: var(--space-1);
+  font-size: 0.92rem;
+  font-weight: 600;
+}
+
+/* Sections */
+
+main > section,
+.basics {
+  margin-bottom: var(--space-3);
+}
+
+main > section {
+  padding: var(--space-2);
+}
+
+/* The heading as a sticker on the box's top edge. */
+h2 {
+  /* A block that fits its text: a negative top margin doesn't move an inline-block up. */
+  width: fit-content;
+  margin: calc(-1 * var(--space-2) - 1.05rem) 0 var(--space-1) calc(-1 * var(--space-0));
+  padding: 0.2rem 0.75rem;
+  border: var(--border);
+  background-color: var(--pink);
+  box-shadow: var(--shadow-small);
+  font-size: 0.95rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+main > section:nth-of-type(3n + 2) h2 {
+  background-color: var(--cyan);
+}
+
+main > section:nth-of-type(3n) h2 {
+  background-color: var(--yellow);
+}
+
+#description p {
+  font-size: 1.15rem;
+  font-weight: 500;
+}
+
+/* The short lists, as small boxes in a grid; their stickers cycle too. */
+
+.basics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-3) var(--space-2);
+  padding-top: 1.2rem;
+}
+
+.basics > section {
+  padding: var(--space-2) var(--space-1) var(--space-1);
+}
+
+.basics > section:nth-child(2) h2 {
+  background-color: var(--cyan);
+}
+
+.basics > section:nth-child(3) h2 {
+  background-color: var(--yellow);
+}
+
+.basics > section:nth-child(4) h2 {
+  background-color: var(--paper);
+}
+
+.basics h2 {
+  margin-top: calc(-1 * var(--space-2) - 1.05rem);
+}
+
+.basics li {
+  padding: 0.15rem 0;
+  font-weight: 500;
+}
+
+/* Roles */
+
+article + article {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 3px dashed var(--ink);
+}
+
+h3 {
+  font-size: 1.2rem;
+  font-weight: 800;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.35rem;
+  margin-top: 0.3rem;
+  font-size: 0.85rem;
+  font-weight: 700;
+}
+
+/* Role, dates and place as little tags. */
+.caption li {
+  padding: 0.05rem 0.45rem;
+  border: 2px solid var(--ink);
+  background-color: #fff;
+}
+
+article > .scv-description {
+  margin-top: var(--space-0);
+}
+
+.scv-keywords {
+  gap: 0.4rem;
+  margin-top: var(--space-0);
+}
+
+.scv-keywords li {
+  padding: 0.05rem 0.5rem;
+  border: 2px solid var(--ink);
+  border-radius: 0;
+  background-color: var(--cyan);
+  box-shadow: 2px 2px 0 var(--ink);
+  font-weight: 700;
+  opacity: 1;
+}
+
+.scv-footer {
+  color: var(--text-color);
+}
+
+@media screen and (max-width: 40rem) {
+  body {
+    padding: var(--space-2) var(--space-1);
+  }
+
+  h1 {
+    font-size: 2.1rem;
+  }
+
+  .basics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+@media print {
+  :root {
+    --background-color: #fff;
+    --shadow: 4px 4px 0 var(--ink);
+  }
+
+  body {
+    max-width: none;
+    padding: 0.4cm 1.4cm 0;
+  }
+
+  header,
+  main > section,
+  .basics {
+    margin-bottom: var(--space-2);
+  }
+
+  /* A box split by a page break gets its whole border on both pages. */
+  main > section {
+    -webkit-box-decoration-break: clone;
+    box-decoration-break: clone;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.2cm 0;
+  }
+}

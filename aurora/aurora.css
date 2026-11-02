@@ -1,0 +1,261 @@
+/* Aurora. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * The "sky" is an empty aria-hidden element fixed behind the page: a few large radial gradients,
+ * blurred, in violet, teal and rose. The header and every section are glass cards: translucent white
+ * with a backdrop blur, a light inner edge and a soft shadow. Print drops the sky, the blur and the
+ * translucency, which printers handle badly, and keeps a gradient band in the header. */
+
+:root {
+  --violet: #8b5cf6;
+  --teal: #14b8a6;
+  --rose: #f472b6;
+  --sky-base: #eef0fb;
+
+  --text-color: #1e1b2e;
+  --text-color-muted: #5d5a73;
+  --background-color: var(--sky-base);
+  --heading-color: #1e1b2e;
+  --accent-color: #6d28d9;
+  --link-color: #1e1b2e;
+  --border-color: rgba(255, 255, 255, 0.7);
+  --font-family-base:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Arial, "Liberation Sans",
+    sans-serif;
+  --space-0: 0.4rem;
+  --space-1: 0.9rem;
+  --space-2: 1.6rem;
+  --space-3: 3rem;
+  --border-radius-base: 999px;
+
+  --glass: rgba(255, 255, 255, 0.55);
+  --radius: 22px;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+/* The sky behind everything */
+
+.sky {
+  position: fixed;
+  inset: -10%;
+  z-index: 0;
+  background:
+    radial-gradient(40% 35% at 15% 10%, rgba(139, 92, 246, 0.55), transparent 70%),
+    radial-gradient(35% 40% at 85% 20%, rgba(20, 184, 166, 0.45), transparent 70%),
+    radial-gradient(45% 35% at 70% 85%, rgba(244, 114, 182, 0.4), transparent 70%),
+    radial-gradient(35% 30% at 20% 75%, rgba(99, 102, 241, 0.35), transparent 70%), var(--sky-base);
+  filter: blur(40px);
+  pointer-events: none;
+}
+
+.page {
+  position: relative;
+  z-index: 1;
+  max-width: 52rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-1);
+}
+
+/* Glass cards */
+
+header,
+main > section,
+.basics {
+  margin-bottom: var(--space-2);
+  padding: var(--space-2);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background-color: var(--glass);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 10px 30px rgba(30, 27, 46, 0.08);
+  -webkit-backdrop-filter: blur(18px) saturate(1.4);
+  backdrop-filter: blur(18px) saturate(1.4);
+}
+
+/* Header */
+
+header {
+  padding: var(--space-3) var(--space-2) var(--space-2);
+}
+
+h1 {
+  font-size: 2.8rem;
+  font-weight: 750;
+  letter-spacing: -0.03em;
+  line-height: 1.05;
+  /* The name in the aurora's colors. */
+  background: linear-gradient(90deg, #5b21b6, #0f766e 55%, #be185d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.job-title {
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+  font-size: 1.2rem;
+}
+
+.contact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  margin-top: var(--space-1);
+  font-size: 0.88rem;
+}
+
+/* Contact details as glass pills. */
+.contact li {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--border-color);
+  border-radius: 999px;
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.contact a {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4em;
+}
+
+/* Sections */
+
+h2 {
+  margin-bottom: var(--space-1);
+  color: var(--accent-color);
+  font-size: 0.78rem;
+  font-weight: 650;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+#description p {
+  font-size: 1.15rem;
+}
+
+.basics {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: var(--space-2);
+}
+
+.basics li {
+  padding: 0.1rem 0;
+}
+
+article + article {
+  margin-top: var(--space-2);
+  padding-top: var(--space-2);
+  border-top: 1px solid rgba(30, 27, 46, 0.08);
+}
+
+h3 {
+  font-size: 1.1rem;
+  font-weight: 650;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  column-gap: 1.1em;
+  overflow: hidden;
+  color: var(--text-color-muted);
+  font-size: 0.93rem;
+}
+
+.caption li {
+  position: relative;
+}
+
+/* Separators in the gap; one that would start a wrapped line is clipped. */
+.caption li + li::before {
+  content: "·";
+  position: absolute;
+  left: -0.75em;
+}
+
+article > .scv-description {
+  margin-top: 0.3rem;
+}
+
+.scv-keywords li {
+  border-color: rgba(109, 40, 217, 0.25);
+  background-color: rgba(255, 255, 255, 0.6);
+  color: #4c1d95;
+  opacity: 1;
+}
+
+.scv-footer {
+  position: relative;
+  z-index: 1;
+  padding-bottom: var(--space-2);
+}
+
+@media screen and (max-width: 40rem) {
+  .page {
+    padding: var(--space-1) 0.5rem;
+  }
+
+  header,
+  main > section,
+  .basics {
+    padding: var(--space-1);
+  }
+
+  h1 {
+    font-size: 2.1rem;
+  }
+
+  .basics {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Print: no sky, no blur, no translucency; white cards with a hairline, and the aurora as a band
+   along the top of the header. */
+@media print {
+  :root {
+    --background-color: #fff;
+    --glass: #fff;
+    --border-color: #e2e0ee;
+  }
+
+  .sky {
+    display: none;
+  }
+
+  .page {
+    max-width: none;
+    padding: 0 1.2cm;
+  }
+
+  header,
+  main > section,
+  .basics {
+    margin-bottom: var(--space-1);
+    padding: var(--space-1) var(--space-2);
+    box-shadow: none;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+  }
+
+  header {
+    padding-top: calc(var(--space-1) + 6px);
+    background:
+      linear-gradient(90deg, var(--violet), var(--teal), var(--rose)) top / 100% 6px no-repeat,
+      #fff;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.2cm 0;
+  }
+}

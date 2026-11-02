@@ -1,5 +1,7 @@
 import { ThemeRegistryEntry } from "./themeRegistryEntry.js";
 import { AliceTheme } from "./alice/index.js";
+import { AuroraTheme } from "./aurora/index.js";
+import { BentoTheme } from "./bento/index.js";
 import { BlueprintTheme } from "./blueprint/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { BusinessCasualTheme } from "./business-casual/index.js";
@@ -11,6 +13,7 @@ import { LenaTheme } from "./lena/index.js";
 import { LetterheadTheme } from "./letterhead/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
+import { NeoBrutalTheme } from "./neo-brutal/index.js";
 import { OnePagerTheme } from "./one-pager/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
 import { QuarterlyTheme } from "./quarterly/index.js";
@@ -27,6 +30,18 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: AliceTheme.meta.title,
     description: AliceTheme.meta.description,
     tags: AliceTheme.meta.tags
+  },
+  [AuroraTheme.meta.id]: {
+    type: AuroraTheme,
+    title: AuroraTheme.meta.title,
+    description: AuroraTheme.meta.description,
+    tags: AuroraTheme.meta.tags
+  },
+  [BentoTheme.meta.id]: {
+    type: BentoTheme,
+    title: BentoTheme.meta.title,
+    description: BentoTheme.meta.description,
+    tags: BentoTheme.meta.tags
   },
   [BlueprintTheme.meta.id]: {
     type: BlueprintTheme,
@@ -93,6 +108,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: MinimalTheme.meta.title,
     description: MinimalTheme.meta.description,
     tags: MinimalTheme.meta.tags
+  },
+  [NeoBrutalTheme.meta.id]: {
+    type: NeoBrutalTheme,
+    title: NeoBrutalTheme.meta.title,
+    description: NeoBrutalTheme.meta.description,
+    tags: NeoBrutalTheme.meta.tags
   },
   [OnePagerTheme.meta.id]: {
     type: OnePagerTheme,
