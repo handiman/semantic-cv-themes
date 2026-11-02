@@ -14,6 +14,8 @@ export type ThemeHeadings = {
 export type ThemeLabels = {
   /** Shown instead of an end date for a role that hasn't ended. */
   present: string;
+  /** Heads a column of numbers of years, such as how long each skill has been in use. */
+  years: string;
 };
 
 export type ThemeOptions = {
@@ -41,7 +43,8 @@ export const defaultOptions: ThemeOptions = {
     lifeEvent: "Events"
   },
   labels: {
-    present: "present"
+    present: "present",
+    years: "years"
   }
 };
 
@@ -76,7 +79,8 @@ const translations: Record<string, ThemeOptionsInput> = {
       lifeEvent: "Händelser"
     },
     labels: {
-      present: "pågående"
+      present: "pågående",
+      years: "år"
     }
   }
 };
