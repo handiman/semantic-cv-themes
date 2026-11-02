@@ -8,6 +8,7 @@ import { LenaTheme } from "./lena/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
+import { StandardIssueTheme } from "./standard-issue/index.js";
 import { TerminalTheme } from "./terminal/index.js";
 import { TimelineTheme } from "./timeline/index.js";
 import { TimesTheme } from "./times/index.js";
@@ -68,6 +69,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: ProofOfWorkTheme.meta.title,
     description: ProofOfWorkTheme.meta.description,
     tags: ProofOfWorkTheme.meta.tags
+  },
+  [StandardIssueTheme.meta.id]: {
+    type: StandardIssueTheme,
+    title: StandardIssueTheme.meta.title,
+    description: StandardIssueTheme.meta.description,
+    tags: StandardIssueTheme.meta.tags
   },
   [TerminalTheme.meta.id]: {
     type: TerminalTheme,
