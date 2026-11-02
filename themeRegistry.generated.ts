@@ -97,7 +97,7 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: QuarterlyTheme.meta.title,
     description: QuarterlyTheme.meta.description,
     tags: QuarterlyTheme.meta.tags
-  },  
+  },
   [StandardIssueTheme.meta.id]: {
     type: StandardIssueTheme,
     title: StandardIssueTheme.meta.title,
