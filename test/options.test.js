@@ -20,7 +20,7 @@ const swedish = {
     projects: "Projekt",
     lifeEvent: "Händelser"
   },
-  labels: { present: "pågående" }
+  labels: { present: "pågående", years: "år" }
 };
 
 const render = async (themeId, options) => {

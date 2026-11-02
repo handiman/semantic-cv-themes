@@ -13,6 +13,7 @@ describe("themeOptionsFor", () => {
     assert.strictEqual(options.headings.worksFor, "Arbetslivserfarenhet");
     assert.strictEqual(options.headings.alumniOf, "Utbildning");
     assert.strictEqual(options.labels.present, "pågående");
+    assert.strictEqual(options.labels.years, "år");
   });
 
   it("only looks at the primary subtag, in any case", () => {
