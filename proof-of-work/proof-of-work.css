@@ -1,0 +1,264 @@
+/* Proof of Work. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * A till receipt on a counter: a narrow strip of paper with a torn, zigzag bottom edge. Jobs are line
+ * items, with the caption's date moved to the right of the name. Print drops the counter and the
+ * torn edge but keeps the narrow strip. */
+
+:root {
+  --text-color: #1d1d1b;
+  --text-color-muted: #5f5e5a;
+  --background-color: #fffefa;
+  --heading-color: #1d1d1b;
+  --accent-color: #1d1d1b;
+  --link-color: #1d1d1b;
+  --border-color: #8d8b84;
+  --font-family-base:
+    ui-monospace, "SFMono-Regular", "Cascadia Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-size-base: 14px;
+  --space-0: 0.4rem;
+  --space-1: 0.9rem;
+  --space-2: 1.5rem;
+  --space-3: 2.5rem;
+  --border-radius-base: 0;
+
+  --counter: #d9d6cf;
+  --tear: 10px;
+}
+
+html {
+  background-color: var(--counter);
+}
+
+body {
+  max-width: 27rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-1);
+  background: transparent;
+  line-height: 1.5;
+}
+
+/* The paper, with a torn edge drawn below it. */
+
+.receipt {
+  position: relative;
+  margin-bottom: calc(var(--tear) + var(--space-2));
+  padding: var(--space-2) var(--space-2) var(--space-1);
+  background-color: var(--background-color);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+}
+
+.receipt::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: calc(var(--tear) * -1);
+  height: var(--tear);
+  background:
+    linear-gradient(-45deg, transparent 50%, var(--background-color) 50%) 0 0 / var(--tear)
+      var(--tear),
+    linear-gradient(45deg, transparent 50%, var(--background-color) 50%) 0 0 / var(--tear)
+      var(--tear);
+  background-repeat: repeat-x;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+/* The shop's name and address: centered. */
+
+header {
+  padding-bottom: var(--space-1);
+  text-align: center;
+}
+
+h1 {
+  color: var(--heading-color);
+  font-size: 1.5rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.job-title {
+  margin-top: 0.2rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.contact {
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+  font-size: 0.9rem;
+  overflow-wrap: anywhere;
+}
+
+/* Sections between dashed rules, headed like a receipt's: centered, between asterisks. */
+
+section {
+  padding: var(--space-1) 0;
+  border-top: 1px dashed var(--border-color);
+}
+
+h2 {
+  margin-bottom: var(--space-0);
+  color: var(--heading-color);
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+h2::before {
+  content: "* ";
+}
+
+h2::after {
+  content: " *";
+}
+
+/* Line items: the name on the left, the date on the right, the rest below. */
+
+article {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  column-gap: var(--space-1);
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+article > *,
+.caption > li {
+  grid-column: 1 / -1;
+}
+
+h3 {
+  grid-column: 1;
+  grid-row: 1;
+  color: var(--heading-color);
+  font-size: 1rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.caption {
+  display: contents;
+  color: var(--text-color-muted);
+}
+
+.caption > li:has(time) {
+  grid-column: 2;
+  grid-row: 1;
+  color: var(--text-color);
+  text-align: right;
+}
+
+.caption time {
+  white-space: nowrap;
+}
+
+article > .scv-description {
+  margin-top: 0.2rem;
+}
+
+/* Keywords: plain, joined with plus signs. */
+.scv-keywords {
+  gap: 0;
+  margin-top: 0.2rem;
+  color: var(--text-color-muted);
+  font-size: 0.9rem;
+}
+
+.scv-keywords li {
+  padding: 0;
+  border: none;
+  opacity: 1;
+}
+
+.scv-keywords li + li::before {
+  content: " + ";
+  white-space: pre;
+}
+
+/* Short lists by the piece. */
+section > ul:not(.scv-keywords) li::before {
+  content: "1 × ";
+  color: var(--text-color-muted);
+}
+
+/* The barcode: bars of different widths, drawn with one repeating gradient. */
+
+.barcode {
+  height: 3.2rem;
+  margin: var(--space-1) auto 0;
+  width: 75%;
+  border-top: 1px dashed var(--border-color);
+  background: repeating-linear-gradient(
+      90deg,
+      var(--text-color) 0 2px,
+      transparent 2px 4px,
+      var(--text-color) 4px 5px,
+      transparent 5px 7px,
+      var(--text-color) 7px 10px,
+      transparent 10px 11px,
+      var(--text-color) 11px 12px,
+      transparent 12px 15px,
+      var(--text-color) 15px 17px,
+      transparent 17px 18px,
+      var(--text-color) 18px 19px,
+      transparent 19px 22px
+    )
+    0 var(--space-1) / 100% calc(100% - var(--space-1)) no-repeat;
+}
+
+.scv-footer {
+  color: var(--text-color-muted);
+}
+
+@media screen and (max-width: 30rem) {
+  body {
+    padding: var(--space-1) 0.5rem;
+  }
+
+  .receipt {
+    padding: var(--space-1);
+  }
+}
+
+/* Print: the strip on white paper, without the counter or the torn edge. */
+@media print {
+  :root {
+    --background-color: #fff;
+  }
+
+  html {
+    background-color: #fff;
+  }
+
+  body {
+    max-width: 12cm;
+    padding: 0;
+  }
+
+  .receipt {
+    margin-bottom: 0;
+    padding: 0;
+    box-shadow: none;
+  }
+
+  .receipt::after,
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.5cm 0;
+  }
+}
