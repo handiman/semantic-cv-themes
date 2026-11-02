@@ -31,7 +31,7 @@ License:
 
 ## Web fonts
 
-Four themes embed their web fonts in their CSS, so that a rendered CV loads nothing for them from the
+Five themes embed their web fonts in their CSS, so that a rendered CV loads nothing for them from the
 network. The files are the Latin (and for some the Latin Extended) subsets of the fonts as Google Fonts
 serves them, put there by [scripts/embed-fonts.mjs](scripts/embed-fonts.mjs):
 
@@ -39,6 +39,7 @@ serves them, put there by [scripts/embed-fonts.mjs](scripts/embed-fonts.mjs):
 | --- | --- | --- |
 | Gnap | Open Sans | SIL Open Font License 1.1 |
 | Lena | Noto Sans, Noto Sans Display | SIL Open Font License 1.1 |
+| Ligne Claire | Comic Neue | SIL Open Font License 1.1 |
 | Times | Pirata One | SIL Open Font License 1.1 |
 | Typewriter | Special Elite, by Astigmatic | Apache License 2.0 |
 
@@ -49,6 +50,7 @@ The copyright statements of the fonts under this license:
 - Copyright 2020 The Open Sans Project Authors (https://github.com/googlefonts/opensans)
 - Copyright 2022 The Noto Project Authors (https://github.com/notofonts/latin-greek-cyrillic)
 - Copyright 2012 Google Inc. All Rights Reserved.
+- Copyright 2014 The Comic Neue Project Authors (https://github.com/crozynski/comicneue)
 - Copyright (c) 2012, Rodrigo Fuenzalida, Nicolas Massi (www.taip.com.ar / abc.taip.com.ar), with Reserved Font Name 'Pirata'
 
 The license, as it is distributed with the fonts:

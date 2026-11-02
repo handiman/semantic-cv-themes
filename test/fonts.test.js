@@ -6,6 +6,7 @@ import { loadTheme, renderDocument } from "./jsdomTransformer.js";
 /** The web fonts a theme has, and so the families that its CSS has to embed. */
 const embedded = {
   gnap: ["Open Sans"],
+  "ligne-claire": ["Comic Neue"],
   lena: ["Noto Sans", "Noto Sans Display"],
   times: ["Pirata One"],
   typewriter: ["Special Elite"]

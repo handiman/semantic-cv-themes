@@ -27,8 +27,16 @@ const fonts = {
       subsets: ["latin", "latin-ext"]
     }
   ],
+  "ligne-claire": [
+    { family: "Comic Neue", query: "Comic+Neue:wght@700", weight: "700", subsets: ["latin"] }
+  ],
   lena: [
-    { family: "Noto Sans", query: "Noto+Sans:wght@100..900", weight: "100 900", subsets: ["latin"] },
+    {
+      family: "Noto Sans",
+      query: "Noto+Sans:wght@100..900",
+      weight: "100 900",
+      subsets: ["latin"]
+    },
     {
       family: "Noto Sans Display",
       query: "Noto+Sans+Display:wght@100..900",
@@ -40,7 +48,12 @@ const fonts = {
     { family: "Pirata One", query: "Pirata+One", weight: "400", subsets: ["latin", "latin-ext"] }
   ],
   typewriter: [
-    { family: "Special Elite", query: "Special+Elite", weight: "400", subsets: ["latin", "latin-ext"] }
+    {
+      family: "Special Elite",
+      query: "Special+Elite",
+      weight: "400",
+      subsets: ["latin", "latin-ext"]
+    }
   ]
 };
 

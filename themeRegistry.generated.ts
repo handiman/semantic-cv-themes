@@ -10,6 +10,7 @@ import { HoldenWreckTheme } from "./holden-wreck/index.js";
 import { JavaBeanTheme } from "./java-bean/index.js";
 import { LenaTheme } from "./lena/index.js";
 import { LetterheadTheme } from "./letterhead/index.js";
+import { LigneClaireTheme } from "./ligne-claire/index.js";
 import { MatildaTheme } from "./matilda/index.js";
 import { MinimalTheme } from "./minimal/index.js";
 import { NeoBrutalTheme } from "./neo-brutal/index.js";
@@ -89,6 +90,12 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     title: LetterheadTheme.meta.title,
     description: LetterheadTheme.meta.description,
     tags: LetterheadTheme.meta.tags
+  },
+  [LigneClaireTheme.meta.id]: {
+    type: LigneClaireTheme,
+    title: LigneClaireTheme.meta.title,
+    description: LigneClaireTheme.meta.description,
+    tags: LigneClaireTheme.meta.tags
   },
   [MatildaTheme.meta.id]: {
     type: MatildaTheme,
