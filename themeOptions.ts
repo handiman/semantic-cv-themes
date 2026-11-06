@@ -18,15 +18,31 @@ export type ThemeLabels = {
   years: string;
 };
 
+/** The CSS variable that each color overrides, by the key a CV uses for it. */
+export const colorVariables = {
+  text: "--text-color",
+  textMuted: "--text-color-muted",
+  background: "--background-color",
+  heading: "--heading-color",
+  accent: "--accent-color",
+  link: "--link-color",
+  border: "--border-color"
+} as const;
+
+/** Colors a CV sets. Left out means the theme's own color. */
+export type ThemeColors = Partial<Record<keyof typeof colorVariables, string>>;
+
 export type ThemeOptions = {
   headings: ThemeHeadings;
   labels: ThemeLabels;
+  colors: ThemeColors;
 };
 
 /** Options as a caller gives them: anything left out keeps its default. */
 export type ThemeOptionsInput = {
   headings?: Partial<ThemeHeadings>;
   labels?: Partial<ThemeLabels>;
+  colors?: ThemeColors;
 };
 
 export const defaultOptions: ThemeOptions = {
@@ -45,8 +61,25 @@ export const defaultOptions: ThemeOptions = {
   labels: {
     present: "present",
     years: "years"
-  }
+  },
+  colors: {}
 };
+
+/**
+ * Whether `value` is a CSS color that is safe to put in a stylesheet: a hex color, a color
+ * name, or rgb(), rgba(), hsl() or hsla(). Nothing that could end the declaration or the
+ * stylesheet (`;`, `}`, `<`, quotes, `url(`) gets through.
+ */
+export const isColor = (value: unknown): value is string =>
+  typeof value === "string" &&
+  /^(#[0-9a-f]{3,8}|[a-z]+|(?:rgb|hsl)a?\([0-9a-z%.,\s/+-]+\))$/i.test(value.trim());
+
+const colorsOf = (values: Record<string, unknown> | undefined): ThemeColors =>
+  Object.fromEntries(
+    Object.entries(values ?? {})
+      .filter(([key, value]) => key in colorVariables && isColor(value))
+      .map(([key, value]) => [key, (value as string).trim()])
+  );
 
 /**
  * Complete options from what the caller gave, with the defaults for anything left out. A value
@@ -54,7 +87,8 @@ export const defaultOptions: ThemeOptions = {
  */
 export const resolveOptions = (input?: ThemeOptionsInput): ThemeOptions => ({
   headings: { ...defaultOptions.headings, ...strings(input?.headings) },
-  labels: { ...defaultOptions.labels, ...strings(input?.labels) }
+  labels: { ...defaultOptions.labels, ...strings(input?.labels) },
+  colors: colorsOf(input?.colors)
 });
 
 const strings = (values: Record<string, unknown> | undefined) =>
@@ -99,6 +133,7 @@ export const themeOptionsFor = (language?: string, custom?: ThemeOptionsInput): 
   const base = resolveOptions(translations[primary]);
   return {
     headings: { ...base.headings, ...strings(custom?.headings) },
-    labels: { ...base.labels, ...strings(custom?.labels) }
+    labels: { ...base.labels, ...strings(custom?.labels) },
+    colors: colorsOf(custom?.colors)
   };
 };
