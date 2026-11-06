@@ -1,7 +1,7 @@
 import { Person, certifications, education, period, projects, work } from "./person.js";
 import { HTMLTransformer } from "./htmlTransformer.js";
 import { ThemeMetadata } from "./themeMetadata.js";
-import { defaultOptions, ThemeOptions } from "./themeOptions.js";
+import { colorVariables, defaultOptions, ThemeOptions } from "./themeOptions.js";
 import { arrayOf, locationText } from "./utils.js";
 
 /**
@@ -35,7 +35,7 @@ export abstract class Theme {
    * @param transformer HTML rewriting implementation of the runtime (CLI or Worker).
    * @param loadAsset Function that loads a theme asset (CSS/JS) by name.
    *                  Implemented differently in CLI and Worker runtimes.
-   * @param options Theme options such as headings. Custom values require a subscription. (or forking the repo and building your own implementation for the creative ones out there)
+   * @param options Theme options such as headings, labels and colors.
    */
   constructor(
     protected transformer: HTMLTransformer,
@@ -152,7 +152,15 @@ export abstract class Theme {
       }
     }
     const css = await Promise.all(ids.map((id) => this.loadAsset(`${id}.css`)));
-    return withResetCSS(css.join("\n"));
+    return withResetCSS(css.join("\n") + this.colorOverrides());
+  }
+
+  /** The colors the CV sets, as CSS variables after the theme's own, so they win. */
+  private colorOverrides(): string {
+    const declarations = Object.entries(this.options.colors ?? {})
+      .filter(([key]) => key in colorVariables)
+      .map(([key, value]) => `${colorVariables[key as keyof typeof colorVariables]}: ${value};`);
+    return declarations.length ? `\n:root { ${declarations.join(" ")} }\n` : "";
   }
 
   /**

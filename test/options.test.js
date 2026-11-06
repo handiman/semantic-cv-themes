@@ -82,3 +82,42 @@ for (const themeId of Object.keys(ThemeRegistry)) {
     });
   });
 }
+
+describe("colors", () => {
+  const css = async (colors) => {
+    const theme = new ThemeLoader(new JsdomTransformer(), loadAsset).loadTheme("minimal", {
+      colors
+    });
+    return theme.renderCSS(structuredClone(fullPerson));
+  };
+
+  it("sets the CSS variables of the colors a CV gives, after the theme's own", async () => {
+    const result = await css({
+      accent: "#ff0066",
+      background: "rgb(10, 10, 10)",
+      textMuted: "gray"
+    });
+    const overrides = result.slice(result.lastIndexOf(":root"));
+    assert.match(overrides, /--accent-color: #ff0066;/);
+    assert.match(overrides, /--background-color: rgb\(10, 10, 10\);/);
+    assert.match(overrides, /--text-color-muted: gray;/);
+  });
+
+  it("adds nothing when no color is given", async () => {
+    assert.deepStrictEqual(resolveOptions().colors, {});
+    assert.strictEqual((await css({})).includes("--accent-color: #ff"), false);
+  });
+
+  it("ignores unknown keys and values that could break out of the stylesheet", async () => {
+    const options = resolveOptions({
+      colors: {
+        accent: "red; } body { display: none",
+        link: "url(https://example.com/x)",
+        border: "</style><script>",
+        text: 5,
+        nonsense: "red"
+      }
+    });
+    assert.deepStrictEqual(options.colors, {});
+  });
+});

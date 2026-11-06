@@ -63,7 +63,7 @@ skeleton live in `semantic-cv-core`, not here.
 ## Languages
 
 Headings and labels come from `ThemeOptions` ([themeOptions.ts](themeOptions.ts)). `themeOptionsFor(language, custom)`
-puts the CV's own headings and labels (`custom`) over those of its language tag (`"sv"`, `"sv-SE"`: Swedish), over
+puts the CV's own headings, labels and colors (`custom`) over those of its language tag (`"sv"`, `"sv-SE"`: Swedish), over
 English for any other language and for none. The CLI and the worker pass
 `themeOptionsFor(languageOf(person), themeOptionsOf(person))` to `ThemeLoader.loadTheme`. Both helpers are in
 semantic-cv-core: `languageOf` reads `{ "@language": … }` from the CV's `@context`, and `themeOptionsOf` reads
