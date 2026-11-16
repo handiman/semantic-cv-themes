@@ -6,6 +6,7 @@ import { BentoTheme } from "./bento/index.js";
 import { BlueprintTheme } from "./blueprint/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { BusinessCasualTheme } from "./business-casual/index.js";
+import { BusinessUsualTheme } from "./business-usual/index.js";
 import { FjordTheme } from "./fjord/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
@@ -86,6 +87,14 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     added: BusinessCasualTheme.meta.added,
     featured: BusinessCasualTheme.meta.featured,
     tags: BusinessCasualTheme.meta.tags
+  },
+  [BusinessUsualTheme.meta.id]: {
+    type: BusinessUsualTheme,
+    title: BusinessUsualTheme.meta.title,
+    description: BusinessUsualTheme.meta.description,
+    added: BusinessUsualTheme.meta.added,
+    featured: BusinessUsualTheme.meta.featured,
+    tags: BusinessUsualTheme.meta.tags
   },
   [FjordTheme.meta.id]: {
     type: FjordTheme,
