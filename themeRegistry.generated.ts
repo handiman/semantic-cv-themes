@@ -28,6 +28,7 @@ import { StandardIssueTheme } from "./standard-issue/index.js";
 import { TerminalTheme } from "./terminal/index.js";
 import { TimelineTheme } from "./timeline/index.js";
 import { TimesTheme } from "./times/index.js";
+import { TpsReportTheme } from "./tps-report/index.js";
 import { TypewriterTheme } from "./typewriter/index.js";
 import { WinterTheme } from "./winter/index.js";
 import { ZurichTheme } from "./zurich/index.js";
@@ -263,6 +264,14 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     added: TimesTheme.meta.added,
     featured: TimesTheme.meta.featured,
     tags: TimesTheme.meta.tags
+  },
+  [TpsReportTheme.meta.id]: {
+    type: TpsReportTheme,
+    title: TpsReportTheme.meta.title,
+    description: TpsReportTheme.meta.description,
+    added: TpsReportTheme.meta.added,
+    featured: TpsReportTheme.meta.featured,
+    tags: TpsReportTheme.meta.tags
   },
   [TypewriterTheme.meta.id]: {
     type: TypewriterTheme,
