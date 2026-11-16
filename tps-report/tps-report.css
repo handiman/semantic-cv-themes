@@ -1,0 +1,160 @@
+/* TPS Report. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * A filled-in office form, cover sheet included. The header is two boxes side by side, the name
+ * and the contact details; every section below is a ruled box with its heading on a grey strip,
+ * and every role a row of the form. Black, white and grey. */
+
+:root {
+  --strip: #dcdcdc;
+  --text-color: #111;
+  --text-color-muted: #444;
+  --background-color: #fff;
+  --heading-color: #111;
+  --accent-color: #111;
+  --link-color: #111;
+  --border-color: #111;
+  --font-family-base: Arial, "Helvetica Neue", Helvetica, "Liberation Sans", sans-serif;
+  --font-size-base: 14px;
+  --space-0: 0.25rem;
+  --space-1: 0.5rem;
+  --space-2: 1rem;
+  --space-3: 2.5rem;
+  --border-radius-base: 0;
+}
+
+body {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.4;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+/* The cover sheet: the name and the contact details in two boxes that share a border. */
+header {
+  display: flex;
+  flex-wrap: wrap;
+  border: 1px solid var(--border-color);
+}
+
+.who {
+  flex: 1 1 18rem;
+  padding: var(--space-1) var(--space-2);
+}
+
+h1 {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.job-title {
+  margin-top: 0.1rem;
+}
+
+header > #contact {
+  flex: 1 1 16rem;
+  margin: 0;
+  border: 0;
+  border-left: 1px solid var(--border-color);
+}
+
+.contact li {
+  display: block;
+  overflow-wrap: anywhere;
+}
+
+/* One per line, so without the commas of the other short lists. */
+#contact .contact li::before {
+  content: none;
+}
+
+/* Every section a ruled box with its heading on a grey strip. */
+section {
+  margin-top: var(--space-2);
+  border: 1px solid var(--border-color);
+}
+
+h2 {
+  padding: 0.15rem var(--space-1);
+  border-bottom: 1px solid var(--border-color);
+  background: var(--strip);
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+section > p,
+section > ul {
+  padding: var(--space-1);
+}
+
+/* Each role a row of the form, the rows divided by rules. */
+article {
+  padding: var(--space-1);
+}
+
+article + article {
+  border-top: 1px solid var(--border-color);
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--text-color-muted);
+}
+
+.caption li + li::before {
+  content: "\00a0| ";
+}
+
+article .scv-description,
+.keywords {
+  margin-top: var(--space-0);
+}
+
+.keywords {
+  color: var(--text-color-muted);
+}
+
+section > ul li {
+  display: inline;
+}
+
+section > ul li + li::before {
+  content: ", ";
+}
+
+.scv-footer {
+  margin-top: var(--space-2);
+}
+
+@media print {
+  :root {
+    --font-size-base: 10pt;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.6cm;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.6cm 0;
+  }
+}
