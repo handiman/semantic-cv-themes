@@ -1,0 +1,146 @@
+/* Beige. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Deliberately unremarkable: a book serif in warm brown-grey on off-white, one column, headings in
+ * italic and a hairline under each. The page prints on white, so the beige costs no ink. */
+
+:root {
+  --oatmeal: #f5f0e6;
+  --umber: #3e3a33;
+  --text-color: var(--umber);
+  --text-color-muted: #7a7266;
+  --background-color: var(--oatmeal);
+  --heading-color: var(--umber);
+  --accent-color: #8a6f4d;
+  --link-color: var(--umber);
+  --border-color: #d9cfbd;
+  --font-family-base:
+    Charter, "Bitstream Charter", "Sitka Text", Cambria, Georgia, "Liberation Serif", serif;
+  --font-size-base: 16px;
+  --space-0: 0.35rem;
+  --space-1: 1rem;
+  --space-2: 1.75rem;
+  --space-3: 3rem;
+  --border-radius-base: 0;
+}
+
+body {
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.55;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+  text-decoration: underline;
+  text-decoration-color: var(--border-color);
+  text-underline-offset: 0.15em;
+}
+
+h1 {
+  font-size: 2rem;
+  font-weight: 400;
+  line-height: 1.2;
+}
+
+.job-title {
+  color: var(--text-color-muted);
+  font-size: 1.1rem;
+  font-style: italic;
+}
+
+.contact {
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+}
+
+.contact li {
+  display: inline;
+}
+
+/* A link breaks between the items, never inside, so a hyphen in it can't split it. */
+.contact a {
+  white-space: nowrap;
+}
+
+.contact li + li::before {
+  content: " · ";
+}
+
+section {
+  margin-top: var(--space-2);
+}
+
+h2 {
+  margin-bottom: var(--space-0);
+  padding-bottom: 0.15rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--heading-color);
+  font-size: 1.2rem;
+  font-style: italic;
+  font-weight: 400;
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+/* Flex, so the whitespace between the items doesn't end up before the commas. */
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--text-color-muted);
+}
+
+.caption li + li::before {
+  content: ", ";
+}
+
+article .scv-description,
+.keywords {
+  margin-top: 0.2rem;
+}
+
+.keywords {
+  color: var(--text-color-muted);
+  font-style: italic;
+}
+
+section > ul li {
+  display: inline;
+}
+
+section > ul li + li::before {
+  content: ", ";
+}
+
+.scv-footer {
+  margin-top: var(--space-3);
+}
+
+@media print {
+  :root {
+    --font-size-base: 11pt;
+    --background-color: #fff;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 2cm;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 2cm 0;
+  }
+}
