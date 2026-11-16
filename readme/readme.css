@@ -1,0 +1,154 @@
+/* Readme. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * The CV as a rendered README on a code host: system type, headings over a hairline rule, blue
+ * links, and keywords, skills and areas as inline code. */
+
+:root {
+  --code-background: #eff1f3;
+  --text-color: #1f2328;
+  --text-color-muted: #59636e;
+  --background-color: #fff;
+  --heading-color: #1f2328;
+  --accent-color: #0969da;
+  --link-color: #0969da;
+  --border-color: #d1d9e0;
+  --font-family-base:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+  --font-family-code:
+    ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+  --font-size-base: 16px;
+  --space-0: 0.25rem;
+  --space-1: 1rem;
+  --space-2: 1.5rem;
+  --space-3: 2.5rem;
+  --border-radius-base: 6px;
+}
+
+body {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.5;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+h1,
+h2 {
+  padding-bottom: 0.3em;
+  border-bottom: 1px solid var(--border-color);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+h1 {
+  font-size: 2em;
+}
+
+.job-title {
+  margin-top: var(--space-1);
+  font-size: 1.1rem;
+}
+
+.contact {
+  margin-top: var(--space-0);
+}
+
+.contact li {
+  display: inline;
+}
+
+/* A link breaks between the items, never inside, so a hyphen in it can't split it. */
+.contact a {
+  white-space: nowrap;
+}
+
+.contact li + li::before {
+  content: " · ";
+  color: var(--text-color-muted);
+}
+
+section {
+  margin-top: var(--space-2);
+}
+
+h2 {
+  margin-bottom: var(--space-1);
+  font-size: 1.5em;
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+h3 {
+  font-size: 1.25em;
+  font-weight: 600;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+  color: var(--text-color-muted);
+}
+
+.caption li + li::before {
+  content: "\00a0· ";
+}
+
+article .scv-description,
+.keywords {
+  margin-top: var(--space-0);
+}
+
+/* Inline code: keywords, and the short lists of skills and areas. */
+code,
+#knowsAbout li,
+#skills li {
+  padding: 0.2em 0.4em;
+  border-radius: var(--border-radius-base);
+  background: var(--code-background);
+  font-family: var(--font-family-code);
+  font-size: 85%;
+}
+
+#knowsAbout ul,
+#skills ul {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+#knowsLanguage li,
+#certifications li {
+  display: list-item;
+  margin-left: 1.5em;
+  list-style: disc;
+}
+
+.scv-footer {
+  margin-top: var(--space-3);
+}
+
+@media print {
+  :root {
+    --font-size-base: 10.5pt;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.8cm;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.8cm 0;
+  }
+}

@@ -20,6 +20,7 @@ import { NeoBrutalTheme } from "./neo-brutal/index.js";
 import { OnePagerTheme } from "./one-pager/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
 import { QuarterlyTheme } from "./quarterly/index.js";
+import { ReadmeTheme } from "./readme/index.js";
 import { RibbonTheme } from "./ribbon/index.js";
 import { StandardIssueTheme } from "./standard-issue/index.js";
 import { TerminalTheme } from "./terminal/index.js";
@@ -196,6 +197,14 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     added: QuarterlyTheme.meta.added,
     featured: QuarterlyTheme.meta.featured,
     tags: QuarterlyTheme.meta.tags
+  },
+  [ReadmeTheme.meta.id]: {
+    type: ReadmeTheme,
+    title: ReadmeTheme.meta.title,
+    description: ReadmeTheme.meta.description,
+    added: ReadmeTheme.meta.added,
+    featured: ReadmeTheme.meta.featured,
+    tags: ReadmeTheme.meta.tags
   },
   [RibbonTheme.meta.id]: {
     type: RibbonTheme,
