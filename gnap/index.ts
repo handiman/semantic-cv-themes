@@ -38,8 +38,7 @@ export class GnapTheme extends Theme {
       renderProjects
     } = this;
     const { headings } = options;
-    const { name, description, jobTitle, telephone, lifeEvent, knowsLanguage, knowsAbout, skills } =
-      person;
+    const { name, description, jobTitle, lifeEvent, knowsLanguage, knowsAbout, skills } = person;
     const location = locationText(person.workLocation);
     // The menu and footer show icon-only links and are hidden in print, so
     // print gets the addresses as text in the header.
