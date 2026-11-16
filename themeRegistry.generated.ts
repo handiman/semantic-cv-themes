@@ -9,6 +9,7 @@ import { FjordTheme } from "./fjord/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
 import { JavaBeanTheme } from "./java-bean/index.js";
+import { LagomTheme } from "./lagom/index.js";
 import { LeanAngleTheme } from "./lean-angle/index.js";
 import { LenaTheme } from "./lena/index.js";
 import { LetterheadTheme } from "./letterhead/index.js";
@@ -109,6 +110,14 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     added: JavaBeanTheme.meta.added,
     featured: JavaBeanTheme.meta.featured,
     tags: JavaBeanTheme.meta.tags
+  },
+  [LagomTheme.meta.id]: {
+    type: LagomTheme,
+    title: LagomTheme.meta.title,
+    description: LagomTheme.meta.description,
+    added: LagomTheme.meta.added,
+    featured: LagomTheme.meta.featured,
+    tags: LagomTheme.meta.tags
   },
   [LeanAngleTheme.meta.id]: {
     type: LeanAngleTheme,
