@@ -1,6 +1,7 @@
 import { ThemeRegistryEntry } from "./themeRegistryEntry.js";
 import { AliceTheme } from "./alice/index.js";
 import { AuroraTheme } from "./aurora/index.js";
+import { BeigeTheme } from "./beige/index.js";
 import { BentoTheme } from "./bento/index.js";
 import { BlueprintTheme } from "./blueprint/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
@@ -45,6 +46,14 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     added: AuroraTheme.meta.added,
     featured: AuroraTheme.meta.featured,
     tags: AuroraTheme.meta.tags
+  },
+  [BeigeTheme.meta.id]: {
+    type: BeigeTheme,
+    title: BeigeTheme.meta.title,
+    description: BeigeTheme.meta.description,
+    added: BeigeTheme.meta.added,
+    featured: BeigeTheme.meta.featured,
+    tags: BeigeTheme.meta.tags
   },
   [BentoTheme.meta.id]: {
     type: BentoTheme,
