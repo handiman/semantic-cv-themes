@@ -31,7 +31,7 @@ export class TpsReportTheme extends Theme {
     return `<p class="keywords">${this.options.headings.skills}: ${keywords.join(", ")}</p>`;
   }
 
-  protected layout(person: Person): string {
+  protected layout(): string {
     return `
       <header>
         <slot name="who"></slot>
