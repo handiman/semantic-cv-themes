@@ -5,6 +5,8 @@
     "module": "node20",
     "moduleResolution": "node16",
     "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
     "esModuleInterop": true,
     "inlineSources": true,
     "inlineSourceMap": true,
