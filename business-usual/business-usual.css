@@ -1,0 +1,144 @@
+/* Business Usual. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * Business as usual: the company template everyone has seen. Arial throughout, the name over a
+ * thick rule, and each heading on a grey band the width of the page. Black, white and grey. */
+
+:root {
+  --band: #e4e4e4;
+  --text-color: #111;
+  --text-color-muted: #444;
+  --background-color: #fff;
+  --heading-color: #111;
+  --accent-color: #111;
+  --link-color: #111;
+  --border-color: #111;
+  --font-family-base: Arial, "Helvetica Neue", Helvetica, "Liberation Sans", sans-serif;
+  --font-size-base: 14px;
+  --space-0: 0.25rem;
+  --space-1: 0.7rem;
+  --space-2: 1.3rem;
+  --space-3: 2.5rem;
+  --border-radius-base: 0;
+}
+
+body {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.4;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+header {
+  padding-bottom: var(--space-1);
+  border-bottom: 3px solid var(--border-color);
+}
+
+h1 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.job-title {
+  font-size: 1.1rem;
+}
+
+.contact {
+  margin-top: var(--space-0);
+}
+
+.contact li {
+  display: inline;
+}
+
+/* A link breaks between the items, never inside, so a hyphen in it can't split it. */
+.contact a {
+  white-space: nowrap;
+}
+
+.contact li + li::before {
+  content: " | ";
+}
+
+section {
+  margin-top: var(--space-2);
+}
+
+h2 {
+  margin-bottom: var(--space-1);
+  padding: 0.2rem 0.5rem;
+  background: var(--band);
+  font-size: 0.95rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+article,
+section > p,
+section > ul {
+  padding: 0 0.5rem;
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+.caption {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.caption li + li::before {
+  content: "\00a0| ";
+}
+
+article .scv-description,
+.keywords {
+  margin-top: var(--space-0);
+}
+
+.keywords {
+  color: var(--text-color-muted);
+}
+
+section > ul li {
+  display: inline;
+}
+
+section > ul li + li::before {
+  content: ", ";
+}
+
+.scv-footer {
+  margin-top: var(--space-2);
+}
+
+@media print {
+  :root {
+    --font-size-base: 10.5pt;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 2cm;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 2cm 0;
+  }
+}

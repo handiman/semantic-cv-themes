@@ -1,10 +1,12 @@
 import { ThemeRegistryEntry } from "./themeRegistryEntry.js";
 import { AliceTheme } from "./alice/index.js";
 import { AuroraTheme } from "./aurora/index.js";
+import { BeigeTheme } from "./beige/index.js";
 import { BentoTheme } from "./bento/index.js";
 import { BlueprintTheme } from "./blueprint/index.js";
 import { BoilingDieselTheme } from "./boiling-diesel/index.js";
 import { BusinessCasualTheme } from "./business-casual/index.js";
+import { BusinessUsualTheme } from "./business-usual/index.js";
 import { FjordTheme } from "./fjord/index.js";
 import { GnapTheme } from "./gnap/index.js";
 import { HoldenWreckTheme } from "./holden-wreck/index.js";
@@ -47,6 +49,14 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     featured: AuroraTheme.meta.featured,
     tags: AuroraTheme.meta.tags
   },
+  [BeigeTheme.meta.id]: {
+    type: BeigeTheme,
+    title: BeigeTheme.meta.title,
+    description: BeigeTheme.meta.description,
+    added: BeigeTheme.meta.added,
+    featured: BeigeTheme.meta.featured,
+    tags: BeigeTheme.meta.tags
+  },
   [BentoTheme.meta.id]: {
     type: BentoTheme,
     title: BentoTheme.meta.title,
@@ -78,6 +88,14 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     added: BusinessCasualTheme.meta.added,
     featured: BusinessCasualTheme.meta.featured,
     tags: BusinessCasualTheme.meta.tags
+  },
+  [BusinessUsualTheme.meta.id]: {
+    type: BusinessUsualTheme,
+    title: BusinessUsualTheme.meta.title,
+    description: BusinessUsualTheme.meta.description,
+    added: BusinessUsualTheme.meta.added,
+    featured: BusinessUsualTheme.meta.featured,
+    tags: BusinessUsualTheme.meta.tags
   },
   [FjordTheme.meta.id]: {
     type: FjordTheme,
