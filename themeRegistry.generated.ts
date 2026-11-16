@@ -21,6 +21,7 @@ import { OnePagerTheme } from "./one-pager/index.js";
 import { ProofOfWorkTheme } from "./proof-of-work/index.js";
 import { QuarterlyTheme } from "./quarterly/index.js";
 import { RibbonTheme } from "./ribbon/index.js";
+import { SmallPrintTheme } from "./small-print/index.js";
 import { StandardIssueTheme } from "./standard-issue/index.js";
 import { TerminalTheme } from "./terminal/index.js";
 import { TimelineTheme } from "./timeline/index.js";
@@ -204,6 +205,14 @@ const ThemeRegistry: Record<string, ThemeRegistryEntry> = {
     added: RibbonTheme.meta.added,
     featured: RibbonTheme.meta.featured,
     tags: RibbonTheme.meta.tags
+  },
+  [SmallPrintTheme.meta.id]: {
+    type: SmallPrintTheme,
+    title: SmallPrintTheme.meta.title,
+    description: SmallPrintTheme.meta.description,
+    added: SmallPrintTheme.meta.added,
+    featured: SmallPrintTheme.meta.featured,
+    tags: SmallPrintTheme.meta.tags
   },
   [StandardIssueTheme.meta.id]: {
     type: StandardIssueTheme,

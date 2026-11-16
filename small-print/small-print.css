@@ -1,0 +1,152 @@
+/* Small Print. The base CSS (a reset and the shared variables) comes before this file.
+ *
+ * For the long CV: small type, tight spacing and one column. The employer, role and dates of each
+ * assignment share one line, and the short lists run on as text, so many assignments fit on few
+ * pages without a second column. */
+
+:root {
+  --text-color: #1a1a1a;
+  --text-color-muted: #555;
+  --background-color: #fff;
+  --heading-color: #1a1a1a;
+  --accent-color: #1a1a1a;
+  --link-color: #1a1a1a;
+  --border-color: #999;
+  --font-family-base: "Helvetica Neue", Helvetica, Arial, "Liberation Sans", sans-serif;
+  --font-size-base: 13px;
+  --space-0: 0.15rem;
+  --space-1: 0.45rem;
+  --space-2: 0.9rem;
+  --space-3: 1.8rem;
+  --border-radius-base: 0;
+}
+
+body {
+  max-width: 50rem;
+  margin: 0 auto;
+  padding: var(--space-3) var(--space-2);
+  line-height: 1.35;
+}
+
+a,
+a:link,
+a:visited {
+  color: var(--link-color);
+}
+
+h1 {
+  font-size: 1.5rem;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.job-title {
+  font-size: 1rem;
+}
+
+.contact {
+  margin-top: var(--space-0);
+  color: var(--text-color-muted);
+}
+
+.contact li {
+  display: inline;
+}
+
+/* A link breaks between the items, never inside, so a hyphen in it can't split it. */
+.contact a {
+  white-space: nowrap;
+}
+
+.contact li + li::before {
+  content: " · ";
+}
+
+section {
+  margin-top: var(--space-2);
+}
+
+h2 {
+  margin-bottom: var(--space-1);
+  padding-bottom: 0.1rem;
+  border-bottom: 1px solid var(--border-color);
+  font-size: 0.85rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+article + article {
+  margin-top: var(--space-1);
+}
+
+/* The employer and the caption on one line: "Example AB — Developer, 2017 – 2022, Stockholm".
+   The caption is an inline flexbox, so the whitespace between its items doesn't end up before the
+   commas. */
+article > h3 {
+  display: inline;
+}
+
+article > .caption {
+  display: inline-flex;
+  flex-wrap: wrap;
+  vertical-align: top;
+}
+
+h3 {
+  font-size: 1rem;
+  font-weight: 700;
+}
+
+article > h3 + .caption::before {
+  content: "—";
+  margin-right: 0.4em;
+}
+
+.caption li + li::before {
+  content: ", ";
+}
+
+.caption {
+  color: var(--text-color-muted);
+}
+
+article .scv-description,
+.keywords {
+  margin-top: var(--space-0);
+}
+
+.keywords {
+  color: var(--text-color-muted);
+}
+
+section > ul li {
+  display: inline;
+}
+
+section > ul li + li::before {
+  content: ", ";
+}
+
+.scv-footer {
+  margin-top: var(--space-2);
+}
+
+@media print {
+  :root {
+    --font-size-base: 9.5pt;
+  }
+
+  body {
+    max-width: none;
+    padding: 0 1.5cm;
+  }
+
+  .scv-footer {
+    display: none;
+  }
+
+  @page {
+    margin: 1.4cm 0;
+  }
+}
