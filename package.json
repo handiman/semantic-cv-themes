@@ -14,7 +14,7 @@
   },
   "devDependencies": {
     "fast-check": "4.10.2",
-    "jsdom": "^31.0.0",
+    "jsdom": "^31.0.1",
     "tsx": "4.23.15",
     "typescript": "7.0.2"
   },
